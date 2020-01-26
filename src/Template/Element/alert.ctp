@@ -1,0 +1,1 @@
+<div class="row g-pt-12" id="div_main_alert" style="display: none;"><div class="col-md-12 col-12" id="div_alert"></div></div>
