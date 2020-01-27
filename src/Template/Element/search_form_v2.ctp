@@ -1,5 +1,3 @@
-
-
 <style>
     /* custom checkbox */
     .checkbox {
@@ -30,20 +28,18 @@
 </style>
 <?= $this->Html->css('jquery.multiselect.css') ?>
 
-<?= $this->Form->create('', ['id' => 'frm_search', 'method' => 'GET']) ?>
-<div class="g-bg-gray-light-v4 g-pa-30">
-
-
+<?= $this->Form->create('', ['id' => 'frm_search', 'type' => 'GET']) ?>
+<div class="g-pa-30 g-bg-black-opacity-0_5">
     <div class="row">
         <div class="col-md-2 col-6 g-mb-10">
-            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_sales">ซื้อ</a>
-            <input type="hidden" name="issales" id="issales" value="N" />
+            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-primary g-color-white" id="bt_sales">ขาย</a>
+            <input type="hidden" name="issales" id="issales" value="Y" />
         </div>
         <div class="col-md-2 col-6 g-mb-10">
-            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_rent">เช่า</a>
+            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white g-color-gray-light-v1" id="bt_rent">ให้เช่า</a>
             <input type="hidden" name="isrent" id="isrent" value="N" />
         </div>
-        
+
         <div class="col-12 col-md-8 g-mb-10">
             <div class="input-group-btn">
                 <select name="search_asset_type_id[]" multiple id="search_asset_type_id" class="form-control rounded-0">
@@ -53,42 +49,44 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 g-mb-10">
+        <div class="col-md-8 g-mb-10">
             <div class="input-group u-shadow-v21 g-bg-white rounded-0 ">
                 <div id="form-icon-location-pin" class="input-group-append">
                     <span class="input-group-text rounded-0 border-0 g-font-size-16 g-color-gray-light-v1"><i class="icon-location-pin g-pos-rel g-top-1 g-px-1"></i></span>
                 </div>
-                <input name="search_text" class="form-control rounded-0 g-px-20" type="text" placeholder="ชื่อเมือง,โครงการ หรือสถานที่สำคัญ" style="border: 0px;" aria-label="City, Zip or Country" aria-describedby="form-icon-location-pin">
+                <input name="search_text" class="form-control rounded-0 g-px-20 g-py-12" type="text" placeholder="ชื่อเมือง,โครงการ หรือสถานที่สำคัญ" style="border: 0px;" aria-label="City, Zip or Country" aria-describedby="form-icon-location-pin">
             </div>
 
         </div>
-
+        <div class="col-md-4 g-mb-10">
+            <a href="javascript:void(0)" id="bt_more_search" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white g-font-size-14"><i class="fa fa-sliders"></i> ค้นหาแบบละเอียด</a>
+        </div>
 
     </div>
-    <div class="row"  id="box_more_search">
+    <div class="row"  id="box_more_search" style="display:none;">
         <div class="col-md-4 g-mb-10">
-            <select name="search_province_id[]"  id="search_province_id" class="custom-select form-control-md rounded-0"></select>
+            <select name="search_province_id[]"  id="search_province_id" class="custom-select form-control-lg rounded-0"></select>
         </div>
         <div class="col-md-4 g-mb-10">
             <div class="input-group-btn">
-                <select name="search_district_id[]" id="search_district_id" class="custom-select form-control form-control-md rounded-0">
+                <select name="search_district_id[]" id="search_district_id" class="custom-select form-control form-control-lg rounded-0">
 
                 </select>
             </div>
         </div>
         <div class="col-md-4 g-mb-10">
             <div class="input-group-btn">
-                <select name="search_sub_district_id[]" id="search_sub_district_id" class="custom-select form-control form-control-md rounded-0">
+                <select name="search_sub_district_id[]" id="search_sub_district_id" class="custom-select form-control form-control-lg rounded-0">
 
                 </select>
             </div>
         </div>
         <div class="col-md-4 g-mb-10">
             <div class="input-group-btn">
-                <select name="orderby" class="custom-select g-bg-white u-select-v1 w-100 g-brd-gray-light-v3 g-color-main g-color-primary--hover" required
+                <select name="orderby" id="orderby" class="custom-select form-control form-control-lg rounded-0" required
                         data-placeholder=""
                         data-open-icon="fa fa-angle-down"
-                        data-close-icon="fa fa-angle-up">
+                        data-close-icon="fa fa-angle-up" style="display: none;">
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="date">เรียงตามวันที่ลงประกาศล่าสุด</option>
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="price">เรียงตามราคาจากมากไปน้อย</option>
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="date">เรียงตามราคาจากน้อยไปมาก</option>
@@ -96,57 +94,64 @@
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="land_size_desc">เรียงตามขนาดที่ดินจากมากไปน้อย</option>
 
                 </select>
+                <select name="announce_type" id="announce_type" class="custom-select form-control form-control-lg rounded-0" required
+                        data-placeholder=""
+                        data-open-icon="fa fa-angle-down"
+                        data-close-icon="fa fa-angle-up" >
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="all">แสดงทุกประกาศ</option>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="hot_sales">แสดงเฉพาะประกาศขายด่วน</option>
+                </select>
+                <select style="display: none;" name="renttype" id="renttype" class="custom-select form-control form-control-lg rounded-0" required
+                        data-placeholder=""
+                        data-open-icon="fa fa-angle-down"
+                        data-close-icon="fa fa-angle-up">
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="daily">รายวัน</option>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="monthly" selected="selected">รายเดือน</option>
+
+                </select>
             </div>
         </div>
         <div class="col-md-4 g-mb-10">
-            <?php
-            $startPrice = [
-                ['value' => '0', 'label' => 'ตั้งแต่ราคา 0'],
-                ['value' => '1000000', 'label' => 'ตั้งแต่ราคา 1,000,000'],
-                ['value' => '2000000', 'label' => 'ตั้งแต่ราคา 2,000,000'],
-                ['value' => '3000000', 'label' => 'ตั้งแต่ราคา 3,000,000'],
-                ['value' => '4000000', 'label' => 'ตั้งแต่ราคา 4,000,000'],
-                ['value' => '5000000', 'label' => 'ตั้งแต่ราคา 5,000,000'],
-                ['value' => '10000000', 'label' => 'ตั้งแต่ราคา 10,000,000'],
-                ['value' => '20000000', 'label' => 'ตั้งแต่ราคา 20,000,000'],
-                ['value' => '30000000', 'label' => 'ตั้งแต่ราคา 30,000,000'],
-                ['value' => '50000000', 'label' => 'ตั้งแต่ราคา 50,000,000'],
-                ['value' => '100000000', 'label' => 'ตั้งแต่ราคา 100,000,000'],
-            ];
-            ?>
-            <select name="price_start" id="price_start" class="custom-select g-bg-white u-select-v1 w-100 g-brd-gray-light-v3 g-color-main g-color-primary--hover" 
+
+            <select id="price_sales_start" class="custom-select form-control form-control-lg rounded-0" 
                     data-placeholder="ตั้งแต่ราคา"
                     data-open-icon="fa fa-angle-down"
                     data-close-icon="fa fa-angle-up">
                 <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" ></option>
-                <?php foreach ($startPrice as $item) : ?>
+                <?php foreach ($startPrice['sales'] as $item) : ?>
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="<?= $item['value'] ?>"><?= $item['label'] ?></option>
                 <?php endforeach; ?>
             </select>
+            <select style="display:none;" id="price_rent_start" class="custom-select form-control form-control-lg rounded-0" 
+                    data-placeholder="ตั้งแต่ราคา"
+                    data-open-icon="fa fa-angle-down"
+                    data-close-icon="fa fa-angle-up">
+                <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" ></option>
+                <?php foreach ($startPrice['rent'] as $item) : ?>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="<?= $item['value'] ?>"><?= $item['label'] ?></option>
+                <?php endforeach; ?>
+            </select>
+
             <?= $this->Form->hidden('price_start', ['id' => 'price_start', 'value' => '0']) ?>
-            <?= $this->Form->hidden('price_end', ['id' => 'price_end', 'value' => '10000000']) ?>
+            <?= $this->Form->hidden('price_end', ['id' => 'price_end', 'value' => '1000000000000']) ?>
         </div>
         <div class="col-md-4 g-mb-10">
-            <?php
-            $endPrice = [
-                ['value' => '1000000', 'label' => 'ถึงราคา 1,000,000'],
-                ['value' => '2000000', 'label' => 'ถึงราคา 2,000,000'],
-                ['value' => '3000000', 'label' => 'ถึงราคา 3,000,000'],
-                ['value' => '4000000', 'label' => 'ถึงราคา 4,000,000'],
-                ['value' => '5000000', 'label' => 'ถึงราคา 5,000,000'],
-                ['value' => '10000000', 'label' => 'ถึงราคา 10,000,000'],
-                ['value' => '20000000', 'label' => 'ถึงราคา 20,000,000'],
-                ['value' => '30000000', 'label' => 'ถึงราคา 30,000,000'],
-                ['value' => '50000000', 'label' => 'ถึงราคา 50,000,000'],
-                ['value' => '100000000', 'label' => 'ถึงราคา 100,000,000'],
-            ];
-            ?>
-            <select name="price_end" id="price_end" class="custom-select g-bg-white u-select-v1 w-100 g-brd-gray-light-v3 g-color-main g-color-primary--hover" 
+
+            <select id="price_sales_end" class="custom-select form-control form-control-lg rounded-0" 
                     data-placeholder="ถึงราคา"
                     data-open-icon="fa fa-angle-down"
                     data-close-icon="fa fa-angle-up">
                 <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" ></option>
-                <?php foreach ($endPrice as $item) : ?>
+                <?php foreach ($endPrice['sales'] as $item) : ?>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="<?= $item['value'] ?>"><?= $item['label'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <select style="display:none;" id="price_rent_end" class="custom-select form-control form-control-lg rounded-0" 
+                    data-placeholder="ถึงราคา"
+                    data-open-icon="fa fa-angle-down"
+                    data-close-icon="fa fa-angle-up">
+                <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" ></option>
+                <?php foreach ($endPrice['rent'] as $item) : ?>
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="<?= $item['value'] ?>"><?= $item['label'] ?></option>
                 <?php endforeach; ?>
             </select>
@@ -156,7 +161,7 @@
 
     <div class="row">
         <div class="col-md-4 offset-md-4">
-            <button class="btn btn-lg btn-block u-btn-primary g-color-white g-bg-primary-dark-v1--hover g-font-weight-600 rounded-0 g-px-18" type="button" id="bt_search">
+            <button class="btn btn-lg btn-block u-btn-primary g-color-white g-bg-primary-dark-v1--hover g-font-weight-600 rounded-0 g-px-18" type="submit" id="bt-search">
                 <i class="fa fa-search"></i> ค้นหา
             </button>
         </div>
@@ -164,78 +169,135 @@
 
 </div>
 <?= $this->Form->end() ?>
-
 <?= $this->Html->script('jquery.multiselect.js') ?>
-<?= $this->Html->script('url.min.js') ?>
+
 <?= $this->Html->script('address-option-search.js') ?>
 <script>
+
+    function activeButton(eleId) {
+        $(eleId).removeClass('g-bg-white');
+        $(eleId).removeClass('g-color-white');
+        $(eleId).removeClass('g-color-gray-light-v1');
+
+        $(eleId).addClass("g-bg-primary");
+        $(eleId).addClass("g-color-white");
+    }
+
+    function inactiveButton(eleId) {
+        $(eleId).addClass('g-bg-white');
+        $(eleId).addClass('g-color-gray-light-v1');
+        $(eleId).removeClass('g-color-white');
+
+        $(eleId).removeClass("g-bg-primary");
+    }
+
+    function priceManage() {
+        var issales = $('#issales').val();
+        if (issales === 'Y') {
+            var price_start = $('#price_sales_start').val();
+            $('#price_start').val(price_start);
+            $('#price_end').val($('#price_sales_end').val());
+            
+            disablePriceOption('price_sales_end',price_start);
+        } else {
+            $('#price_start').val($('#price_rent_start').val());
+            $('#price_end').val($('#price_rent_end').val());
+            
+            disablePriceOption('price_rent_end',$('#price_rent_start').val());
+        }
+    }
+
+    function disablePriceOption(element_id, start_value) {
+        $('#' + element_id + ' option').each(function () {
+            console.log($(this).val()+' / '+start_value);
+            if(parseInt($(this).val()) <= parseInt(start_value)){
+                $(this).attr('disabled', true);
+            }else{
+                $(this).attr('disabled', false);
+            }
+        });
+    }
+
     $(document).ready(function () {
-        //$.HSCore.components.HSSlider.init('#rangeSlider1');
 
-        
 
-        $('#bt_search').on('click', function () {
-            var form_data = $('#frm_search').serializeArray();
-            var urlParam = $.AssetCore.search.makeUrlParam(form_data);
-            console.log(urlParam);
-            window.location.href = siteurl + 'search?search=1' + urlParam;
+        $('#bt_more_search').on('click', function () {
+            if ($('#box_more_search').is(":visible")) {
+                $('#box_more_search').hide();
+            } else {
+                $('#box_more_search').show();
+            }
+
         });
 
         $('#bt_rent').on('click', function () {
-            if ($(this).hasClass("g-bg-white")) {
 
-                $('#isrent').val('Y').trigger('change');
-            } else {
+            activeButton('#bt_rent');
+            inactiveButton('#bt_sales');
+            $('#isrent').val('Y').trigger('change');
+            $('#issales').val('N').trigger('change');
 
-                $('#isrent').val('N').trigger('change');
-            }
+            $('#announce_type').hide();
+            $('#renttype').show();
+
+
+            $('#price_sales_start').hide();
+            $('#price_sales_end').hide();
+
+            $('#price_rent_start').show();
+            $('#price_rent_end').show();
+            priceManage();
         });
+
         $('#bt_sales').on('click', function () {
-            if ($(this).hasClass("g-bg-white")) {
-                $('#issales').val('Y').trigger('change');
-            } else {
-                $('#issales').val('N').trigger('change');
-            }
+            activeButton('#bt_sales');
+            inactiveButton('#bt_rent');
+            $('#isrent').val('N').trigger('change');
+            $('#issales').val('Y').trigger('change');
+
+            $('#announce_type').show();
+            $('#renttype').hide();
+
+            $('#price_sales_start').show();
+            $('#price_sales_end').show();
+
+            $('#price_rent_start').hide();
+            $('#price_rent_end').hide();
+            priceManage();
         });
 
-        $('#isrent').on('change', function () {
-            var value = $(this).val();
-            if (value === 'Y') {
-                $('#bt_rent').removeClass('g-bg-white');
-                $('#bt_rent').removeClass('g-color-white');
 
-                $('#bt_rent').addClass("g-bg-primary");
-                $('#bt_rent').addClass("g-color-white");
-            } else {
-                $('#bt_rent').addClass('g-bg-white');
-                $('#bt_rent').removeClass('g-color-white');
-
-                $('#bt_rent').removeClass("g-bg-primary");
-            }
+        $('#search_asset_type_id').on('change', function () {
+            //console.log($(this).val());
+            $('#asset_type').val($(this).val());
         });
 
-        $('#issales').on('change', function () {
-            var value = $(this).val();
-            if (value === 'Y') {
-                $('#bt_sales').removeClass('g-bg-white');
-                $('#bt_sales').removeClass('g-color-white');
+        $('#price_sales_start').val('0').trigger('change');
+        $('#price_rent_start').val('0').trigger('change');
 
-                $('#bt_sales').addClass("g-bg-primary");
-                $('#bt_sales').addClass("g-color-white");
-            } else {
-                $('#bt_sales').addClass('g-bg-white');
-                $('#bt_sales').removeClass('g-color-white');
+        $('#price_sales_end').val('10000000000').trigger('change');
+        $('#price_rent_end').val('10000000000').trigger('change');
 
-                $('#bt_sales').removeClass("g-bg-primary");
-            }
+        $('#price_sales_start').on('change', function () {
+            //console.log('price_sales_start changed = '+$(this).val());
+            //$('#price_start').val($(this).val());
+            priceManage();
+            $('#price_sales_end').val('10000000000').trigger('change');
         });
-        
-        
-        
-        //set default from url
-        var urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('issales')) {
-            $('#issales').val(urlParams.get('issales')).trigger('change');
-        }
-    });
+        $('#price_rent_start').on('change', function () {
+            //$('#price_start').val($(this).val());
+            priceManage();
+            $('#price_rent_end').val('10000000000').trigger('change');
+        });
+
+        $('#price_sales_end').on('change', function () {
+            //$('#price_end').val($(this).val());
+            priceManage();
+        });
+        $('#price_rent_end').on('change', function () {
+            // $('#price_end').val($(this).val());
+            priceManage();
+        });
+    }
+    );
 </script>

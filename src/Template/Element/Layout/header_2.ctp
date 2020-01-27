@@ -20,8 +20,8 @@
                 </button>
 
                 <?php
-                $linkClass = 'nav-link rounded g-color-primary--hover g-bg-transparent g-bg-main--hover g-font-weight-600 g-font-size-14 g-py-10';
-                $linkClassActive = 'nav-link rounded g-color-primary g-bg-transparent g-bg-main--hover g-font-weight-600 g-font-size-14 g-py-10';
+                $linkClass = 'nav-link rounded g-color-primary--hover g-bg-transparent g-bg-main--hover g-font-weight-600 g-font-size-15 g-py-10';
+                $linkClassActive = 'nav-link rounded g-color-primary g-bg-transparent g-bg-main--hover g-font-weight-600 g-font-size-15 g-py-10';
                 $controllerName = strtolower($this->request->getParam('controller'));
                 $issales = strtolower($this->request->getQuery('issales'));
                 $isrent = strtolower($this->request->getQuery('isrent'));
@@ -30,26 +30,26 @@
                 ?>
                 <div id="navBar" class="collapse navbar-collapse align-items-center flex-sm-row">
                     <ul class="navbar-nav ml-auto g-pb-30 g-pb-0--lg">
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('อสังหาขายด่วน', ['controller' => 'property', 'action' => 'index','issales'=>'Y'], ['class' => ($controllerName=='property' && $issales=='y')?$linkClassActive:$linkClass]) ?>
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
+                            <?= $this->Html->link('ขาย', ['controller' => 'property', 'action' => 'index','issales'=>'Y'], ['class' => ($controllerName=='property' && $issales=='y')?$linkClassActive:$linkClass]) ?>
                         </li>
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('อสังหามือสอง', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => ($controllerName=='property' && $isrent=='y')?$linkClassActive:$linkClass]) ?>
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
+                            <?= $this->Html->link('ให้เช่า', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => ($controllerName=='property' && $isrent=='y')?$linkClassActive:$linkClass]) ?>
                         </li>
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'new-project'], ['class' => ($controllerName=='property' && $actionName=='newproject')?$linkClassActive:$linkClass]) ?>
                         </li>
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('บทความ/ข่าว', ['controller'=>'article'], ['class' => ($controllerName=='article')?$linkClassActive:$linkClass]) ?>
                         </li>
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'package'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
                         </li>
-                        <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
+                        <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('ลงประกาศฟรี', ['controller' => 'myassets'], ['class' => ($controllerName=='myassets')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <?php if (is_null($this->request->getSession()->read('Authen.isactive')) || $this->request->getSession()->read('Authen.isactive') == 'N') { ?>
-                            <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
+                            <li class="nav-item g-mx-10 g-mx-3--lg g-mb-5 g-mb-0--lg">
                                 <?= $this->Html->link('เข้าสู่ระบบ', ['controller' => 'login'], ['class' => ($controllerName=='login')?$linkClassActive:$linkClass]) ?>
                             </li>
                         <?php } else { ?>

@@ -32,10 +32,15 @@ class PropertyController extends AppController {
 
         $this->set(compact('assets'));
     }
-    
-    public function newProject(){
+
+    public function newProject() {
         $params = $this->request->getQueryParams();
         $assets = $this->Property->searchAvaliable($params);
+
+        $startPrice = $this->GolbalObj->getStartPriceList();
+        $endPrice = $this->GolbalObj->getEndPriceList();
+
+        $this->set(compact('startPrice', 'endPrice'));
 
         $this->set(compact('assets'));
     }

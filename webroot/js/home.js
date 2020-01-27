@@ -40,13 +40,21 @@ $(document).ready(function () {
 
 
 
-    $.get(apiurl + 'api-assets/avaliable-asset?limit=3&orderby=datedesc').done(function (res) {
+    $.get(apiurl + 'api-assets/avaliable-asset?limit=4&orderby=datedesc').done(function (res) {
         res = JSON.parse(res);
         //console.log(res);
         $.each(res['list'], function (index, value) {
             var str = '<div class="col-md-3">';
             str += '<article>';
+            str += '<figure class="g-pos-rel">';
+            
             str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
+            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
+            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '</figcaption>';
+            str += '</figure>';
+            
+            
             str += '<div class="g-brd-around g-brd-top-none g-brd-gray-light-v3 g-bg-white">';
             str += '<ul class="d-flex list-inline g-brd-y g-brd-gray-light-v3 mb-0">';
             str += '<li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-10 mr-0">';
@@ -86,7 +94,16 @@ $(document).ready(function () {
         $.each(res['list'], function (index, value) {
             var str = '<div class="col-md-3">';
             str += '<article>';
+            
+            str += '<figure class="g-pos-rel">';
+            
             str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
+            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
+            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '</figcaption>';
+            str += '</figure>';
+            
+            
             str += '<div class="g-brd-around g-brd-top-none g-brd-gray-light-v3 g-bg-white">';
             str += '<ul class="d-flex list-inline g-brd-y g-brd-gray-light-v3 mb-0">';
             str += '<li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-10 mr-0">';
@@ -126,7 +143,15 @@ $(document).ready(function () {
         $.each(res['list'], function (index, value) {
             var str = '<div class="col-md-3">';
             str += '<article>';
+            str += '<figure class="g-pos-rel">';
+            
             str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
+            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
+            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '</figcaption>';
+            str += '</figure>';
+            
+            
             str += '<div class="g-brd-around g-brd-top-none g-brd-gray-light-v3 g-bg-white">';
             str += '<ul class="d-flex list-inline g-brd-y g-brd-gray-light-v3 mb-0">';
             str += '<li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-10 mr-0">';
