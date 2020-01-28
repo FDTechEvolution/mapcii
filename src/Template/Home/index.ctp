@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-md-10 col-12 offset-md-1">
                 <h1 class="g-color-primary text-center g-font-weight-600 mx-auto g-mb-0"><span class="">แมพซี่ ดีที่สุด</span></h1>
-                <h3 class="g-color-primary text-center g-font-weight-600 mx-auto g-mb-0"><span class="">ค้นหาอสังหาฯ ด้วยแผนที่</span></h3>
+                <h3 class="g-color-primary text-center g-font-weight-600 mx-auto g-mb-0"><span class="">ด้านการค้นหาอสังหาฯ ด้วยแผนที่</span></h3>
 
                 <!-- Search Form -->
                 <div class="g-pa-30">
-                    <?= $this->element('search_form_v1') ?>
+                    <?= $this->element('menu_icon_header') ?>
                 </div>
             </div>
         </div>
