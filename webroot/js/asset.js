@@ -253,7 +253,7 @@
                     $.get(config.apiurl).done(function (res) {
                         res = JSON.parse(res);
                         var types = res.types;
-                        console.log(types);
+                        //console.log(types);
                         var body = '';
                         $.each(types, function (key, value) {
                             body = '<li class="g-py-2">';

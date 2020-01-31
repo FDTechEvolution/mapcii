@@ -7,7 +7,7 @@
             <h1 class="h2 mb-0 prompt-600 g-color-primary">ประกาศขาย</h1>
             <div class="row">
                 <div class="col-md-12">
-                    <?= $this->element('search_form_a') ?>
+                    <?= $this->element('search_form_a_1') ?>
                 </div>
             </div>
         </div>

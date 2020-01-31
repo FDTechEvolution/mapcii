@@ -7,7 +7,7 @@
             <h1 class="h2 mb-0 prompt-600 g-color-primary">โครงการใหม่</h1>
             <div class="row">
                 <div class="col-md-12">
-                    <?= $this->element('search_form_v2') ?>
+                    <?= $this->element('search_form_v2_2') ?>
                 </div>
             </div>
         </div>
