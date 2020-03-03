@@ -19,6 +19,8 @@
         <link rel="icon" type="image/png" sizes="32x32" href="<?=SITE_URL?>fav.ico/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="96x96" href="<?=SITE_URL?>fav.ico/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="<?=SITE_URL?>fav.ico/favicon-16x16.png">
+
+        <link href="https://fonts.googleapis.com/css?family=Handlee&display=swap" rel="stylesheet">
        
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="<?=SITE_URL?>fav.ico/ms-icon-144x144.png">
@@ -50,7 +52,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.18.0/jquery.validate.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
+
+        <!-- Vue.js & Axios -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-------------------->
+
         <script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAP_API_KEY ?>" async defer></script>
         <?= $this->Html->script('alert.js') ?>
         <script>var siteurl = '<?= SITE_URL ?>'; var apiurl = '<?= SITE_API ?>'; var user_id = '<?= $USERID ?>';</script>

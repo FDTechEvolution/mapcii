@@ -10,6 +10,7 @@ $(document).ready(function () {
 
                 if (res.status === 200) {
                     $('#user_id').val(res.user.id);
+                    localStorage.setItem('MAPCII_USER', res.user.id);
                     $('#verifycode').val(res.verifycode);
                     $('#frmverify').submit();
                 } else {

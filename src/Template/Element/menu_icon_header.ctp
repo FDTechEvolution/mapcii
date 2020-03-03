@@ -16,19 +16,19 @@
 
 <div class="row bg-white-op-7 g-rad-3 g-px-30 g-pt-40 g-pb-80">
     <div class="col-md-3 text-center">
-        <?= $this->Html->image('icon/home_icon_4.png', ['url' => ['controller' => 'property', 'action' => 'index','issales'=>'Y'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
+        <?= $this->Html->image('icon/home_icon_7.png', ['url' => ['controller' => 'property', 'action' => 'index','issales'=>'Y'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
         <h4 class="g-mt-minus-20"><?= $this->Html->link('อสังหาขายด่วน', ['controller' => 'property', 'action' => 'index','issales'=>'Y'], ['class' => 'a-href-color']) ?></h4>
     </div>
     <div class="col-md-3 text-center">
-        <?= $this->Html->image('icon/home_icon_2.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y'],'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
+        <?= $this->Html->image('icon/home_icon_8.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y'],'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
         <h4 class="g-mt-minus-20"><?= $this->Html->link('อสังหามือสอง', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => 'a-href-color']) ?></h4>
     </div>
     <div class="col-md-3 text-center">
-        <?= $this->Html->image('icon/home_icon_3.png', ['url' => ['controller' => 'property', 'action' => 'new-project'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
+        <?= $this->Html->image('icon/home_icon_9.png', ['url' => ['controller' => 'property', 'action' => 'new-project'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
         <h4 class="g-mt-minus-20"><?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'new-project'], ['class' => 'a-href-color']) ?></h4>
     </div>
     <div class="col-md-3 text-center">
-        <?= $this->Html->image('icon/home_icon_1.png', ['url' => ['controller'=>'article'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
+        <?= $this->Html->image('icon/home_icon_5.png', ['url' => ['controller'=>'article'], 'class' => 'img-fluid g-pb-0 g-mb-0']); ?>
         <h4 class="g-mt-minus-20"><?= $this->Html->link('บทความ/ข่าว', ['controller'=>'article'], ['class' => 'a-href-color']) ?></h4>
     </div>
 </div>

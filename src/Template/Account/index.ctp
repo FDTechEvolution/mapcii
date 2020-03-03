@@ -21,7 +21,10 @@
                             <?= $this->Html->link('<i class="mr-1 fa fa-caret-right"></i> เปลี่ยนรหัสผ่าน', ['action'=>'change-password'], ['escape' => false]) ?>                     
                         </li>
                         <li class="g-py-2">
-                            <?= $this->Html->link('<i class="mr-1 fa fa-caret-right"></i> รายการ Package', ['action'=>'package'], ['escape' => false]) ?>                     
+                            <?= $this->Html->link('<i class="mr-1 fa fa-caret-right"></i> รายการลงโฆษณา', ['action'=>'package'], ['escape' => false]) ?>                     
+                        </li>
+                        <li class="g-py-2">
+                            <?= $this->Html->link('<i class="mr-1 fa fa-caret-right"></i> รายการลงประกาศฟรี', ['controller' => 'myassets'], ['escape' => false]) ?>                     
                         </li>
                         <li class="g-py-2">
                             <?= $this->Html->link('<i class="mr-1 fa fa-caret-right"></i> รายการสินทรัพย์ที่ชอบ', ['action'=>'asset-fav'], ['escape' => false]) ?>                     

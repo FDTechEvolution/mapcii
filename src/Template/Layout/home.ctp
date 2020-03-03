@@ -19,6 +19,8 @@
         <link rel="icon" type="image/png" sizes="32x32" href="<?=SITE_URL?>fav.ico/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="96x96" href="<?=SITE_URL?>fav.ico/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="<?=SITE_URL?>fav.ico/favicon-16x16.png">
+
+        <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
        
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="<?=SITE_URL?>fav.ico/ms-icon-144x144.png">

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Account Controller
@@ -12,11 +13,14 @@ use App\Controller\AppController;
  */
 class AccountController extends AppController {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        
+        if(is_null($this->getRequest()->getSession()->read('Authen.User'))){
+            $this->redirect(['controller'=>'login']);
+        }
+    }
+
     public function index() {
         
     }

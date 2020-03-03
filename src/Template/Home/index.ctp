@@ -70,32 +70,29 @@
                 <p><?= $this->Html->link('เรารวบรวมโครงการที่อยู่อาศัย หรือเพื่อลงทุน จากทั่วประเทศ ให้คุณได้เลือกสรร', ['controller' => 'property', 'action' => 'index', 'isrent'=>'Y', 'type'=>'6640bc19-8d50-43a4-82b2-45f33741e58f'], ['class' => 'a-href-color']) ?></p>
             </div>
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/condominium.png', ['class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5>รวมโครงการคอนโด</h5>
-                <p>คอนโดทำเลทอง หลากหลายรูปแบบ ให้คุณเลือกตามความต้องการและตรงใจของคุณ</p>
-            </div>
-
-            <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/land.png', ['class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5>รวมประกาศขายที่ดิน</h5>
-                <p>ที่ดินหลากหลายพื้นที่ หลากหลายขนาด ตามความต้องการของคุณ มีมาให้เลือก</p>
+                <?= $this->Html->image('icon/condominium.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมโครงการคอนโด', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('คอนโดทำเลทอง หลากหลายรูปแบบ ให้คุณเลือกตามความต้องการและตรงใจของคุณ', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color']) ?></p>
             </div>
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/cityscape.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5><?= $this->Html->link('รวมประกาศขาย/เช่า', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
-                <p><?= $this->Html->link('เรารวบรวม ประกาศซื้อขาย บ้าน คอนโด ที่ดิน รวมถึง ประกาศให้เช่า', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color']) ?></p>
+                <?= $this->Html->image('icon/cityscape.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมประกาศขาย/เช่า', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('เรารวบรวม ประกาศซื้อขาย บ้าน คอนโด ที่ดิน รวมถึง ประกาศให้เช่า', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => 'a-href-color']) ?></p>
+            </div>
+            <div class="col-md-3 text-center">
+                <?= $this->Html->image('icon/land.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมประกาศขายที่ดิน', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('ที่ดินหลากหลายพื้นที่ หลากหลายขนาด ตามความต้องการของคุณ มีมาให้เลือก', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'type' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], ['class' => 'a-href-color']) ?></p>
             </div>
         </div>
     </div>
 </section>
 
-<section>
-    <div class="row" style="border-bottom: #9E9E9E solid 3px;">
-        <div class="col-md-12 g-py-5">
-
-        </div>
-    </div>
-</section>
+<style>
+    .font-new-family {
+        font-family: 'Fredoka One';
+    }
+</style>
 
 <?= $this->Html->script('map.js') ?>
 <?= $this->Html->script('home.js') ?>

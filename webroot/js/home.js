@@ -48,9 +48,9 @@ $(document).ready(function () {
             str += '<article>';
             str += '<figure class="g-pos-rel">';
             
-            str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
-            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
-            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '<a href="' + siteurl + 'property/view?id=' + value['id'] + '"><img class="img-fluid w-100" src="' + value['url'] + '" alt=""></a>';
+            str += '<figcaption class="g-pos-abs g-top-2 g-left-2">';
+            str += '<a class="btn btn-sm g-font-size-10 g-color-white g-bg-red g-px-3 g-py-0 font-new-family" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
             str += '</figcaption>';
             str += '</figure>';
             
@@ -97,9 +97,9 @@ $(document).ready(function () {
             
             str += '<figure class="g-pos-rel">';
             
-            str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
-            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
-            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '<a href="' + siteurl + 'property/view?id=' + value['id'] + '"><img class="img-fluid w-100" src="' + value['url'] + '" alt=""></a>';
+            str += '<figcaption class="g-pos-abs g-top-2 g-left-2">';
+            str += '<a class="btn btn-sm g-font-size-10 g-color-white g-bg-red g-px-3 g-py-0 font-new-family"" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
             str += '</figcaption>';
             str += '</figure>';
             
@@ -145,9 +145,9 @@ $(document).ready(function () {
             str += '<article>';
             str += '<figure class="g-pos-rel">';
             
-            str += '<img class="img-fluid w-100" src="' + value['url'] + '" alt="">';
-            str += '<figcaption class="g-pos-abs g-top-10 g-left-10">';
-            str += '<a class="btn btn-sm u-btn-outline-red rounded-0" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
+            str += '<a href="' + siteurl + 'property/view?id=' + value['id'] + '"><img class="img-fluid w-100" src="' + value['url'] + '" alt=""></a>';
+            str += '<figcaption class="g-pos-abs g-top-2 g-left-2">';
+            str += '<a class="btn btn-sm g-font-size-10 g-color-white g-bg-red g-px-3 g-py-0 font-new-family"" href="' + siteurl + 'property/view?id=' + value['id'] + '">NEW</a>';
             str += '</figcaption>';
             str += '</figure>';
             

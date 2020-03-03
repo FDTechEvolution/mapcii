@@ -42,9 +42,11 @@
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('บทความ/ข่าว', ['controller'=>'article'], ['class' => ($controllerName=='article')?$linkClassActive:$linkClass]) ?>
                         </li>
+                        <!--
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'package'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
                         </li>
+                        -->
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('ลงประกาศฟรี', ['controller' => 'myassets'], ['class' => ($controllerName=='myassets')?$linkClassActive:$linkClass]) ?>
                         </li>
@@ -64,7 +66,10 @@
                                         <?= $this->Html->link('รายการสินทรัพย์ที่ชอบ', ['controller' => 'account','action'=>'asset-fav'], ['class' => 'nav-link']) ?>
                                     </li>
                                     <li class="dropdown-item ">
-                                         <?= $this->Html->link('รายการประกาศ', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
+                                         <?= $this->Html->link('รายการลงโฆษณา', ['controller' => 'account', 'action' => 'package'], ['class' => 'nav-link']) ?>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                         <?= $this->Html->link('รายการประกาศฟรี', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
                                     </li>
                                    
                                     <li class="dropdown-item ">

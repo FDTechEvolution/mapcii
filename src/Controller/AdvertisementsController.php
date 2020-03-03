@@ -19,4 +19,28 @@ class AdvertisementsController extends AppController {
         }
     }
 
+    public function packageNew() {
+        
+    }
+
+    public function packageBA() {
+        $this->set('headTitle','ค่าบริการลงโฆษณา Banner A');
+    }
+
+    public function packageBB() {
+        $this->set('headTitle','ค่าบริการลงโฆษณา Banner B');
+    }
+
+    public function packageBC() {
+        $this->set('headTitle','ค่าบริการลงโฆษณา Banner C');
+    }
+
+    public function packagePayment() {
+        $this->set('headTitle','แจ้งชำระเงินค่าบริการลงโฆษณา');
+        
+        if(is_null($this->getRequest()->getSession()->read('Authen.User'))){
+            $this->redirect(['controller'=>'login']);
+        }
+    }
+
 }
