@@ -23,7 +23,9 @@
                 <tbody class="g-font-size-14">
                     <tr v-for="(payment, index) in payments">
                         <td class="text-center">{{index + 1}}.</td>
-                        <td>{{payment.package.name}} - {{payment.package_duration}} : {{payment.package_amount}} บาท
+                        <td>
+                            {{payment.package.name}} - {{payment.package_duration}} : {{payment.package_amount}} บาท<br>
+                            <span class="g-font-size-11">ขนาด : {{payment.package.size.width}} x {{payment.package.size.height}} px</span>
                         </td>
                         <td class="text-center"><button class="g-px-10 round-3 g-py-0" type="button" data-toggle="modal" data-target="#modalPaymentlines" @click="loadpaymentline(payment.id)"><i class="fa fa-ellipsis-h g-font-size-20"></i></button></td>
                         <td class="text-center g-font-size-10">
@@ -33,7 +35,7 @@
                         </td>
                         <td class="text-center">
                             <div v-if="payment.status == 'CO'">
-                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id)"><i class="fa fa-pencil"></i></a><span class="g-px-5">|</span>
+                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id,payment.package.size.width,payment.package.size.height)"><i class="fa fa-pencil"></i></a><span class="g-px-5">|</span>
                                 <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="กำลังเปิดแสดง" @click="disblebanner(payment.id)"><i class="fa fa-eye"></i></a>
                             </div>
                             <div v-if="payment.status == 'EX'">
@@ -194,11 +196,11 @@
                     <div v-else class="modal-body">
                         <div v-if="bannerStatus == 100" class="g-mb-10">
                             <input class="form-control" type="file" name="bannerimage" id="bannerimage" ref="bannerimage" @change="onChangeFileUpload()" required>
-                            <span class="g-color-red g-font-size-12">* ขนาด 1500 x 400 px (ไม่เกิน 1 MB และต้องเป็นไฟล์ jpeg หรือ gif เท่านั้น)</span>
+                            <span class="g-color-red g-font-size-12">* ขนาด {{bannerWidth}} x {{bannerHeight}} px (ไม่เกิน 1 MB และต้องเป็นไฟล์ jpeg หรือ gif เท่านั้น)</span>
                         </div>
                         <div v-else-if="bannerLength < bannerLimit" class="g-mb-10">
                             <input class="form-control" type="file" name="bannerimage" id="bannerimage" ref="bannerimage" @change="onChangeFileUpload()" required>
-                            <span class="g-color-red g-font-size-12">* ขนาด 1500 x 400 px (ไม่เกิน 1 MB และต้องเป็นไฟล์ jpeg หรือ gif เท่านั้น)</span>
+                            <span class="g-color-red g-font-size-12">* ขนาด {{bannerWidth}} x {{bannerHeight}} px (ไม่เกิน 1 MB และต้องเป็นไฟล์ jpeg หรือ gif เท่านั้น)</span>
                         </div>
                         <table class="table g-mb-20" style="border-bottom: 1px solid #ddd;">
                             <thead>
@@ -300,6 +302,12 @@ let packagepaymentlist = new Vue ({
                 detail: null,
                 slip: null
             },
+            image: {
+                width: null,
+                height: null,
+                size: null,
+                type: null
+            },
             payments: [],
             paymentlines: [],
             bannerlines: [],
@@ -313,7 +321,9 @@ let packagepaymentlist = new Vue ({
             bannerLength: null,
             bannerStatus: null,
             notice: null,
-            payment_id: null
+            payment_id: null,
+            bannerWidth: null,
+            bannerHeight: null
         }
     },
     mounted () {
@@ -340,9 +350,11 @@ let packagepaymentlist = new Vue ({
             })
             .finally(() => this.loading.paymentline = false)
         },
-        loadbanner: function (id) {
+        loadbanner: function (id,width,height) {
             this.bannerlines = null
             this.loading.banner = true
+            this.bannerWidth = width
+            this.bannerHeight = height
             axios.get(apiurl + 'api-banners/listbannerline?id=' + id)
             .then((response) => {
                 this.paymentId = id
@@ -503,31 +515,38 @@ let packagepaymentlist = new Vue ({
             this.imageUrl = image
         },
         saveBannerImage: function () {
-            let formData = new FormData()
-            formData.append('type', 'ADS')
-            formData.append('image_id', this.bannerImage)
-            formData.append('payment_id', this.paymentId)
-            formData.append('user_id', localStorage.getItem('MAPCII_USER'))
+            const imageSizeSeting = 1048567
+            if (this.image.size > imageSizeSeting || this.image.width != this.bannerWidth || this.image.height != this.bannerHeight || this.image.type != 'jpeg' && this.image.type != 'gif') {
+                    let imagesize = this.image.size/imageSizeSeting
+                    alert('ขนาดของรูปแบนเนอร์ไม่ถูกต้อง กรุณาตรวจสอบ!!!\n'+
+                            'ข้อกำหนด : '+this.bannerWidth+' x '+this.bannerHeight+' px : ไม่เกิน 1 MB : ไฟล์ jpeg หรือ gif \n'+
+                            'ไฟล์ของคุณ : '+this.image.width+' x '+this.image.height+' px : ขนาด '+imagesize.toFixed(2)+' MB : ไฟล์ '+this.image.type)
+            } else {
+                let formData = new FormData()
+                formData.append('type', 'ADS')
+                formData.append('image_id', this.bannerImage)
+                formData.append('payment_id', this.paymentId)
+                formData.append('user_id', localStorage.getItem('MAPCII_USER'))
 
-            axios.post(apiurl + 'api-banners/saveimage', formData , {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then((response) => {
-                this.bannerImage = null
-                this.loadbanner(this.paymentId)
-            })
-            .catch(e => {
-                console.log(e)
-            })
+                axios.post(apiurl + 'api-banners/saveimage', formData , {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+                    this.bannerImage = null
+                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+            }
         },
         delBannerImage: function (id) {
             if(confirm('ยืนยันการลบ?')){
                 axios.post(apiurl + 'api-banners/deleteimage?id=' + id)
                 .then((response) => {
-                    console.log(response)
-                    this.loadbanner(this.paymentId)
+                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight)
                 })
                 .catch(e => {
                     console.log(e)
@@ -536,6 +555,20 @@ let packagepaymentlist = new Vue ({
         },
         onChangeFileUpload: function () {
             this.bannerImage = this.$refs.bannerimage.files[0]
+            this.image.size = this.bannerImage.size
+            let imagetype = this.$refs.bannerimage.files[0]['type'].split("/")
+            this.image.type = imagetype[1]
+            
+            let reader = new FileReader()
+            reader.readAsDataURL(this.bannerImage)
+            reader.onload = evt => {
+                let img = new Image()
+                img.onload = () => {
+                    this.image.width = img.width
+                    this.image.height = img.height
+                }
+                img.src = evt.target.result
+            }
         },
         onChangeSlipUpload: function (){
             this.renew.slip = this.$refs.slip.files[0];
