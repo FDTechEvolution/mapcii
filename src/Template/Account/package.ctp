@@ -14,7 +14,8 @@
                 <thead>
                     <tr class="g-bg-primary g-color-white">
                         <th class="text-center" style="width: 5%;">#</th>
-                        <th style="width: 30%;">Package</th>
+                        <th style="width: 25%;">Package</th>
+                        <th class="text-center" style="width: 5%;">ตำแหน่ง</th>
                         <th class="text-center" style="width: 15%;">รายละเอียด</th>
                         <th class="text-center" style="width: 20%;">สถานะ</th>
                         <th class="text-center" style="width: 20%;"></th>
@@ -27,6 +28,7 @@
                             {{payment.package.name}} - {{payment.package_duration}} : {{payment.package_amount}} บาท<br>
                             <span class="g-font-size-11">ขนาด : {{payment.package.size.width}} x {{payment.package.size.height}} px</span>
                         </td>
+                        <td class="text-center">{{payment.package.position.position}}</td>
                         <td class="text-center"><button class="g-px-10 round-3 g-py-0" type="button" data-toggle="modal" data-target="#modalPaymentlines" @click="loadpaymentline(payment.id)"><i class="fa fa-ellipsis-h g-font-size-20"></i></button></td>
                         <td class="text-center g-font-size-10">
                             <div v-if="payment.status == 'DR'"><span class="badge badge-dr g-font-size-12 g-px-10">รอตรวจสอบ</span></div>
@@ -35,11 +37,11 @@
                         </td>
                         <td class="text-center">
                             <div v-if="payment.status == 'CO'">
-                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id,payment.package.size.width,payment.package.size.height)"><i class="fa fa-pencil"></i></a><span class="g-px-5">|</span>
+                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id,payment.package.size.width,payment.package.size.height,payment.package.position.id)"><i class="fa fa-pencil"></i></a><span class="g-px-5">|</span>
                                 <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="กำลังเปิดแสดง" @click="disblebanner(payment.id)"><i class="fa fa-eye"></i></a>
                             </div>
                             <div v-if="payment.status == 'EX'">
-                                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#modalRenew" @click="renewmodal(payment.id, payment.package_name)"><i class="fa fa-plus"></i> ต่ออายุ</button>
+                                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#modalRenew" @click="renewmodal(payment.id, payment.package.name)"><i class="fa fa-plus"></i> ต่ออายุ</button>
                                 <button class="btn btn-danger btn-sm" type="button" @click=""><i class="fa fa-trash-o"></i></button>
                             </div>
                         </td>
@@ -207,7 +209,6 @@
                                 <tr class="g-bg-primary g-color-white">
                                     <th class="text-center" style="width: 5%;">#</th>
                                     <th style="width: 65%;">Banner</th>
-                                    <th class="text-center" style="width: 15%">ตำแหน่ง</th>
                                     <th class="text-center" style="width: 15%;">สถานะ</th>
                                 </tr>
                             </thead>
@@ -215,7 +216,6 @@
                                 <tr v-for="(bannerline, index) in bannerlines">
                                     <td class="text-center">{{index + 1}}.</td>
                                     <td><img class="img-fluid" v-bind:src="bannerline.image.url"></td>
-                                    <td class="text-center">{{bannerline.banner.position}}</td>
                                     <td class="text-center g-font-size-12">
                                         <div v-if="bannerline.isactive == 'N'">
                                             <span class="badge badge-dr">รอตรวจสอบ</span><br>
@@ -323,7 +323,8 @@ let packagepaymentlist = new Vue ({
             notice: null,
             payment_id: null,
             bannerWidth: null,
-            bannerHeight: null
+            bannerHeight: null,
+            bannerPosition: null
         }
     },
     mounted () {
@@ -350,11 +351,12 @@ let packagepaymentlist = new Vue ({
             })
             .finally(() => this.loading.paymentline = false)
         },
-        loadbanner: function (id,width,height) {
+        loadbanner: function (id,width,height,position) {
             this.bannerlines = null
             this.loading.banner = true
             this.bannerWidth = width
             this.bannerHeight = height
+            this.bannerPosition = position
             axios.get(apiurl + 'api-banners/listbannerline?id=' + id)
             .then((response) => {
                 this.paymentId = id
@@ -526,6 +528,7 @@ let packagepaymentlist = new Vue ({
                 formData.append('type', 'ADS')
                 formData.append('image_id', this.bannerImage)
                 formData.append('payment_id', this.paymentId)
+                formData.append('position_id', this.bannerPosition)
                 formData.append('user_id', localStorage.getItem('MAPCII_USER'))
 
                 axios.post(apiurl + 'api-banners/saveimage', formData , {
@@ -535,7 +538,7 @@ let packagepaymentlist = new Vue ({
                 })
                 .then((response) => {
                     this.bannerImage = null
-                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight)
+                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight,this.bannerPosition)
                 })
                 .catch(e => {
                     console.log(e)
@@ -546,7 +549,7 @@ let packagepaymentlist = new Vue ({
             if(confirm('ยืนยันการลบ?')){
                 axios.post(apiurl + 'api-banners/deleteimage?id=' + id)
                 .then((response) => {
-                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight)
+                    this.loadbanner(this.paymentId,this.bannerWidth,this.bannerHeight,this.bannerPosition)
                 })
                 .catch(e => {
                     console.log(e)
