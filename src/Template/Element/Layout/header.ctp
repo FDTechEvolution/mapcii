@@ -55,8 +55,11 @@
                                 <?= $this->Html->link('เข้าสู่ระบบ', ['controller' => 'login'], ['class' => ($controllerName=='login')?$linkClassActive:$linkClass]) ?>
                             </li>
                         <?php } else { ?>
-                            <li class="nav-item hs-has-sub-menu  g-mx-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut">
-                                <a id="nav-link--features" class="nav-link g-py-10 g-px-14 g-font-weight-600 g-font-size-15" href="#!" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--features">ข้อมูลส่วนตัว</a>
+                            <li class="nav-item g-ml-10--lg g-mb-5 g-mb-0--lg" style="display: -webkit-inline-box;">
+                                <i class="fa fa-star" style="margin-top: 14px; margin-right: -5px; color: #c3c300;"></i><?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'package'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
+                            </li>
+                            <li class="nav-item hs-has-sub-menu  g-mr-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut">
+                                <a id="nav-link--features" class="nav-link g-pl-0 g-py-10 g-px-14 g-font-weight-600 g-font-size-15" href="#!" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--features">ข้อมูลส่วนตัว</a>
                                 <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu--features" aria-labelledby="nav-link--features">
                                     <!-- Features - Headers -->
                                     <li class="dropdown-item ">

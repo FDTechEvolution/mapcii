@@ -71,12 +71,13 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="g-mb-20">
+                <?= $this->element('banner/side_r') ?>
+                <!-- <div class="g-mb-20">
                     <img src="https://sv1.picz.in.th/images/2019/06/25/1Pkhtn.jpg" class="img-fluid w-100">
                 </div>
                 <div class="g-mb-20">
                     <img src="https://sv1.picz.in.th/images/2019/06/25/1Pkhtn.jpg" class="img-fluid w-100">
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

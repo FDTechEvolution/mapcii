@@ -6,7 +6,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid g-pb-100">
+<div id="assets-list" class="container-fluid g-pb-100">
     <div class="g-pa-5">
         <div class="row">
             <div class="col-md-12">
@@ -17,19 +17,72 @@
             <table class="table table-hover" id="tb_list_asset">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="text-center">#</th>
                         <th>หัวข้อประกาศ</th>
-                        <th>วันที่</th>
-                        <th>สถานะ</th>
+                        <th class="text-center">วันที่</th>
+                        <th class="text-center">สถานะ</th>
+                        <th class="text-center">โฆษณา</th>
                     </tr>
                 </thead>
-
+                <tbody v-if="assetAds" class="g-mb-20">
+                    <tr is="asset-ads-table"
+                        v-for="(assetad, index) in assetAds"
+                        :asset-ads = "assetad"
+                        :index = "index"
+                    >
+                    </tr>
+                </tbody>
                 <tbody>
-                   
+                    <tr is="asset-list-table"
+                        v-for="(asset, index) in assets"
+                        :asset = "asset"
+                        :index = "index"
+                    >
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <div class="modal fade" id="modalPackage" role="dialog">
+        <div class="modal-dialog modal-banner">
+        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-window-close g-font-size-20 g-color-red"></i></button>
+                </div>
+                
+                <div class="modal-body">
+                    <package-payment
+                        :new-project = "isNewProject"
+                        :sales = "isSales"
+                        :rent = "isRent"
+                        :asset-name = "assetName"
+                        :asset-id = 'assetId'
+                    >
+                    </package-payment>
+                </div>
+                <div class="modal-footer">
+                    
+                </div>
+            </div>
+        
+        </div>
+    </div>
 </div>
-<script>var user_id = '<?=$user_id?>';</script>
-<?=$this->Html->script('asset/list.js')?>
+
+<style>
+    .modal-dialog {
+        max-width: 60%;
+    }
+    .u-label-secondary {
+        background-color: #555;
+        border-radius: 5px;
+    }
+    .u-label-success {
+        border-radius: 5px;
+    }
+</style>
+
+<?=$this->Html->script('asset/component/package-payment.js')?>
+<?=$this->Html->script('asset/main.js')?>
