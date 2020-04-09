@@ -220,7 +220,9 @@ button.asset-content-name:hover {
                 axios.get(apiurl + 'api-assets/asset-favorite?id=' + localStorage.getItem('MAPCII_USER'))
                 .then((response) => {
                     // console.log(response)
-                    this.favorites = response.data.assetfavorite
+                    if(response.data.status == 200){
+                        this.favorites = response.data.assetfavorite
+                    }
                 })
                 .catch(e => {
                     console.log(e)
