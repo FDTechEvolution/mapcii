@@ -55,8 +55,6 @@ class ServicesController extends AppController {
             }
         }
         
-        
-        
         $this->Message['data']= $data;
         
         $json = json_encode($this->Message);

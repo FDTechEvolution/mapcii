@@ -247,16 +247,15 @@
             var urlParams = new URLSearchParams(window.location.search);
             var asset_types = JSON.parse(res);
             // console.log(asset_types.types);
-            let search_asset = urlParams.getAll('search_asset_type_id');
+            // let search_asset = urlParams.getAll('search_asset_type_id');
             // console.log(search_asset);
             $.each(asset_types.types, function (key, item) {
                 // console.log(item);
-                search_asset.forEach(asset => {
-                    if (item.id == asset) {
-                        $('#search_asset_type_id').append('<option value="' + item.id + '" selected>' + item.name + '</option>');
-                    }
-                })
-                $('#search_asset_type_id').append('<option value="' + item.id + '">' + item.name + '</option>');
+                if (urlParams.getAll('search_asset_type_id').includes(item.id) == true) {
+                    $('#search_asset_type_id').append('<option value="' + item.id + '" selected>' + item.name + '</option>');
+                }else{
+                    $('#search_asset_type_id').append('<option value="' + item.id + '">' + item.name + '</option>');
+                }
             });
 
             $('#search_asset_type_id').multiselect({

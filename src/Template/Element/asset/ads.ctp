@@ -5,8 +5,8 @@
             <div class="col-lg-7">
                 <div class="g-brd-around g-brd-gray-light-v3 g-bg-white">
                     <div class="g-pa-10 g-pt-0">
-                        <strong class="g-color-primary--hover g-font-size-13 g-font-weight-700"><button class="asset-content-name" type="button" @click="assetAdsClicked(ads.asset.id)">{{ads.asset.name}}</button></strong>
-                        <p class="g-color-text g-font-weight-500 g-font-size-13 mb-0">Posted: <span class="g-color-text g-font-weight-400">2 days ago</span></p>
+                        <strong class="g-color-primary--hover g-font-size-13 g-font-weight-700"><a class="asset-content-name" :href="'<?= SITE_URL ?>property/view?id=' + ads.asset.id">{{ads.asset.name}}</a></strong>
+                        <p class="g-color-text g-font-weight-500 g-font-size-13 mb-0"><strong>ประกาศ :</strong> <span class="g-color-text g-font-weight-400">{{driffday(ads.asset.startdate)}} วันที่ผ่านมา</span></p>
                     </div>
                     <ul class="d-flex list-inline align-items-center g-brd-top g-brd-gray-light-v3 mb-0">
                         <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-5 mr-0">
@@ -115,6 +115,11 @@ button.asset-content-name:hover {
                     if(this.province != null) {
                         if(this.search_district_id == ''){
                             this.assetAds = response.data.listprovince
+                            if(this.assetAds != null){
+                                response.data.imgprovince.forEach((img,index) => {
+                                    this.backgroundImages.push('background-image: url('+img+')')
+                                })
+                            }
                             // console.log('4444444444')
                         }else{
                             if(response.data.listprovince != '' && response.data.listdistrict != '') {
@@ -123,16 +128,34 @@ button.asset-content-name:hover {
                                         this.assetAds.push(province)
                                         // console.log('11111111')
                                     })
+                                    response.data.imgprovince.forEach((img,index) => {
+                                        this.backgroundImages.push('background-image: url('+img+')')
+                                    })
+
+
                                     response.data.listdistrict.forEach((district,index) => {
                                         this.assetAds.push(district)
                                         // console.log('222222222')
                                     })
+                                    response.data.imgdistrict.forEach((img,index) => {
+                                        this.backgroundImages.push('background-image: url('+img+')')
+                                    })
                                 }
                             }else if(response.data.listprovince == ''){
                                 this.assetAds = response.data.listdistrict
+                                if(this.assetAds != null){
+                                    response.data.imgdistrict.forEach((img,index) => {
+                                        this.backgroundImages.push('background-image: url('+img+')')
+                                    })
+                                }
                                 // console.log('3333333333')
                             }else if(response.data.listprovince != ''){
                                 this.assetAds = response.data.listprovince
+                                if(this.assetAds != null){
+                                    response.data.imgprovince.forEach((img,index) => {
+                                        this.backgroundImages.push('background-image: url('+img+')')
+                                    })
+                                }
                                 // console.log('555555555555')
                             }
                         }
@@ -140,12 +163,12 @@ button.asset-content-name:hover {
                     // console.log(this.backgroundImages)
                     // console.log(this.assetAds)
                     
-                    if(response.data.status == 200){
-                        this.assetAds.forEach(ads => {
-                            // console.log(ads.asset.id)
-                            this.assetImages(ads.asset.id)
-                        })
-                    }
+                    // if(response.data.status == 200){
+                    //     this.assetAds.forEach(ads => {
+                    //         // console.log(ads.asset.id)
+                    //         this.assetImages(ads.asset.id)
+                    //     })
+                    // }
                 })
                 .catch(e => {
                     console.log(e)
@@ -168,6 +191,12 @@ button.asset-content-name:hover {
             },
             formatNumber(num) {
                 return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+            },
+            driffday: function (d) {
+                let aday = new Date(d)
+                let fgg = (Date.now() - aday.getTime()) / (1000 * 3600 * 24)
+
+                return fgg.toFixed(0)
             }
         }
     })

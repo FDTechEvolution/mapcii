@@ -104,6 +104,35 @@
                 <div class="col-lg-12 g-mb-70" id="div_assetlist_">
                     <h3>ประกาศล่าสุด</h3>
                     <hr class="hr-margin-0-10">
+                    <!-- <?php foreach ($assets as $key => $asset): ?>
+                        <article class="row no-gutters g-mb-15">
+                            <div class="col-lg-5 g-bg-img-hero g-min-height-100" style="background-image: url('<?= $asset['url'] ?>');"></div>
+
+                            <div class="col-lg-7">
+                                <div class="g-brd-around g-brd-gray-light-v3 g-bg-white">
+                                    <div class="g-pa-10 g-pt-0">
+                                        <strong class="g-color-primary--hover g-font-size-13 g-font-weight-700"><?= $this->Html->link($asset['name'], ['controller' => 'property', 'action' => 'view', 'id' => $asset['id']], ['class' => 'asset-content-name']) ?></strong>
+                                        <p class="g-color-text g-font-weight-500 g-font-size-13 mb-0"><strong>ประกาศ :</strong> <span class="g-color-text g-font-weight-400">2 วันที่ผ่านมา</span></p>
+                                    </div>
+                                    <ul class="d-flex list-inline align-items-center g-brd-top g-brd-gray-light-v3 mb-0">
+                                        <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-5 mr-0">
+                                            <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-022 u-line-icon-pro"></i><?= $asset['bedroom'] ?>
+                                        </li>
+                                        <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-brd-x g-brd-gray-light-v3 g-py-5 mr-0">
+                                            <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-008 u-line-icon-pro"></i><?= $asset['bathroom'] ?>
+                                        </li>
+                                        <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0"><?= number_format($asset['price']) ?> ฿</li>
+                                        <li class="list-inline-item col-2 g-px-0 mr-0">
+                                            <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="เก็บไว้" data-id="bt-add-history" data-value="<?=$asset['id']?>">
+                                                <i class="fa fa-star-o"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                    <hr> -->
                     <div id="avaliable-assets">
                         <div v-for="(asset, index) in assets">
                             <article class="row no-gutters g-mb-15">
@@ -123,7 +152,7 @@
                                             </li>
                                             <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0">{{formatNumber(asset.price)}} ฿</li>
                                             <li class="list-inline-item col-2 g-px-0 mr-0">
-                                                <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5 on-cursor-pointer" data-toggle="tooltip" data-placement="top" title="เก็บไว้" @click="addToFavolite(asset.id)">
+                                                <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="เก็บไว้" data-id="bt-add-history" data-value="">
                                                     <i class="fa fa-star-o"></i>
                                                 </a>
                                             </li>
@@ -132,13 +161,91 @@
                                 </div>
                             </article>
                         </div>
-                        <div v-if="assets == undefined" class="text-center">ไม่มีประกาศ</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<!-- Display none
+<div class="container">
+    <div class="row justify-content-center g-pt-10">
+        <div class="col-lg-9 order-lg-2 g-mb-70" id="div_assetlist_">
+
+            <?php foreach ($assets as $key => $asset): ?>
+                <article class="row no-gutters g-mb-15">
+                    <div class="col-lg-5 g-bg-img-hero g-min-height-200" style="background-image: url('<?= $asset['url'] ?>');"></div>
+
+                    <div class="col-lg-7">
+                        <div class="g-brd-around g-brd-top-none g-brd-gray-light-v3 g-bg-white">
+                            <ul class="d-flex list-inline g-brd-y g-brd-gray-light-v3 mb-0">
+                                <li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-10 mr-0">
+                                    <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-022 u-line-icon-pro"></i><?= $asset['bedroom'] ?> ห้องนอน
+                                </li>
+                                <li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-brd-x g-brd-gray-light-v3 g-py-10 mr-0">
+                                    <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-008 u-line-icon-pro"></i><?= $asset['bathroom'] ?> ห้องน้ำ
+                                </li>
+                                <li class="list-inline-item col-4 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-10 mr-0">
+                                    <i class="align-middle g-color-text mr-1 icon-real-estate-047 u-line-icon-pro"></i>
+                                    963 sqft
+                                </li>
+                            </ul>
+                            <div class="g-pa-10">
+                                <strong class="g-color-primary--hover"><?= $this->Html->link($asset['name'], ['controller' => 'property', 'action' => 'view', 'id' => $asset['id']], []) ?></strong>
+                                <p class="g-font-size-13 mb-0"><i> <?= h($asset['address']) ?></i></p>
+                                <p class="g-color-text g-font-weight-500 g-font-size-13 mb-1">Agency: <a class="g-color-text g-color-primary--hover g-font-weight-400 g-text-underline--none--hover" href="#">Real Estate State</a></p>
+                                <p class="g-color-text g-font-weight-500 g-font-size-13 mb-0">Posted: <span class="g-color-text g-font-weight-400">2 days ago</span></p>
+                            </div>
+                            <ul class="d-flex list-inline align-items-center g-brd-top g-brd-gray-light-v3 mb-0">
+                                <li class="list-inline-item col-10 g-font-weight-600 g-font-size-17 text-center g-color-red g-px-0 g-py-7 mr-0"><?= number_format($asset['price']) ?> บาท</li>
+                                <li class="list-inline-item col-2 g-px-0 mr-0">
+                                    <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-7" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="เก็บไว้" data-id="bt-add-history" data-value="<?=$asset['id']?>">
+                                        <i class="fa fa-star-o"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <a class="btn btn-block g-brd-gray-light-v3 g-color-main g-bg-secondary rounded-0 g-px-10 g-py-10" href="<?= SITE_URL ?>property/view?id=<?= $asset['id'] ?>">
+                            ดูรายละเอียด
+                            <i class="align-middle ml-2 fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="col-md-5 col-lg-3 order-lg-1 g-mb-70">
+            <div class="g-bg-secondary g-pa-5 g-mb-30">
+                <div class="g-bg-white g-pa-15">
+                    <h2 class="h6 g-font-weight-600 mb-4">ประเภทอสังหาริมทรัพย์</h2>
+
+                    <ul class="list-unstyled g-font-weight-500 mb-0" id="ul_asset_type">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="g-bg-secondary g-pa-5 g-mb-30">
+                <div class="g-bg-white g-pa-15">
+                    <h2 class="h6 g-font-weight-600 mb-4">รายการแนะนำ</h2>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <h3 class="h3 mb-0 prompt-600 g-color-primary">รีวิวโครงการ</h3>
+        </div>
+    </div>
+</div>
+
+-->
 
 
 <style>
@@ -226,9 +333,6 @@
     .hr-margin-0-10 {
         margin-top: 0;
         margin-bottom: 10px;
-    }
-    .on-cursor-pointer {
-        cursor: pointer;
     }
 </style>
 

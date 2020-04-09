@@ -110,6 +110,7 @@
                     search_url += '&type=' + param_value;
                     param_value = '';
                 }
+                // console.log(param_value);
 
                 return search_url;
             },
@@ -131,8 +132,6 @@
                 var datas = this.readUrlParam();
                 console.log(datas);
                 return apiUrl + 'api-assets/avaliable-asset?'+datas[1];
-
-
             }
         },
 
