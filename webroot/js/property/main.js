@@ -220,6 +220,7 @@ new Vue ({
             price_end: '',
             imageAssets: null,
             backgroundImages: [],
+            favorites: []
         }
     },
     mounted () {
@@ -236,6 +237,7 @@ new Vue ({
         this.price_end = this.urlParams.get('price_end')
 
         this.loadAssetsAvaliable()
+        this.loadAssetFavorite()
     },
     methods: {
         loadAssetsAvaliable () {
@@ -277,10 +279,26 @@ new Vue ({
 
             return fgg.toFixed(0)
         },
-        addToFavolite (fav_id) {
+        addToFavorite (fav_id) {
             axios.get(siteurl + 'services/property?action=favorite&id='+fav_id)
             .then((response) => {
-                console.log(response)
+                // console.log(response)
+                if(response.data.code == 200){
+                    this.loadAssetFavorite()
+                }else{
+                    window.location.href = siteurl+'login';
+                    console.log('failed...')
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            })
+        },
+        loadAssetFavorite () {
+            axios.get(apiurl + 'api-assets/asset-favorite?id=' + localStorage.getItem('MAPCII_USER'))
+            .then((response) => {
+                // console.log(response)
+                this.favorites = response.data.assetfavorite
             })
             .catch(e => {
                 console.log(e)

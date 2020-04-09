@@ -104,7 +104,7 @@
                 <div class="col-lg-12 g-mb-70" id="div_assetlist_">
                     <h3>ประกาศล่าสุด</h3>
                     <hr class="hr-margin-0-10">
-                    <div id="avaliable-assets">
+                    <div id="avaliable-assets" class="asset-style">
                         <div v-for="(asset, index) in assets">
                             <article class="row no-gutters g-mb-15">
                                 <div class="col-lg-5 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
@@ -123,8 +123,9 @@
                                             </li>
                                             <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0">{{formatNumber(asset.price)}} ฿</li>
                                             <li class="list-inline-item col-2 g-px-0 mr-0">
-                                                <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5 on-cursor-pointer" data-toggle="tooltip" data-placement="top" title="เก็บไว้" @click="addToFavolite(asset.id)">
-                                                    <i class="fa fa-star-o"></i>
+                                                <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5">
+                                                    <i v-if="favorites.includes(asset.id) == true" class="fa fa-star"></i>
+                                                    <i v-else class="fa fa-star-o on-cursor-pointer" data-toggle="tooltip" data-placement="top" title="เก็บไว้" @click="addToFavorite(asset.id)"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -146,7 +147,9 @@
         max-width: 80%;
     }
     #map {
-        height: 1200px;
+        min-height: 870px;
+        height: auto;
+        max-height: 1200px;
         background: #ddd;
     }
     .asset-content-marker {
@@ -229,6 +232,23 @@
     }
     .on-cursor-pointer {
         cursor: pointer;
+    }
+    .asset-style {
+        height: 500px;
+        overflow-y: auto;
+    }
+    .asset-style::-webkit-scrollbar {
+        width: 7px;
+    }
+    .asset-style::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .asset-style::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+    .asset-style::-webkit-scrollbar-thumb:hover {
+        background: #555;
     }
 </style>
 

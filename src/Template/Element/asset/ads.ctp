@@ -17,8 +17,9 @@
                         </li>
                         <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0">{{formatNumber(ads.asset.price)}} ฿</li>
                         <li class="list-inline-item col-2 g-px-0 mr-0">
-                            <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5" href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="เก็บไว้" data-id="bt-add-history" data-value="">
-                                <i class="fa fa-star-o"></i>
+                            <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5">
+                                <i v-if="favorites.includes(ads.asset.id) == true" class="fa fa-star"></i>
+                                <i v-else class="fa fa-star-o on-cursor-pointer" data-toggle="tooltip" data-placement="top" title="เก็บไว้" @click="addToFavorite(ads.asset.id)"></i>
                             </a>
                         </li>
                     </ul>
@@ -78,7 +79,8 @@ button.asset-content-name:hover {
                 search_district_id: '',
                 search_sub_district_id: '',
                 price_start: '',
-                price_end: ''
+                price_end: '',
+                favorites: []
             }
         },
         mounted () {
@@ -95,6 +97,7 @@ button.asset-content-name:hover {
             this.price_end = this.urlParams.get('price_end')
 
             this.loadAssetsAdsList()
+            this.loadAssetFavorite()
             // console.log(this.province)
             // console.log(this.search_district_id)
             // console.log(this.type)
@@ -197,6 +200,31 @@ button.asset-content-name:hover {
                 let fgg = (Date.now() - aday.getTime()) / (1000 * 3600 * 24)
 
                 return fgg.toFixed(0)
+            },
+            addToFavorite (fav_id) {
+                axios.get(siteurl + 'services/property?action=favorite&id='+fav_id)
+                .then((response) => {
+                    // console.log(response)
+                    if(response.data.code == 200){
+                        this.loadAssetFavorite()
+                    }else{
+                        window.location.href = siteurl+'login';
+                        console.log('failed...')
+                    }
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+            },
+            loadAssetFavorite () {
+                axios.get(apiurl + 'api-assets/asset-favorite?id=' + localStorage.getItem('MAPCII_USER'))
+                .then((response) => {
+                    // console.log(response)
+                    this.favorites = response.data.assetfavorite
+                })
+                .catch(e => {
+                    console.log(e)
+                })
             }
         }
     })
