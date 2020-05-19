@@ -66,6 +66,7 @@ new Vue ({
             urlParams: null,
             issales: '',
             isrent: '',
+            isnewproject: '',
             type: [],
             search_text: '',
             province: '',
@@ -87,6 +88,8 @@ new Vue ({
         this.urlParams = new URLSearchParams(this.queryString)
         this.issales = this.urlParams.get('issales')
         this.isrent = this.urlParams.get('isrent')
+        this.isnewproject = this.urlParams.get('isnewproject')
+        // console.log(this.isnewproject)
         this.type = this.urlParams.getAll('search_asset_type_id')
         this.search_text = this.urlParams.get('search_text')
         this.province = this.urlParams.get('province')
@@ -117,8 +120,7 @@ new Vue ({
             checkForMap()
         },
         getPositionAsset () {
-            axios.get(apiurl + 'api-assets/listassetaddress?issales=' + this.issales +
-                                '&isrent=' + this.isrent +
+            axios.get(apiurl + 'api-assets/listassetaddress?isnewproject=' + this.isnewproject +
                                 '&type=' + this.type +
                                 '&search_text=' + this.search_text +
                                 '&province=' + this.province +
@@ -135,7 +137,7 @@ new Vue ({
                         }
                     })
                     this.assetAds = response.data.ads
-
+                
                     this.assetAds.forEach((adsPosition) => {
                         if (adsPosition.position.position == 'province') {
                             this.assetAdsProvince.push(adsPosition)
@@ -146,7 +148,8 @@ new Vue ({
                 }
                 // console.log(this.assetAdsProvince)
                 // console.log(this.assetAdsDistrict)
-                if(this.province != null && this.search_district_id != null && response.data.status == 200){
+                if(this.province != null && this.search_district_id != '' && response.data.status == 200){
+                    console.log(this.province)
                     if(this.assets.length > 0){
                         this.lat = response.data.list[0].address.province.lat
                         this.lng = response.data.list[0].address.province.lng
@@ -161,7 +164,7 @@ new Vue ({
                     this.lng = response.data.list[0].address.province.lng
                     this.zoom = response.data.list[0].address.province.zoom
                 }else if(this.province == null || response.data.status == 400){
-                    if(this.province == '' || this.province == null){
+                    if(this.province === null){
                         this.lat = 13.7645601
                         this.lng = 100.6930241
                         this.zoom = 7
@@ -216,6 +219,7 @@ new Vue ({
             urlParams: null,
             issales: '',
             isrent: '',
+            isnewproject: '',
             type: [],
             search_text: '',
             province: '',
@@ -233,6 +237,7 @@ new Vue ({
         this.urlParams = new URLSearchParams(this.queryString)
         this.issales = this.urlParams.get('issales')
         this.isrent = this.urlParams.get('isrent')
+        this.isnewproject = this.urlParams.get('isnewproject')
         this.type = this.urlParams.getAll('search_asset_type_id')
         this.search_text = this.urlParams.get('search_text')
         this.province = this.urlParams.get('province')
@@ -247,8 +252,7 @@ new Vue ({
     },
     methods: {
         loadAssetsAvaliable () {
-            axios.get(apiurl + 'api-assets/loadassets?issales=' + this.issales +
-                                '&isrent=' + this.isrent +
+            axios.get(apiurl + 'api-assets/loadassets?isnewproject=' + this.isnewproject +
                                 '&type=' + this.type +
                                 '&search_text=' + this.search_text +
                                 '&province=' + this.province +

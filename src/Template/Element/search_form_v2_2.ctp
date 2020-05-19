@@ -45,7 +45,7 @@
         </div>
         <div class="col-12 col-md-8 g-mb-10">
             <div class="input-group-btn">
-                <select name="search_asset_type_id" multiple id="search_asset_type_id" class="form-control rounded-0">
+                <select name="search_asset_type_id" multiple id="search_asset_type_id" class="form-control rounded-0 g-color-black">
 
                 </select>
                 <input type="hidden" name="asset_type" value="" id="asset_type"/>
@@ -151,6 +151,7 @@
         </div>
     </div>
 
+    <input type="hidden" name="isnewproject" value="Y">
 
     <div class="row">
         <div class="col-md-4 offset-md-4">
@@ -164,8 +165,9 @@
 <?= $this->Form->end() ?>
 
 <?= $this->Html->script('jquery.multiselect.js') ?>
-<?= $this->Html->script('address-option-search.js') ?>
+<!-- <?= $this->Html->script('address-option-search.js') ?> -->
 <script>
+    let type_id = [];
     function setDefaultFields(){
         //set default from url
         var urlParams = new URLSearchParams(window.location.search);
@@ -189,6 +191,7 @@
         if (urlParams.has('price_end')) {
             $('#price_end').val(urlParams.get('price_end')).trigger('change');
         }
+
     }
     
     $(document).ready(function () {
@@ -242,11 +245,18 @@
 
         var asset_type_url = apiurl + 'api-assets/type';
         $.get(asset_type_url).done(function (res) {
+            var urlParams = new URLSearchParams(window.location.search);
             var asset_types = JSON.parse(res);
-            //console.log(asset_types.types);
+            // console.log(asset_types.types);
+            // let search_asset = urlParams.getAll('search_asset_type_id');
+            // console.log(search_asset);
             $.each(asset_types.types, function (key, item) {
-                //console.log(item);
-                $('#search_asset_type_id').append('<option value="' + item.id + '">' + item.name + '</option>');
+                // console.log(item);
+                if (urlParams.getAll('search_asset_type_id').includes(item.id) == true) {
+                    $('#search_asset_type_id').append('<option value="' + item.id + '" selected>' + item.name + '</option>');
+                }else{
+                    $('#search_asset_type_id').append('<option value="' + item.id + '">' + item.name + '</option>');
+                }
             });
 
             $('#search_asset_type_id').multiselect({
@@ -254,6 +264,7 @@
                 placeholder: 'ทุกประเภท',
                 search: false
             });
+            
         });
 
 
@@ -267,17 +278,27 @@
         function resetDistrict() {
             //console.log('reset district');
             $('#search_district_id').empty();
+            var urlParams = new URLSearchParams(window.location.search);
             $('#search_district_id').append('<option value="" selected="">ทุกอำเภอ</option>');
             $.each(districtJson, function (key, value) {
-                $('#search_district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                if (value.id == urlParams.get('search_district_id')) {
+                    $('#search_district_id').append('<option value="' + value.id + '" selected>' + value.name + '</option>');
+                } else {
+                    $('#search_district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                }
             });
         }
 
         function resetSubdistrict() {
             $('#search_sub_district_id').empty();
+            var urlParams = new URLSearchParams(window.location.search);
             $('#search_sub_district_id').append('<option value="" selected="">ทุกตำบล</option>');
             $.each(subDistrictJson, function (key, value) {
-                $('#search_sub_district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                if (value.id == urlParams.get('search_sub_district_id')) {
+                    $('#search_sub_district_id').append('<option value="' + value.id + '" selected>' + value.name + '</option>');
+                } else {
+                    $('#search_sub_district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                }
             });
         }
 
@@ -288,6 +309,7 @@
             $.each(provinceJson, function (key, value) {
                 $('#province').append('<option value="' + value.id + '">' + value.name + '</option>');
             });
+
             
             /*
              $('#province').multiselect({
@@ -315,7 +337,6 @@
                     resetDistrict();
                     resetSubdistrict();
                 }
-
             });
         });
 
@@ -385,8 +406,10 @@
         });
         
         $('#search_asset_type_id').on('change',function(){
-            //console.log($(this).val());
-            $('#asset_type').val($(this).val());
+            // console.log($(this).val());
+            $('#search_asset_type_id').val($(this).val());
+            type_id = $(this).val();
+            // console.log(type_id)
         });
 
         $('#bt_more_search').on('click', function () {

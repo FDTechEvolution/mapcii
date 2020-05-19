@@ -2,7 +2,33 @@
 <?= $this->Html->script('/assets/bootstrap-datepicker-thai-thai/js/bootstrap-datepicker.js'); ?>
 <?= $this->Html->script('/assets/bootstrap-datepicker-thai-thai/js/bootstrap-datepicker-thai.js'); ?>
 <?= $this->Html->script('/assets/bootstrap-datepicker-thai-thai/js/locales/bootstrap-datepicker.th.js'); ?>
-
+<?php
+    if($this->request->getSession()->read('Authen.User.islocked') == 'Y') {
+        echo "<script>
+        $(window).on('load',function(){
+            $('#blockModal').modal({show: true, backdrop: 'static', keyboard: false})
+        })
+        </script>";
+    }
+?>
+<div class="modal fade" id="blockModal" role="dialog">
+    <div class="modal-dialog modal-banner">
+    
+        <div class="modal-content">
+            <div class="modal-header">
+                lock
+            </div>
+            
+            <div class="modal-body">
+                คุณถูกบล๊อค
+            </div>
+            <div class="modal-footer">
+                <?= $this->Html->link('<i class="fa fa-home"></i> กลับหน้าหลัก', ['controller' => 'home'], ['class' => 'btn btn-primary', 'escape' => false]) ?>
+            </div>
+        </div>
+    
+    </div>
+</div>
 <script>
     var asset_id = '<?= $asset_id ?>';
     var user_id = '<?= $user_id ?>';

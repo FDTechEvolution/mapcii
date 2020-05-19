@@ -37,7 +37,7 @@
                             <?= $this->Html->link('อสังหามือสอง', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => ($controllerName=='property' && $isrent=='y')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'new-project'], ['class' => ($controllerName=='property' && $actionName=='newproject')?$linkClassActive:$linkClass]) ?>
+                            <?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'new-project', 'isnewproject'=>'Y'], ['class' => ($controllerName=='property' && $actionName=='newproject')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('บทความ/ข่าว', ['controller'=>'article'], ['class' => ($controllerName=='article')?$linkClassActive:$linkClass]) ?>

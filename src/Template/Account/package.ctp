@@ -26,7 +26,7 @@
                         <td class="text-center">{{index + 1}}.</td>
                         <td>
                             {{payment.package.name}} - {{payment.package_duration}} : {{payment.package_amount}} บาท<br>
-                            <span class="g-font-size-11">ขนาด : {{payment.package.size.width}} x {{payment.package.size.height}} px</span>
+                            <span v-if="payment.package.package_type.name === 'Banner'" class="g-font-size-11">ขนาด : {{payment.package.size.width}} x {{payment.package.size.height}} px</span>
                         </td>
                         <td class="text-center">{{payment.package.position.position}}</td>
                         <td class="text-center"><button class="g-px-10 round-3 g-py-0" type="button" data-toggle="modal" data-target="#modalPaymentlines" @click="loadpaymentline(payment.id)"><i class="fa fa-ellipsis-h g-font-size-20"></i></button></td>
@@ -37,8 +37,8 @@
                         </td>
                         <td class="text-center">
                             <div v-if="payment.status == 'CO'">
-                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id,payment.package.size.width,payment.package.size.height,payment.package.position.id)"><i class="fa fa-pencil"></i></a><span class="g-px-5">|</span>
-                                <a href="#" class="on-default edit-row g-font-size-16 g-color-black" data-toggle="modal" data-target="#modalBanner" title="กำลังเปิดแสดง" @click="disblebanner(payment.id)"><i class="fa fa-eye"></i></a>
+                                <span v-if="payment.package.package_type.name === 'Banner'" href="#" class="on-default edit-row g-font-size-16 g-color-black"><button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modalBanner" title="จัดการแบนเนอร์" @click="loadbanner(payment.id,payment.package.size.width,payment.package.size.height,payment.package.position.id)"><i class="fa fa-pencil"></i></button></span>
+                                <span v-if="payment.package.package_type.name === 'Ads'" href="#" class="on-default edit-row g-font-size-16 g-color-black"><button v-if="payment.ads.status === 'DW'"  class="btn btn-success btn-sm" type="button" @click="upAds(payment.id)">เลื่อนอันดับ <i class="fa fa-level-up" title="เลื่อนอันดับการแสดงผลรายวัน"></i></button><span v-if="payment.ads.status === 'UP'" class="g-font-size-12">อันดับถูกเลื่อนแล้วในวันนี้</i></span>
                             </div>
                             <div v-if="payment.status == 'EX'">
                                 <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#modalRenew" @click="renewmodal(payment.id, payment.package.name)"><i class="fa fa-plus"></i> ต่ออายุ</button>
@@ -334,6 +334,7 @@ let packagepaymentlist = new Vue ({
         loadpayment: function () {
             axios.get(apiurl + 'api-payments/listpayment?id=' + localStorage.getItem('MAPCII_USER'))
             .then((response) => {
+                console.log(response)
                 this.payments = response.data.paymentlist
             })
             .catch(e => {
@@ -409,7 +410,18 @@ let packagepaymentlist = new Vue ({
         paymentexp: function (id) {
             axios.post(apiurl + 'api-payments/exp?id=' + id)
             .then((response) => {
-                console.log(response)
+                alert(response.data.message)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+        },
+        upAds: function (id) {
+            axios.post(apiurl + 'api-assets/up-asset-to-first', {
+                'id': id
+            })
+            .then((response) => {
+                this.loadpayment()
             })
             .catch(e => {
                 console.log(e)

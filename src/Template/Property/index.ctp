@@ -99,7 +99,7 @@
                     <?= $this->element('asset/ads') ?>
                 </div>
                 <div class="col-lg-12 g-mb-10">
-                    <?= $this->element('banner/side_l') ?>
+                    <?= $this->element('banner/side_b') ?>
                 </div>
                 <div class="col-lg-12 g-mb-70" id="div_assetlist_">
                     <h3>ประกาศล่าสุด</h3>
