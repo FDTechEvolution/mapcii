@@ -1,0 +1,268 @@
+.modal-active {
+  display: contents;
+}
+.modal-content {
+  box-shadow: 0px 0px 35px 5px #aaa;
+}
+.modal-dialog {
+  max-width: 900px;
+}
+
+.content{
+  width: 100%;
+  height: auto;
+  /* margin: 0 auto; */
+  padding: 20px 0;
+}
+.nav-pills{
+  width: 100%;
+}
+.nav-item-tabs{
+  width: 50%;
+}
+ul.nav.nav-pills{
+  display: -webkit-inline-box !important;
+}
+.nav-pills .nav-link{
+  font-weight: bold;
+  padding-top: 13px;
+  text-align: center;
+  background: #343436;
+  color: #fff;
+  border-radius: 30px;
+  height: 100px;
+}
+.nav-pills .nav-link.active{
+  background: #fff;
+  color: #000;
+  box-shadow: 0px 0px 7px rgb(0,0,0,0.4);
+}
+.tab-content{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: -50px;
+  background: #fff;
+  color: #000;
+  border-radius: 30px;
+  z-index: 1000;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+  padding: 30px 15px;
+  margin-bottom: 50px;
+}
+.tab-content button{
+  border-radius: 15px;
+  width: 100px;
+  margin: 0 auto;
+  float: right;
+}
+.show-on-responsive { display: none; }
+
+@media only screen and (max-width: 430px) {
+      
+  .tableresponsive table,
+  .tableresponsive thead, 
+  .tableresponsive tbody, 
+  .tableresponsive th, 
+  .tableresponsive td, 
+  .tableresponsive tr
+  { 
+     display:block ;  /* เปลี่ยน display ของ table ทั้งหมดไม่ว่าเป็น th tr td thead tbody */
+  }  
+  
+  .tableresponsive thead tr {   
+   position: absolute ;
+   top: -9999px;
+   left: -9999px;
+  }   
+  .tableresponsive tr { border: 1px solid #ccc; margin-bottom: 5px; }
+
+  .tableresponsive td {  /*  ในส่วนี้ปรับขนาด td  */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 45% !important; 
+    white-space: normal;
+    text-align:left;
+  }
+
+  .tableresponsive td:before {  /*  สร้าง  td  ขึ้นมาใหม่ข้างหน้าเพื่อแทนคอลั่มน์ด้านบนของ thead */
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 50%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+  }
+
+  .tableresponsive td:before { content: attr(data-title); padding-top: 6px; } /*  เพิ่ม text เข้าไปใน td:befor จาก attribute data-title ของ td นั้นๆ  */
+
+  .hide-on-responsive { display: none;}
+
+  .show-on-responsive { display: initial; }
+
+  .modal-dialog { margin-top: -130%; }
+
+  .tab-content>.active { padding: 0; }
+}
+
+
+/* PAYMENT LOADING STYLE */
+@keyframes ldio-8gc4kjnx9fm {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+}
+.ldio-8gc4kjnx9fm div {
+  left: 150.35px;
+  top: 66.65px;
+  position: absolute;
+  animation: ldio-8gc4kjnx9fm linear 1s infinite;
+  background: #292664;
+  width: 9.3px;
+  height: 40.300000000000004px;
+  border-radius: 3.627px / 3.627px;
+  transform-origin: 4.65px 88.35000000000001px;
+}.ldio-8gc4kjnx9fm div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -0.9444444444444444s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(2) {
+  transform: rotate(20deg);
+  animation-delay: -0.8888888888888888s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(3) {
+  transform: rotate(40deg);
+  animation-delay: -0.8333333333333334s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(4) {
+  transform: rotate(60deg);
+  animation-delay: -0.7777777777777778s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(5) {
+  transform: rotate(80deg);
+  animation-delay: -0.7222222222222222s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(6) {
+  transform: rotate(100deg);
+  animation-delay: -0.6666666666666666s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(7) {
+  transform: rotate(120deg);
+  animation-delay: -0.6111111111111112s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(8) {
+  transform: rotate(140deg);
+  animation-delay: -0.5555555555555556s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(9) {
+  transform: rotate(160deg);
+  animation-delay: -0.5s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(10) {
+  transform: rotate(180deg);
+  animation-delay: -0.4444444444444444s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(11) {
+  transform: rotate(200deg);
+  animation-delay: -0.3888888888888889s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(12) {
+  transform: rotate(220deg);
+  animation-delay: -0.3333333333333333s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(13) {
+  transform: rotate(240deg);
+  animation-delay: -0.2777777777777778s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(14) {
+  transform: rotate(260deg);
+  animation-delay: -0.2222222222222222s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(15) {
+  transform: rotate(280deg);
+  animation-delay: -0.16666666666666666s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(16) {
+  transform: rotate(300deg);
+  animation-delay: -0.1111111111111111s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(17) {
+  transform: rotate(320deg);
+  animation-delay: -0.05555555555555555s;
+  background: #292664;
+}.ldio-8gc4kjnx9fm div:nth-child(18) {
+  transform: rotate(340deg);
+  animation-delay: 0s;
+  background: #292664;
+}
+.loadingio-spinner-spinner-pc6b8g2r9j {
+  width: 310px;
+  height: 310px;
+  display: inline-block;
+  overflow: hidden;
+  background: transparent;
+}
+.ldio-8gc4kjnx9fm {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-8gc4kjnx9fm div { box-sizing: content-box; }
+
+
+/* BALANCE LOADING STYLE */
+@keyframes ldio-ukcojlsaueg-1 {
+  0% { top: 20px; height: 60px }
+  50% { top: 30px; height: 40px }
+  100% { top: 30px; height: 40px }
+}
+@keyframes ldio-ukcojlsaueg-2 {
+  0% { top: 22.5px; height: 55px }
+  50% { top: 30px; height: 40px }
+  100% { top: 30px; height: 40px }
+}
+@keyframes ldio-ukcojlsaueg-3 {
+  0% { top: 25px; height: 50px }
+  50% { top: 30px; height: 40px }
+  100% { top: 30px; height: 40px }
+}
+.ldio-ukcojlsaueg div { position: absolute; width: 15px }.ldio-ukcojlsaueg div:nth-child(1) {
+  left: 17.5px;
+  background: #292664;
+  animation: ldio-ukcojlsaueg-1 1s cubic-bezier(0,0.5,0.5,1) infinite;
+  animation-delay: -0.2s
+}
+.ldio-ukcojlsaueg div:nth-child(2) {
+  left: 42.5px;
+  background: #667395;
+  animation: ldio-ukcojlsaueg-2 1s cubic-bezier(0,0.5,0.5,1) infinite;
+  animation-delay: -0.1s
+}
+.ldio-ukcojlsaueg div:nth-child(3) {
+  left: 67.5px;
+  background: #94a9ce;
+  animation: ldio-ukcojlsaueg-3 1s cubic-bezier(0,0.5,0.5,1) infinite;
+  animation-delay: undefineds
+}
+
+.loadingio-spinner-pulse-s0fdf1v0u4 {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  overflow: hidden;
+  background: rgba(NaN, NaN, NaN, 0);
+}
+.ldio-ukcojlsaueg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(0.9);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-ukcojlsaueg div { box-sizing: content-box; }

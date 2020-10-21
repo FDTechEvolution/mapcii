@@ -44,7 +44,7 @@
                         </li>
                         <!--
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'package'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
+                            <?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'balance'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
                         </li>
                         -->
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
@@ -56,14 +56,17 @@
                             </li>
                         <?php } else { ?>
                             <li class="nav-item g-ml-10--lg g-mb-5 g-mb-0--lg" style="display: -webkit-inline-box;">
-                                <i class="fa fa-star" style="margin-top: 14px; margin-right: -5px; color: #c3c300;"></i><?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'package'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
+                                <i class="fa fa-star" style="margin-top: 14px; margin-right: -5px; color: #c3c300;"></i><?= $this->Html->link('ลงโฆษณา', ['controller'=>'advertisements','action'=>'balance'], ['class' => ($controllerName=='advertisements')?$linkClassActive:$linkClass]) ?>
                             </li>
                             <li class="nav-item hs-has-sub-menu  g-mr-10--lg g-mx-15--xl" data-animation-in="fadeIn" data-animation-out="fadeOut">
-                                <a id="nav-link--features" class="nav-link g-pl-0 g-py-10 g-px-14 g-font-weight-600 g-font-size-15" href="#!" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--features">ข้อมูลส่วนตัว</a>
+                                <a id="nav-link--features" class="nav-link g-pl-0 g-py-10 g-px-14 g-font-weight-600 g-font-size-15" href="#!" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--features"><?= $this->Html->image('mapcii_avatar.png', ['class' => 'g-width-25 bg-white rounded-circle border border-info mr-1']) ?> <?= $this->request->getSession()->read('Authen.User.firstname') ?></a>
                                 <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu--features" aria-labelledby="nav-link--features">
                                     <!-- Features - Headers -->
                                     <li class="dropdown-item ">
-                                        <?= $this->Html->link('บัญชีผู้ใช้', ['controller' => 'account'], ['class' => 'nav-link']) ?>
+                                        <?= $this->Html->link('ข้อมูลส่วนตัวของฉัน', ['controller' => 'account'], ['class' => 'nav-link']) ?>
+                                    </li>
+                                    <li class="dropdown-item ">
+                                         <?= $this->Html->link('ประกาศฟรีของฉัน', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
                                     </li>
                                     <li class="dropdown-item ">
                                         <?= $this->Html->link('รายการสินทรัพย์ที่ชอบ', ['controller' => 'account','action'=>'asset-fav'], ['class' => 'nav-link']) ?>
@@ -71,10 +74,6 @@
                                     <li class="dropdown-item ">
                                          <?= $this->Html->link('รายการลงโฆษณา', ['controller' => 'account', 'action' => 'package'], ['class' => 'nav-link']) ?>
                                     </li>
-                                    <li class="dropdown-item ">
-                                         <?= $this->Html->link('รายการประกาศฟรี', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
-                                    </li>
-                                   
                                     <li class="dropdown-item ">
                                          <?= $this->Html->link('ออกจากระบบ', ['controller' => 'logout'], ['class' => 'nav-link']) ?>
                                     </li>

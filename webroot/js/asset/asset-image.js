@@ -33,7 +33,7 @@ function getListImage() {
     $('#div_list_asset_image').empty();
     $.get(apiurl + 'api-assets/asset-image?id=' + asset_id).done(function (res) {
         json = JSON.parse(res);
-        console.log(json);
+        // console.log(json);
         $.each(json.data, function (key, value) {
             makeShowImage(value.image.url, value.id);
         });
@@ -62,7 +62,7 @@ $(document).ready(function () {
             processData: false,
             type: 'POST',
             success: function (data, textStatus, jqXHR) {
-                data = JSON.parse(data);
+                // data = JSON.parse(data);
                 console.log(data);
                 if (data.status === 200) {
 

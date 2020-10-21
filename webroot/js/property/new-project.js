@@ -108,7 +108,10 @@ new Vue ({
         loadMap () {
             this.map = new window.google.maps.Map(this.$refs['map'], {
                 center: { lat: this.lat, lng: this.lng },
-                zoom: this.zoom
+                zoom: this.zoom,
+                options: {
+                    gestureHandling: 'greedy'
+                }
             })
         },
         getMap(callback) {

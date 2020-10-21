@@ -55,13 +55,18 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
 
         <!-- Vue.js & Axios -->
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vuex@2.0.0"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
         <!-------------------->
+
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/b20a8414fc.js" crossorigin="anonymous"></script>
 
         <script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAP_API_KEY ?>" async defer></script>
         <?= $this->Html->script('alert.js') ?>
-        <script>var siteurl = '<?= SITE_URL ?>'; var apiurl = '<?= SITE_API ?>'; var user_id = '<?= $USERID ?>';</script>
+        <script>var siteurl = '<?= SITE_URL ?>'; var apiurl = '<?= SITE_API ?>'; var user_id = '<?= $USERID ?>'; var user_active = '<?= $this->request->getSession()->read('Authen.isactive') ?>';</script>
 
     </head>
 

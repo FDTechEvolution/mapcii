@@ -1,4 +1,4 @@
-<div class="col-lg-12 g-mb-0 g-px-0" id="asset-ads">
+<div class="col-lg-12 g-mb-0 g-px-0" id="asset-ads" class="asset-ads-style">
     <div v-for="(ads, index) in assetAds">
         <article class="row no-gutters g-mb-15 ads-asset-banner">
             <div class="col-lg-5 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
@@ -57,6 +57,23 @@ button.asset-content-name:hover {
     border: 1.3px solid #dd0000;
     color: #dd0000;
     background-color: rgba(255,255,255,0.7);
+}
+.asset-ads-style {
+    height: 500px;
+    overflow-y: auto;
+}
+.asset-ads-style::-webkit-scrollbar {
+    width: 7px;
+}
+.asset-ads-style::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.asset-ads-style::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+.asset-ads-style::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 </style>

@@ -12,80 +12,63 @@
     </div>
 </section>
 
-<section class="g-py-10 g-mb-40">
+<section id="selectpackage" class="g-py-10 g-mb-40">
     <div class="container">
         <div class="row">
             <div class="col-md-4 g-mt-20">
                 <h4>แมพซี่ดอทคอม (mapcii.com)</h4>
-                <p class="g-font-size-16" style="text-indent: 30px;">ช่วยเพิ่มยอดขายให้กับธุรกิจของคุณ ด้วยการโฆษณาผ่าน Banner ทำให้โฆษณาของคุณโดดเด่นและเป็นที่จดจำของลูกค้าได้โดยง่าย แค่ปลายนิ้ว</p>
+                <p class="g-font-size-16" style="text-indent: 30px;" v-html="package_description"></p>
             </div>
-            <div class="col-md-8 g-mt-20" id="selectpackage">
-                <div v-if="selected == false">
-                    <table class="table g-mb-20" style="border-bottom: 1px solid #ddd;">
-                        <thead>
-                            <tr class="g-bg-primary g-color-white">
-                                <th style="width: 17%;">Package</th>
-                                <th style="width: 18%;">หน้าที่แสดง</th>
-                                <th class="text-center" style="width: 24%;">ราคา 1 เดือน (30 วัน)</th>
-                                <th class="text-center" style="width: 15%;">ราคา 1 ปี</th>
-                                <th style="width: 30%;">การแสดงผล</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="g-font-size-14">
-                            <tr v-for="(package, index) in packages">
-                                <td>{{package.name}}</td>
-                                <td>{{package.showpage}}</td>
-                                <td class="text-center">{{package.monthly_price}} บาท</td>
-                                <td class="text-center">{{package.annual_price}} บาท<br/><span class="g-font-size-12">(ประหยัด ... บาท)</span></td>
-                                <td class="g-color-red g-font-size-12">{{package.showcase}}</td>
-                                <td class="text-center"><button type="button" class="btn u-btn-primary u-btn-hover-v1-1 g-mb-20" @click="selectedpackage(package.name,package.showpage,package.monthly_price,package.annual_price,package.showcase,package.size)">เลือก</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="col-md-8 g-mt-20">
+                <div v-if="package_name === 'Banner A'" class="mb-3 text-center">
+                    <h2>{{package_name}}</h2>
+                    <?= $this->Html->image('banner-top-on-null.jpg', ['class' => 'w-100', 'alt' => '']); ?>
+                </div>
+                <div v-if="package_name === 'Banner B'" class="mb-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $this->Html->image('banner-side-on-null.jpg', ['class' => 'w-100', 'alt' => '']); ?>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <h2 style="margin-top: 20%;">{{package_name}}</h2>
+                        </div>
+                    </div>
                 </div>
 
-                <div v-if="selected">
-                    <button type="button" class="btn btn-secondary waves-effect g-mb-20" @click="unSelectedPackage()"><i class="fa fa-arrow-left"></i> ย้อนกลับ</button>
+                <table class="table g-mb-20 w-100" style="border-bottom: 1px solid #ddd;">
+                    <thead>
+                        <tr class="g-bg-primary g-color-white">
+                            <th style="width: 17%;">Package</th>
+                            <th style="width: 18%;">หน้าที่แสดง</th>
+                            <th class="text-center" style="width: 24%;">ราคา 1 เดือน (30 วัน)</th>
+                            <th class="text-center" style="width: 15%;">ราคา 1 ปี</th>
+                            <th style="width: 30%;">การแสดงผล</th>
+                        </tr>
+                    </thead>
+                    <tbody class="g-font-size-14">
+                        <tr v-for="(package, index) in packages">
+                            <!-- <slot v-if="package.package_type.name === 'Banner'"> -->
+                                <td>{{package.name}}</td>
+                                <td><span v-html="package.showpage"></span></td>
+                                <td class="text-center">{{formatNumber(package.monthly_price)}} บาท</td>
+                                <td class="text-center">{{formatNumber(package.annual_price)}} บาท<br/><span class="g-font-size-12">(ประหยัด {{formatNumber(priceDiscount(package.monthly_price,package.annual_price))}} บาท)</span></td>
+                                <td class="g-color-red g-font-size-12"><span v-html="package.showcase"></span></td>
+                            <!-- </slot> -->
+                        </tr>
+                    </tbody>
+                </table>
 
-                    <div v-if="getPackage.size == 0" class="row">
-                        <div class="col-md-12">
-                            <h3 class="text-center g-mb-0">{{getPackage.name}}</h3>
-                            <p class="text-center g-font-size-12">(ตัวอย่างขนาดและการแสดงผล)</p>
-                            <?= $this->Html->image('simple_banner_A.jpg', ['class' => 'img-fluid g-mb-20']) ?>
-                        </div>
-                    </div>
-                    <div v-if="getPackage.size == 1" class="row">
-                        <div class="col-md-6">
-                            <?= $this->Html->image('simple_banner_B.jpg', ['class' => 'img-fluid g-mb-20']) ?>
-                        </div>
-                        <div class="col-md-6 text-center align-self-center">
-                            <h3 class="text-center g-mb-0">{{getPackage.name}}</h3>
-                            <p class="text-center g-font-size-12">(ตัวอย่างขนาดและการแสดงผล)</p>
-                        </div>
-                    </div>
-
-                    <table class="table g-mb-20" style="border-bottom: 1px solid #ddd;">
-                        <thead>
-                            <tr class="g-bg-primary g-color-white">
-                                <th style="width: 13%;">Package</th>
-                                <th style="width: 15%;">หน้าที่แสดง</th>
-                                <th class="text-center" style="width: 22%;">ราคา 1 เดือน (30 วัน)</th>
-                                <th class="text-center" style="width: 17%;">ราคา 1 ปี</th>
-                                <th style="width: 35%;">การแสดงผล</th>
-                            </tr>
-                        </thead>
-                        <tbody class="g-font-size-14">
-                            <tr>
-                                <td>{{getPackage.name}}</td>
-                                <td>{{getPackage.showpage}}</td>
-                                <td class="text-center">{{getPackage.monthly_price}} บาท</td>
-                                <td class="text-center">{{getPackage.annual_price}} บาท<br/><span class="g-font-size-12">(ประหยัด {{priceDiscount}} บาท)</span></td>
-                                <td class="g-color-red g-font-size-12">{{getPackage.showcase}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <howto-payment></howto-payment>
+                <div>
+                    <h4>ขั้นตอนการชำระเงิน/ลงโฆษณา</h4>
+                    <ol class="g-pl-30">
+                        <li>ลูกค้า <?=$this->Html->link('สมัครสมาชิก',['controller'=>'register'],['target'=>'_blank'])?> เว็บ mapcii.com</li>
+                        <li>เลือกแพ็กเกจ และ ระยะเวลา การลงโฆษณา</li>
+                        <li>ชำระเงินโดยการโอนเงินเข้าบัญชี ตามแพ็กเกจ/ระยะเวลา ที่ต้องการลง มาที่</li>
+                        <li><?=$this->Html->link('แจ้งชำระเงิน',['action'=>'package_payment'],['target'=>'_blank'])?> พร้อมแนบหลักฐานการโอนเงิน</li>
+                        <li>ทางทีมงานจะทำการตรวจสอบ เมื่อยอดชำระถูกต้องจะทำการกำหนดสิทธิ์ให้ลูกค้าสามารถลงโฆษณาได้ทันที</li>
+                        <li>เริ่มลงโฆษณาโดยการ <?=$this->Html->link('เข้าสู่ระบบสมาชิก',['controller'=>'login'],['target'=>'_blank'])?> และลงโฆษณาตามแพ็กเกจที่เลือก</li>
+                        <li>หากมีคำถาม <?=$this->Html->link('โปรดติดต่อ',['controller'=>'contact'],['target'=>'_blank'])?></p>
+                    </ol>
                 </div>
             </div>
         </div>
@@ -98,63 +81,42 @@ let selectpackage = new Vue ({
     data () {
         return {
             packages: [],
-            getPackage: {
-                name: null,
-                showpage: null,
-                monthly_price: null,
-                annual_price: null,
-                showcase: null,
-                size: null
-            },
-            selected: false
+            package_name: null,
+            queryString: null,
+            urlParams: null,
+            package_id: null,
+            package_description: null
         }
     },
     mounted () {
+        this.queryString = window.location.search
+        this.urlParams = new URLSearchParams(this.queryString)
+        this.package_id = this.urlParams.get('b')
+
         this.loadpackages()
     },
     methods: {
         loadpackages: function () {
-            axios.get(apiurl + 'api-packages/listpackages')
+            axios.get(apiurl + 'api-packages/listpackages?package=' + this.package_id)
             .then((response) => {
+                console.log(response)
                 this.packages = response.data.packagelist
+                this.package_name = response.data.packagelist[0].name
+                this.package_description = response.data.packagelist[0].package_type.description
             })
             .catch(e => {
                 console.log(e)
             })
         },
-        selectedpackage: function (name,showpage,monthly_price,annual_price,showcase,size) {
-            this.selected = true
-            this.getPackage.name = name
-            this.getPackage.showpage = showpage
-            this.getPackage.monthly_price = monthly_price
-            this.getPackage.annual_price = annual_price
-            this.getPackage.showcase = showcase
-            this.getPackage.size = size
+        priceDiscount: function (monthly_price, annual_price) {
+            return (monthly_price * 12) - annual_price
         },
-        unSelectedPackage: function () {
-            this.selected = false
+        formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         }
     },
     computed: {
-        priceDiscount: function () {
-            return (this.getPackage.monthly_price * 12) - this.getPackage.annual_price
-        }
+        
     }
 })
-
-Vue.component ('howto-payment', {
-    template: `<div>
-                <h4>ขั้นตอนการชำระเงิน/ลงโฆษณา</h4>
-                    <ol class="g-pl-30">
-                        <li>ลูกค้า <?=$this->Html->link('สมัครสมาชิก',['controller'=>'register'],['target'=>'_blank'])?> เว็บ mapcii.com</li>
-                        <li>เลือกแพ็กเกจ และ ระยะเวลา การลงโฆษณา</li>
-                        <li>ชำระเงินโดยการโอนเงินเข้าบัญชี ตามแพ็กเกจ/ระยะเวลา ที่ต้องการลง มาที่</li>
-                        <li><?=$this->Html->link('แจ้งชำระเงิน',['action'=>'package_payment'],['target'=>'_blank'])?> พร้อมแนบหลักฐานการโอนเงิน</li>
-                        <li>ทางทีมงานจะทำการตรวจสอบ เมื่อยอดชำระถูกต้องจะทำการกำหนดสิทธิ์ให้ลูกค้าสามารถลงโฆษณาได้ทันที</li>
-                        <li>เริ่มลงโฆษณาโดยการ <?=$this->Html->link('เข้าสู่ระบบสมาชิก',['controller'=>'login'],['target'=>'_blank'])?> และลงโฆษณาตามแพ็กเกจที่เลือก</li>
-                        <li>หากมีคำถาม <?=$this->Html->link('โปรดติดต่อ',['controller'=>'contact'],['target'=>'_blank'])?></p>
-                    </ol>
-                </div>`
-})
-
 </script>

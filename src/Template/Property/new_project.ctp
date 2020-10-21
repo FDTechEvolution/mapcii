@@ -17,7 +17,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8 g-px-0 g-pr-5">
+        <div class="col-md-9 g-px-0 g-pr-5">
             <div id="g-map">
                 <div id="map" ref="map">
                     <!-- <map-marker
@@ -94,13 +94,13 @@
             </div>
         </div>
         
-        <div class="col-md-4 g-px-0">
+        <div class="col-md-3 g-px-0">
             <div class="row">
-                <div class="col-lg-12 g-mb-0">
-                    <?= $this->element('asset/ads_newproject') ?>
-                </div>
                 <div class="col-lg-12 g-mb-10">
                     <?= $this->element('banner/side_b') ?>
+                </div>
+                <div class="col-lg-12 g-mb-0">
+                    <?= $this->element('asset/ads_newproject') ?>
                 </div>
                 <div class="col-lg-12 g-mb-70" id="div_assetlist_">
                     <h3>ประกาศล่าสุด</h3>
@@ -146,10 +146,13 @@
     .container {
         max-width: 80%;
     }
+    #g-map {
+        height: 100%;
+    }
     #map {
-        min-height: 870px;
-        height: auto;
-        max-height: 1200px;
+        min-height: 1000px;
+        height: 100%;
+        max-height: 1600px;
         background: #ddd;
     }
     .asset-content-marker {

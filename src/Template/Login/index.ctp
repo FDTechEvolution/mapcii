@@ -18,6 +18,7 @@
                 </div>
                 <div class="g-mb-20">
                     <input class="form-control rounded-0 g-py-13 g-px-15" type="password" placeholder="Enter your Password" name="password" id="password">
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" title="แสดงรหัสผ่าน"></span>
                 </div>
                 <?= $this->Form->hidden('name', ['id' => 'name']) ?>
                 <?= $this->Form->hidden('facebookid', ['id' => 'facebookid']) ?>
@@ -40,6 +41,16 @@
         </div>
     </div>
 </div>
+
+<style>
+.field-icon {
+  float: right;
+  margin-right: 10px;
+  margin-top: -30px;
+  position: relative;
+  z-index: 2;
+}
+</style>
 
 <?= $this->Html->script('login/validation.js') ?>
 <?= $this->Html->script('login/login.js') ?>
@@ -135,6 +146,15 @@
     }(document, 'script', 'facebook-jssdk'));
 
 
+    $(".toggle-password").click(function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
 
 </script>
 

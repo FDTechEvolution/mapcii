@@ -1,15 +1,15 @@
 <div class="g-bg-cover g-bg-pos-top-center g-bg-img-hero" style="background-image: url(<?=COVER_TITLE_IMAGE?>);">
     <div class="g-pos-rel g-z-index-1">
         <!-- Breadcrumbs -->
-        <div class="container-fluid g-py-50">
-            <h1 class="h2 mb-0 g-color-primary">รายการประกาศ</h1>
+        <div class="container g-pt-40">
+            
         </div>
     </div>
 </div>
-<div id="assets-list" class="container-fluid g-pb-100">
+<div id="assets-list" class="container g-pb-100">
     <div class="g-pa-5">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 d-flex">
                 <?php
                     if($this->request->getSession()->read('Authen.User.islocked') == 'Y') {
                         echo "<script>
@@ -18,42 +18,21 @@
                         })
                         </script>";
                     }else{ ?>
-                        <?=$this->Html->link('เพิ่ม',['action'=>'add'],['class'=>BT_ADD_CLASS])?>
+                        <h1 class="h2 mb-0 g-color-primary g-mr-20">รายการประกาศฟรีของฉัน</h1> <?=$this->Html->link('<i class="far fa-plus-square"></i> เพิ่มประกาศ',['action'=>'add'],['class'=>BT_ADD_CLASS, 'escape' => false])?>
                 <?php
                     }
                 ?>
             </div>
+            <div class="col-md-6 text-right align-text-bottom pt-4">
+                <small>
+                    <i class="fas fa-edit text-success"></i> = แก้ไขประกาศ , <i class="fas fa-redo-alt text-info"></i> = ต่ออายุประกาศ , <i class="fas fa-level-up-alt text-primary"></i> = เลื่อนประกาศขึ้นอันดับแรก , <i class="fas fa-times text-danger"></i> = ปิดประกาศ
+                </small>
+            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover" id="tb_list_asset">
-                <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th>หัวข้อประกาศ</th>
-                        <th class="text-center">วันที่ประกาศ</th>
-                        <th class="text-center">ถึงวันที่</th>
-                        <th class="text-center">สถานะ</th>
-                        <th class="text-center">โฆษณา</th>
-                    </tr>
-                </thead>
-                <tbody v-if="assetAds" class="g-mb-20">
-                    <tr is="asset-ads-table"
-                        v-for="(assetad, index) in assetAds"
-                        :asset-ads = "assetad"
-                        :index = "index"
-                    >
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr is="asset-list-table"
-                        v-for="(asset, index) in assets"
-                        :asset = "asset"
-                        :index = "index"
-                    >
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <asset-list-table
+            :assets = "this.$store.getters.assetLists"
+            :images = "this.$store.getters.imageLists"
+        ></asset-list-table>
     </div>
 
     <div class="modal fade" id="modalPackage" role="dialog">
@@ -122,5 +101,6 @@
     
 </script>
 
+<?= $this->Html->css('myassets/style.css') ?>
 <?=$this->Html->script('asset/component/package-payment.js')?>
-<?=$this->Html->script('asset/main.js')?>
+<?=$this->Html->script('asset/main.js', ['type' => 'module'])?>

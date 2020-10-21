@@ -35,6 +35,9 @@ Vue.component('package-payment', {
                     this.form.memberID = user.usercode
                     this.form.tel = user.phone
                 })
+                .catch(e => {
+                    console.log(e)
+                })
             }
         },
         loadPackages: function () {
@@ -168,10 +171,15 @@ Vue.component('package-payment', {
             this.form.slip = this.$refs.slip.files[0];
         },
         setAssetAds: function (payment,position) {
-            axios.post(apiurl + 'api-assets/setassetads', {
-                asset_id: this.assetId,
-                payment_id: payment,
-                position_id: position
+            let formData = new FormData()
+            formData.append('asset_id', this.assetId)
+            formData.append('payment_id', payment)
+            formData.append('position_id', position)
+
+            axios.post(apiurl + 'api-assets/setassetads', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
             .then(() => {
                 alert('ข้อมูลรายละเอียดถูกส่งเรียบร้อยแล้ว ทีมงานของเราจะตรวจสอบและตอบกลับโดยเร็วที่สุด')

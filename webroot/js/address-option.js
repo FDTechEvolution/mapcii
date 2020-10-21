@@ -27,10 +27,11 @@ $(document).ready(function () {
 
     $.get(address_option_url).done(function (res) {
         provinceJson = JSON.parse(res);
+        // console.log(provinceJson)
         $('#province_id').empty();
         $.each(provinceJson, function (key, value) {
             if (key == 0) {
-                districtJson = value.districts;
+                $('#province_id').append('<option disabled value="" selected>เลือกจังหวัด...</option>');
             }
             $('#province_id').append('<option value="'+value.id+'">' + value.name + '</option>');
         });

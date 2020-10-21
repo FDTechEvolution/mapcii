@@ -43,4 +43,20 @@ class AdvertisementsController extends AppController {
         }
     }
 
+    public function balance() {
+        
+    }
+
+    public function packageAd() {
+        
+    }
+
+    public function packageBannerA() {
+
+    }
+
+    public function packageBannerB() {
+        
+    }
+
 }

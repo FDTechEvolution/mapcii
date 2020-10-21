@@ -105,7 +105,10 @@ new Vue ({
         loadMap () {
             this.map = new window.google.maps.Map(this.$refs['map'], {
                 center: { lat: this.lat, lng: this.lng },
-                zoom: this.zoom
+                zoom: this.zoom,
+                options: {
+                    gestureHandling: 'greedy'
+                }
             })
         },
         getMap(callback) {
@@ -129,11 +132,7 @@ new Vue ({
             .then((response) => {
                 // console.log(response)
                 if(response.data.status == 200) {
-                    response.data.list.forEach((asset_list) => {
-                        if(asset_list.status === 'CO') {
-                            this.assets.push(asset_list)
-                        }
-                    })
+                    this.assets = response.data.list
                     this.assetAds = response.data.ads
 
                     this.assetAds.forEach((adsPosition) => {

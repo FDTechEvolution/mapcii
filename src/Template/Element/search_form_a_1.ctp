@@ -1,5 +1,3 @@
-
-
 <style>
     /* custom checkbox */
     .checkbox {
@@ -28,6 +26,11 @@
 
     .combo-label {margin-bottom:.5em;}
 </style>
+
+<?php 
+    $issales = (isset($_GET['issales'])) ? $_GET['issales'] : null;
+    $isrent = (isset($_GET['isrent'])) ? $_GET['isrent'] : null;
+?>
 <?= $this->Html->css('jquery.multiselect.css') ?>
 
 <?= $this->Form->create('search', ['id' => 'frm_search', 'type' => 'GET']) ?>
@@ -35,14 +38,16 @@
 
 
     <div class="row">
-        <div class="col-md-2 col-6 g-mb-10">
+        <div <?php if($isrent == 'Y') { ?> class="col-md-4 col-6 g-mb-10" <?php }else if($issales == 'Y'){ ?> class="col-md-2 col-6 g-mb-10" <?php } ?> >
             <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_sales">ขาย</a>
             <input type="hidden" name="issales" id="issales" value="N" />
         </div>
+        <?php if($issales == 'Y') { ?>
         <div class="col-md-2 col-6 g-mb-10">
             <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_rent">ให้เช่า</a>
             <input type="hidden" name="isrent" id="isrent" value="N" />
         </div>
+        <?php } ?>
         <div class="col-12 col-md-8 g-mb-10">
             <div class="input-group-btn">
                 <select name="search_asset_type_id" multiple id="search_asset_type_id" class="form-control rounded-0 g-color-black">
@@ -92,8 +97,8 @@
                         data-open-icon="fa fa-angle-down"
                         data-close-icon="fa fa-angle-up">
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="date">แสดงทุกประกาศ</option>
-                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="price_desc" selected>อสังหาขายด่วน</option>
-                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="price_asc">อสังหามือสอง</option>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="price_desc" <?php if($issales == 'Y') { ?> selected <?php } ?>>อสังหาขายด่วน</option>
+                    <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="price_asc" <?php if($isrent == 'Y') { ?> selected <?php } ?>>อสังหามือสอง</option>
                     <option class="g-brd-none g-color-main g-color-white--hover g-color-white--active g-bg-primary--hover g-bg-primary--active" value="land_size_asc">โครงการใหม่</option>
                 </select>
             </div>

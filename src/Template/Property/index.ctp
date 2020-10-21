@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8 g-px-0 g-pr-5">
+        <div class="col-md-9 g-px-0 g-pr-5">
             <div id="g-map">
                 <div id="map" ref="map">
                     <!-- <map-marker
@@ -30,16 +30,18 @@
                         :lat="parseFloat(ads.asset.address.latitude)" 
                         :lng="parseFloat(ads.asset.address.longitude)"
                     >
-                        <div class="row" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != ads.asset.id}">
-                            <div class="col-md-2">
-                                <img width="40" class="g-mt-3 g-pr-5" :src="assetimageAds[index]">
+                        <div class="row row-to-fix" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != ads.asset.id}">
+                            <div class="col-md-5 px-1">
+                                <img style="width: 100%;" class="g-mt-3 g-pr-5" :src="assetimageAds[index]">
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-7 px-1">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <a class="asset-a-marker" :href="'<?= SITE_URL ?>property/view?id=' + ads.asset.id">
-                                            <span class="asset-content-marker g-font-size-12">{{ads.asset.name}}</span>
+                                            <span class="asset-content-marker g-font-size-12"><strong>{{ads.asset.name}}</strong></span>
                                         </a>
+                                        <span><i class="align-middle g-color-text mr-1 icon-hotel-restaurant-022 u-line-icon-pro"></i> {{ads.asset.bedroom}}</span> | 
+                                        <span><i class="align-middle g-color-text mr-1 icon-hotel-restaurant-008 u-line-icon-pro"></i> {{ads.asset.bathroom}}</span><hr class="my-2"/>
                                         <span class="asset-content-price g-font-size-12"><strong>ราคา :</strong> {{assetprice(ads.asset.price)}} ล้านบาท</span>
                                     </div>
                                 </div>
@@ -67,16 +69,18 @@
                         :lat="parseFloat(asset.address.latitude)" 
                         :lng="parseFloat(asset.address.longitude)"
                     >
-                        <div class="row" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != asset.id}">
-                            <div class="col-md-2">
-                                <img width="40" class="g-mt-3 g-pr-5" :src="assetimages[index]">
+                        <div class="row row-to-fix" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != asset.id}">
+                            <div class="col-md-5 px-1">
+                                <img style="width: 100%;" class="g-mt-3 g-pr-5" :src="assetimages[index]">
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-7 px-1">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a class="asset-a-marker" :href="'<?= SITE_URL ?>property/view?id=' + asset.id">
+                                        <a class="asset-a-marker pb-2" :href="'<?= SITE_URL ?>property/view?id=' + asset.id">
                                             <span class="asset-content-marker g-font-size-12">{{asset.name}}</span>
                                         </a>
+                                        <span><i class="align-middle g-color-text mr-1 icon-hotel-restaurant-022 u-line-icon-pro"></i> {{asset.bedroom}}</span> | 
+                                        <span><i class="align-middle g-color-text mr-1 icon-hotel-restaurant-008 u-line-icon-pro"></i> {{asset.bathroom}}</span><hr class="my-2"/>
                                         <span class="asset-content-price g-font-size-12"><strong>ราคา :</strong> {{assetprice(asset.price)}} ล้านบาท</span>
                                     </div>
                                 </div>
@@ -93,13 +97,13 @@
             </div>
         </div>
         
-        <div class="col-md-4 g-px-0">
+        <div class="col-md-3 g-px-0">
             <div class="row">
-                <div class="col-lg-12 g-mb-0">
-                    <?= $this->element('asset/ads') ?>
-                </div>
                 <div class="col-lg-12 g-mb-10">
                     <?= $this->element('banner/side_b') ?>
+                </div>
+                <div class="col-lg-12 g-mb-0">
+                    <?= $this->element('asset/ads') ?>
                 </div>
                 <div class="col-lg-12 g-mb-70" id="div_assetlist_">
                     <h3>ประกาศล่าสุด</h3>
@@ -107,8 +111,8 @@
                     <div id="avaliable-assets" class="asset-style">
                         <div v-for="(asset, index) in assets">
                             <article class="row no-gutters g-mb-15">
-                                <div class="col-lg-5 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
-                                <div class="col-lg-7">
+                                <div class="col-lg-4 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
+                                <div class="col-lg-8">
                                     <div class="g-brd-around g-brd-gray-light-v3 g-bg-white">
                                         <div class="g-pa-10 g-pt-0">
                                             <strong class="g-color-primary--hover g-font-size-13 g-font-weight-700"><a class="asset-content-name" :href="'<?= SITE_URL ?>property/view?id=' + asset.id">{{asset.name}}</a></strong>
@@ -146,16 +150,19 @@
     .container {
         max-width: 80%;
     }
+    #g-map {
+        height: 100%;
+    }
     #map {
-        min-height: 870px;
-        height: auto;
-        max-height: 1200px;
+        min-height: 1000px;
+        height: 100%;
+        max-height: 1600px;
         background: #ddd;
     }
     .asset-content-marker {
         text-overflow: ellipsis;
         overflow: hidden; 
-        width: 140px;
+        width: 150px;
         white-space: nowrap;
         display: block;
     }
@@ -198,6 +205,10 @@
     }
     .color-gold{
         color: #DAA520;
+    }
+    .row-to-fix {
+        width: 320px;
+        height: 80px;
     }
     .blinking{
     animation:blinkingText 1.2s infinite;
