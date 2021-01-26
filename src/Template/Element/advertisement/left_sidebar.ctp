@@ -1,6 +1,6 @@
 <h4>ลงโฆษณา</h4>
 <ul>
-    <li><a href="#">ลงโฆษณา Banner A / B</a></li>
+    <li><?= $this->Html->link('ลงโฆษณา Banner A / B', ['controller'=>'mybanners','action'=>'add'], ['class' => '']) ?></li>
     <li><?= $this->Html->link('ลงโฆษณาประกาศ (AD)', ['controller'=>'myassets','action'=>'add'], ['class' => '']) ?></li>
 </ul>
 <hr/>

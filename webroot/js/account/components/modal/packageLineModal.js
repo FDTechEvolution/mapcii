@@ -33,14 +33,14 @@ export const packageLineModal = {
                                         <tbody v-if="!$store.getters.balanceline_loaded">
                                             <tr class="pt-2 pb-2" v-for="(balanceline, index) in $store.getters.balance_line">
                                                 <td data-title="หมายเลขใบเสร็จ">
-                                                    <span v-if="balanceline.user_payments[index].documentno !== null">
-                                                        {{index+1}}. {{ balanceline.user_payments[index].documentno }}
+                                                    <span v-if="balanceline.user_payments[0].documentno !== null">
+                                                        {{index+1}}. {{ balanceline.user_payments[0].documentno }}
                                                     </span>
                                                     <span v-else>
                                                         ยังไม่ได้ชำระเงิน...
                                                     </span>
                                                 </td>
-                                                <td data-title="วันที่เริ่ม - วันสุดท้าย" class="text-center">
+                                                <td data-title="วันที่" class="text-center">
                                                     <span v-if="balanceline.start_date !== null">
                                                         {{ $parent.thaiDateFormat(balanceline.start_date) }} - {{ $parent.thaiDateFormat(balanceline.end_date) }}
                                                     </span>

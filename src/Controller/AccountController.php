@@ -39,6 +39,10 @@ class AccountController extends AppController {
         
     }
 
+    public function history() {
+        
+    }
+
     public function assetFav(){
         
     }

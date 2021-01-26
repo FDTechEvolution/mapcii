@@ -25,19 +25,21 @@
                 $controllerName = strtolower($this->request->getParam('controller'));
                 $issales = strtolower($this->request->getQuery('issales'));
                 $isrent = strtolower($this->request->getQuery('isrent'));
+                $isnewproject = strtolower($this->request->getQuery('isnewproject'));
+                $type = strtolower($this->request->getQuery('type'));
                 //echo $issales;
                 $actionName = strtolower($this->request->getParam('action'));
                 ?>
                 <div id="navBar" class="collapse navbar-collapse align-items-center flex-sm-row">
                     <ul class="navbar-nav ml-auto g-pb-30 g-pb-0--lg">
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('อสังหาขายด่วน', ['controller' => 'property', 'action' => 'index','issales'=>'Y'], ['class' => ($controllerName=='property' && $issales=='y')?$linkClassActive:$linkClass]) ?>
+                            <?= $this->Html->link('อสังหาขายด่วน', ['controller' => 'property', 'action' => 'index','issales'=>'Y','type'=>'อสังหา-ขายด่วน'], ['class' => ($controllerName=='property' && $type=='อสังหา-ขายด่วน')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('อสังหามือสอง', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => ($controllerName=='property' && $isrent=='y')?$linkClassActive:$linkClass]) ?>
+                            <?= $this->Html->link('อสังหามือสอง', ['controller' => 'property', 'action' => 'index','type'=>'อสังหา-มือสอง'], ['class' => ($controllerName=='property' && $type=='อสังหา-มือสอง')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
-                            <?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'new-project', 'isnewproject'=>'Y'], ['class' => ($controllerName=='property' && $actionName=='newproject')?$linkClassActive:$linkClass]) ?>
+                            <?= $this->Html->link('โครงการใหม่', ['controller' => 'property', 'action' => 'index','type'=>'อสังหา-โครงการใหม่'], ['class' => ($controllerName=='property' && $type=='อสังหา-โครงการใหม่')?$linkClassActive:$linkClass]) ?>
                         </li>
                         <li class="nav-item g-mx-10 g-mx-1--lg g-mb-5 g-mb-0--lg">
                             <?= $this->Html->link('บทความ/ข่าว', ['controller'=>'article'], ['class' => ($controllerName=='article')?$linkClassActive:$linkClass]) ?>
@@ -62,22 +64,24 @@
                                 <a id="nav-link--features" class="nav-link g-pl-0 g-py-10 g-px-14 g-font-weight-600 g-font-size-15" href="#!" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu--features"><?= $this->Html->image('mapcii_avatar.png', ['class' => 'g-width-25 bg-white rounded-circle border border-info mr-1']) ?> <?= $this->request->getSession()->read('Authen.User.firstname') ?></a>
                                 <ul class="hs-sub-menu list-unstyled u-shadow-v11 g-brd-top g-brd-primary g-brd-top-2 g-min-width-220 g-mt-18 g-mt-8--lg--scrolling" id="nav-submenu--features" aria-labelledby="nav-link--features">
                                     <!-- Features - Headers -->
-                                    <li class="dropdown-item ">
-                                        <?= $this->Html->link('ข้อมูลส่วนตัวของฉัน', ['controller' => 'account'], ['class' => 'nav-link']) ?>
+                                    <li class="dropdown-item">
+                                        <a href="<?= SITE_URL ?>account#/profile" class="nav-link">ข้อมูลส่วนตัวของฉัน</a>
                                     </li>
-                                    <li class="dropdown-item ">
-                                         <?= $this->Html->link('ประกาศฟรีของฉัน', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
+                                    <li class="dropdown-item">
+                                         <?= $this->Html->link('รายการประกาศฟรี', ['controller' => 'myassets'], ['class' => 'nav-link']) ?>
                                     </li>
-                                    <li class="dropdown-item ">
-                                        <?= $this->Html->link('รายการสินทรัพย์ที่ชอบ', ['controller' => 'account','action'=>'asset-fav'], ['class' => 'nav-link']) ?>
+                                    <li class="dropdown-item">
+                                        <a href="<?= SITE_URL ?>account#/package" class="nav-link">รายการโฆษณา/ประกาศ</a>
                                     </li>
-                                    <li class="dropdown-item ">
-                                         <?= $this->Html->link('รายการลงโฆษณา', ['controller' => 'account', 'action' => 'package'], ['class' => 'nav-link']) ?>
+                                    <li class="dropdown-item">
+                                        <a href="<?= SITE_URL ?>account#/history" class="nav-link">ประวัติโฆษณา/ประกาศ</a>
                                     </li>
-                                    <li class="dropdown-item ">
+                                    <li class="dropdown-item">
+                                        <a href="<?= SITE_URL ?>account#/favorite" class="nav-link">รายการสินทรัพย์ที่สนใจ</a>
+                                    </li>
+                                    <li class="dropdown-item">
                                          <?= $this->Html->link('ออกจากระบบ', ['controller' => 'logout'], ['class' => 'nav-link']) ?>
                                     </li>
-                                    
                                 </ul>
                             </li>
 

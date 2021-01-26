@@ -1,3 +1,6 @@
+import {assetContent} from './components/asset-content.js'
+import {mapInfoWindowContent} from './components/map-info-window-content.js'
+
 Vue.component('map-marker', {
     props: {
         lat: { type: Number, required: true },
@@ -52,6 +55,9 @@ Vue.component('map-info-window', {
 
 new Vue ({
     el: '#g-map',
+    components: {
+        'map-info-windown-content' : mapInfoWindowContent
+    },
     data () {
         return {
             map: null,
@@ -73,13 +79,15 @@ new Vue ({
             search_sub_district_id: '',
             price_start: '',
             price_end: '',
+            asset_type: '',
             lat: null,
             lng: null,
             zoom: null,
             classObj: {
                 infowindowActive: null,
                 infowindowPrice: null
-            }
+            },
+            loadingMap: true
         }
     },
     mounted () {
@@ -94,6 +102,14 @@ new Vue ({
         this.search_sub_district_id = this.urlParams.get('search_sub_district_id')
         this.price_start = this.urlParams.get('price_start')
         this.price_end = this.urlParams.get('price_end')
+        
+        let isType = this.urlParams.get('type')
+        if(isType !== '') {
+            let exType = isType.split('-')
+            this.asset_type = exType[1]
+        }else{
+            this.asset_type = ''
+        }
 
         this.getPositionAsset()
 
@@ -102,6 +118,9 @@ new Vue ({
         // console.log(this.province)
     },
     methods: {
+        reloadPositonAsset() {
+            this.getPositionAsset()
+        },
         loadMap () {
             this.map = new window.google.maps.Map(this.$refs['map'], {
                 center: { lat: this.lat, lng: this.lng },
@@ -128,20 +147,22 @@ new Vue ({
                                 '&search_district_id=' + this.search_district_id +
                                 '&search_sub_district_id=' + this.search_sub_district_id +
                                 '&price_start=' + this.price_start +
-                                '&price_end=' + this.price_end)
+                                '&price_end=' + this.price_end +
+                                '&asset_type=' + this.asset_type)
             .then((response) => {
                 // console.log(response)
                 if(response.data.status == 200) {
                     this.assets = response.data.list
                     this.assetAds = response.data.ads
+                    // console.log(this.assetAds)
 
-                    this.assetAds.forEach((adsPosition) => {
-                        if (adsPosition.position.position == 'province') {
-                            this.assetAdsProvince.push(adsPosition)
-                        } else if (adsPosition.position.position == 'district') {
-                            this.assetAdsDistrict.push(adsPosition)
-                        }
-                    })
+                    // this.assetAds.forEach((adsPosition) => {
+                    //     if (adsPosition.position.position == 'province') {
+                    //         this.assetAdsProvince.push(adsPosition)
+                    //     } else if (adsPosition.position.position == 'district') {
+                    //         this.assetAdsDistrict.push(adsPosition)
+                    //     }
+                    // })
                 }
                 // console.log(this.assetAdsProvince)
                 // console.log(this.assetAdsDistrict)
@@ -177,7 +198,9 @@ new Vue ({
             })
             .catch(e => {
                 console.log(e)
+                this.reloadPositonAsset()
             })
+            .finally(() => this.loadingMap = false)
         },
         getImageAsset (id) {
             axios.get(apiurl + 'api-assets/listassetimage?id=' + id)
@@ -188,8 +211,17 @@ new Vue ({
                 console.log(e)
             })
         },
-        assetprice (price) {
-            return price/1000000
+        assetprice (price, discount) {
+            if(discount === null || discount === '' || discount === undefined || discount === 0) {
+                return (price/1000000).toFixed(2)
+            }else{
+                return ((price - discount)/1000000).toFixed(2)
+            }
+        },
+        priceSplitToFixed(price) {
+            let cutDot = price.split('.')
+            let checKAfterDot = (cutDot[1] != '00') ? true : false
+            return (checKAfterDot) ? price : cutDot[0]
         },
         getDetailAsset (index) {
             this.classObj.infowindowActive = index
@@ -199,15 +231,34 @@ new Vue ({
             this.classObj.infowindowActive = 'x'
             this.classObj.infowindowPrice = 'x'
         },
+        thDateFormat(date) {
+            let cutT = date.split('T')
+            let thDate = cutT[0].split('-')
+            return thDate[2] + '/' + thDate[1] + '/' + thDate[0]
+        },
+        setAssetType(issales, isrent) {
+            if(issales === 'Y' && isrent === 'Y') return 'ขาย/เช่า'
+            if(issales === 'Y' && isrent === 'N') return 'ขาย'
+            if(issales === 'N' && isrent === 'Y') return 'เช่า'
+        },
         async loadFunction () {
             await this.getPositionAsset()
             await this.loadMap()
+        },
+        showDiscount(discount) {
+            return (discount !== 0) ? true : false
+        },
+        formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         }
     }
 })
 
 new Vue ({
     el: '#avaliable-assets',
+    components: {
+        'asset-content' : assetContent
+    },
     data () {
         return {
             assets: [],
@@ -224,7 +275,9 @@ new Vue ({
             price_end: '',
             imageAssets: null,
             backgroundImages: [],
-            favorites: []
+            favorites: [],
+            asset_type: '',
+            onlyAd: false
         }
     },
     mounted () {
@@ -239,6 +292,14 @@ new Vue ({
         this.search_sub_district_id = this.urlParams.get('search_sub_district_id')
         this.price_start = this.urlParams.get('price_start')
         this.price_end = this.urlParams.get('price_end')
+        
+        let isType = this.urlParams.get('type')
+        if(isType !== '') {
+            let exType = isType.split('-')
+            this.asset_type = exType[1]
+        }else{
+            this.asset_type = ''
+        }
 
         this.loadAssetsAvaliable()
         this.loadAssetFavorite()
@@ -246,6 +307,7 @@ new Vue ({
     },
     methods: {
         loadAssetsAvaliable () {
+            if(this.asset_type === 'ขายด่วน' || this.asset_type === 'โครงการใหม่') this.onlyAd = true
             axios.get(apiurl + 'api-assets/loadassets?issales=' + this.issales +
                                 '&isrent=' + this.isrent +
                                 '&type=' + this.type +
@@ -254,15 +316,23 @@ new Vue ({
                                 '&search_district_id=' + this.search_district_id +
                                 '&search_sub_district_id=' + this.search_sub_district_id +
                                 '&price_start=' + this.price_start +
-                                '&price_end=' + this.price_end)
+                                '&price_end=' + this.price_end +
+                                '&asset_type=' + this.asset_type)
             .then((response) => {
                 // console.log(response)
-                this.assets = response.data.listasset
-                if(this.assets != null){
-                    response.data.imgasset.forEach((img,index) => {
-                        this.backgroundImages.push('background-image: url('+img+')')
+                if(response.data.status === 200) {
+                    this.assets = response.data.listasset
+                    response.data.listasset.forEach(item => {
+                        item.asset_images.forEach(img => {
+                            if(img.isdefault === 'Y') {
+                                let bgImgSplit = img.image.url.split('\\')
+                                let bgImgSplitCombine = bgImgSplit[0] + bgImgSplit[1]
+                                this.backgroundImages.push('background-image: url('+bgImgSplitCombine+')')
+                            }
+                        })
                     })
                 }
+                // console.log(this.backgroundImages)
                 // console.log(this.assets)
  
                 // if(response.data.status == 200){
@@ -274,6 +344,16 @@ new Vue ({
             .catch(e => {
                 console.log(e)
             })
+        },
+        setAssetType(issales, isrent) {
+            if(issales === 'Y' && isrent === 'Y') return 'ขาย/เช่า'
+            if(issales === 'Y' && isrent === 'N') return 'ขาย'
+            if(issales === 'N' && isrent === 'Y') return 'เช่า'
+        },
+        thDateFormat(date) {
+            let cutT = date.split('T')
+            let thDate = cutT[0].split('-')
+            return thDate[2] + '/' + thDate[1] + '/' + thDate[0]
         },
         formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -310,6 +390,17 @@ new Vue ({
             .catch(e => {
                 console.log(e)
             })
+        },
+        calculateDiscount(price, discount) {
+            if(discount === null || discount === '' || discount === undefined || discount === 0) {
+                return price
+            }else{
+                this.isDiscount = price - discount
+                return price - discount
+            }
+        },
+        showDiscount(discount) {
+            return (discount !== 0) ? true : false
         }
     }
 })

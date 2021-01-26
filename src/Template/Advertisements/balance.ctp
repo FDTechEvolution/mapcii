@@ -24,5 +24,11 @@
     </div>
 </section>
 
+<style>
+    .package-intro {
+        display: none;
+    }
+</style>
+
 <?= $this->Html->css('isadvert/style.css') ?>
 <?= $this->Html->script('isadvert/main.js', ['type' => 'module']) ?>

@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <?= $this->element('banner/side_c') ?>
+                <?= $this->element('banner/side_b') ?>
                 <!-- <div class="g-mb-20">
                     <img src="https://sv1.picz.in.th/images/2019/06/25/1Pkhtn.jpg" class="img-fluid w-100">
                 </div>

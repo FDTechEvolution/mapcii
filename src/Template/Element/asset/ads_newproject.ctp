@@ -1,21 +1,31 @@
-<div class="col-lg-12 g-mb-0 g-px-0" id="asset-ads" class="asset-ads-style">
+<div class="col-lg-12 g-mb-0 g-px-0 mt-2" id="asset-ads" class="asset-ads-style">
+    <button v-if="asset_type !== 'มือสอง'" class="btn btn-block text-white rounded-0 mb-1" style="line-height: 16px; background-color: #ff8027; letter-spacing: 1px;" @click="buyAdAssetLink"><strong>AD ประกาศ<br/>ลงโฆษณา</strong></button>
     <div v-for="(ads, index) in assetAds">
         <article class="row no-gutters g-mb-15 ads-asset-banner">
-            <div class="col-lg-5 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
-            <div class="col-lg-7">
+            <div class="col-lg-4 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
+            <div class="col-lg-8">
+                <p v-if="ads.asset.discount !== ''" class="is-show-discount">ลด : {{formatNumber(ads.asset.discount)}} ฿</p>
                 <div class="g-brd-around g-brd-gray-light-v3 g-bg-white">
-                    <div class="g-pa-10 g-pt-0">
-                        <strong class="g-color-primary--hover g-font-size-13 g-font-weight-700"><a class="asset-content-name" :href="'<?= SITE_URL ?>property/view?id=' + ads.asset.id">{{ads.asset.name}}</a></strong>
-                        <p class="g-color-text g-font-weight-500 g-font-size-13 mb-0"><strong>ประกาศ :</strong> <span class="g-color-text g-font-weight-400">{{driffday(ads.asset.startdate)}} วันที่ผ่านมา</span></p>
+                    <div class="g-pa-10 g-pt-10">
+                        <strong class="g-color-primary--hover g-font-size-12 g-font-weight-700"><a class="asset-content-name" :href="'<?= SITE_URL ?>property/view?id=' + ads.asset.id">{{ads.asset.name}}</a></strong>
+                        <p class="g-color-text g-font-weight-500 g-font-size-12 mb-0"><small><strong>ปรับปรุงเมื่อ :</strong> <span class="g-color-text g-font-weight-400">{{thDateFormat(ads.asset.modified)}}</span></small></p>
                     </div>
                     <ul class="d-flex list-inline align-items-center g-brd-top g-brd-gray-light-v3 mb-0">
-                        <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-5 mr-0">
+                        <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-py-0 mr-0">
                             <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-022 u-line-icon-pro"></i>{{ads.asset.bedroom}}
                         </li>
                         <li class="list-inline-item col-2 g-font-weight-500 g-font-size-13 text-center g-px-0 g-brd-x g-brd-gray-light-v3 g-py-5 mr-0">
                             <i class="align-middle g-color-text mr-1 icon-hotel-restaurant-008 u-line-icon-pro"></i>{{ads.asset.bathroom}}
                         </li>
-                        <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0">{{formatNumber(ads.asset.price)}} ฿</li>
+                        <li class="list-inline-item col-6 g-font-weight-600 g-font-size-14 text-right g-color-red g-px-0 g-pr-5 g-py-5 mr-0">
+                            <slot v-if="ads.asset.discount !== ''">
+                                <small><s>{{formatNumber(ads.asset.price)}} ฿</s></small><br/>
+                                {{formatNumber(calculateDiscount(ads.asset.price, ads.asset.discount))}} ฿
+                            </slot>
+                            <slot v-else>
+                                {{formatNumber(ads.asset.price)}} ฿
+                            </slot>
+                        </li>
                         <li class="list-inline-item col-2 g-px-0 mr-0">
                             <a class="d-block g-brd-x g-brd-gray-light-v3 g-color-text g-color-primary g-font-size-17 text-center g-text-underline--none--hover g-py-5">
                                 <i v-if="favorites.includes(ads.asset.id) == true" class="fa fa-star"></i>
@@ -98,7 +108,10 @@ button.asset-content-name:hover {
                 search_sub_district_id: '',
                 price_start: '',
                 price_end: '',
-                favorites: []
+                favorites: [],
+                limit: 5,
+                isDiscount: '',
+                asset_type: ''
             }
         },
         mounted () {
@@ -115,6 +128,14 @@ button.asset-content-name:hover {
             this.price_start = this.urlParams.get('price_start')
             this.price_end = this.urlParams.get('price_end')
 
+            let isType = this.urlParams.get('type')
+            if(isType !== '') {
+                let exType = isType.split('-')
+                this.asset_type = exType[1]
+            }else{
+                this.asset_type = ''
+            }
+
             this.loadAssetsAdsList()
             this.loadAssetFavorite()
             // console.log(this.province)
@@ -130,66 +151,78 @@ button.asset-content-name:hover {
                                     '&search_district_id=' + this.search_district_id +
                                     '&search_sub_district_id=' + this.search_sub_district_id +
                                     '&price_start=' + this.price_start +
-                                    '&price_end=' + this.price_end)
+                                    '&price_end=' + this.price_end +
+                                    '&limit =' + this.limit +
+                                    '&asset_type=' + this.asset_type)
                 .then((response) => {
                     // console.log(response)
-                    if(this.province != null) {
-                        if(this.search_district_id == ''){
-                            this.assetAds = response.data.listprovince
-                            if(this.assetAds != null){
-                                response.data.imgprovince.forEach((img,index) => {
-                                    this.backgroundImages.push('background-image: url('+img+')')
-                                })
-                            }
-                            // console.log('4444444444')
-                        }else{
-                            if(response.data.listprovince != '' && response.data.listdistrict != '') {
-                                if(response.data.status == 200) {
-                                    response.data.listprovince.forEach((province,index) => {
-                                        this.assetAds.push(province)
-                                        // console.log('11111111')
-                                    })
-                                    response.data.imgprovince.forEach((img,index) => {
-                                        this.backgroundImages.push('background-image: url('+img+')')
-                                    })
-
-
-                                    response.data.listdistrict.forEach((district,index) => {
-                                        this.assetAds.push(district)
-                                        // console.log('222222222')
-                                    })
-                                    response.data.imgdistrict.forEach((img,index) => {
-                                        this.backgroundImages.push('background-image: url('+img+')')
-                                    })
-                                }
-                            }else if(response.data.listprovince == ''){
-                                this.assetAds = response.data.listdistrict
-                                if(this.assetAds != null){
-                                    response.data.imgdistrict.forEach((img,index) => {
-                                        this.backgroundImages.push('background-image: url('+img+')')
-                                    })
-                                }
-                                // console.log('3333333333')
-                            }else if(response.data.listprovince != ''){
+                    if(response.data.status === 200) {
+                        this.assetAds = response.data.asset_ads
+                        response.data.asset_ads_img.forEach(img => {
+                            let bgImgSplit = img.split('\\')
+                            let bgImgSplitCombine = bgImgSplit[0] + bgImgSplit[1]
+                            this.backgroundImages.push('background-image: url('+bgImgSplitCombine+')')
+                        })
+                        // console.log(this.backgroundImages)
+                    }else{ ////////// ปิดไว้เผื่อข้าม /////////////
+                        if(this.province != null) {
+                            if(this.search_district_id == ''){
                                 this.assetAds = response.data.listprovince
                                 if(this.assetAds != null){
                                     response.data.imgprovince.forEach((img,index) => {
                                         this.backgroundImages.push('background-image: url('+img+')')
                                     })
                                 }
-                                // console.log('555555555555')
+                                // console.log('4444444444')
+                            }else{
+                                if(response.data.listprovince != '' && response.data.listdistrict != '') {
+                                    if(response.data.status == 200) {
+                                        response.data.listprovince.forEach((province,index) => {
+                                            this.assetAds.push(province)
+                                            // console.log('11111111')
+                                        })
+                                        response.data.imgprovince.forEach((img,index) => {
+                                            this.backgroundImages.push('background-image: url('+img+')')
+                                        })
+
+
+                                        response.data.listdistrict.forEach((district,index) => {
+                                            this.assetAds.push(district)
+                                            // console.log('222222222')
+                                        })
+                                        response.data.imgdistrict.forEach((img,index) => {
+                                            this.backgroundImages.push('background-image: url('+img+')')
+                                        })
+                                    }
+                                }else if(response.data.listprovince == ''){
+                                    this.assetAds = response.data.listdistrict
+                                    if(this.assetAds != null){
+                                        response.data.imgdistrict.forEach((img,index) => {
+                                            this.backgroundImages.push('background-image: url('+img+')')
+                                        })
+                                    }
+                                    // console.log('3333333333')
+                                }else if(response.data.listprovince != ''){
+                                    this.assetAds = response.data.listprovince
+                                    if(this.assetAds != null){
+                                        response.data.imgprovince.forEach((img,index) => {
+                                            this.backgroundImages.push('background-image: url('+img+')')
+                                        })
+                                    }
+                                    // console.log('555555555555')
+                                }
                             }
                         }
+                        // console.log(this.backgroundImages)
+                        // console.log(this.assetAds)
+                        
+                        // if(response.data.status == 200){
+                        //     this.assetAds.forEach(ads => {
+                        //         // console.log(ads.asset.id)
+                        //         this.assetImages(ads.asset.id)
+                        //     })
+                        // }
                     }
-                    // console.log(this.backgroundImages)
-                    // console.log(this.assetAds)
-                    
-                    // if(response.data.status == 200){
-                    //     this.assetAds.forEach(ads => {
-                    //         // console.log(ads.asset.id)
-                    //         this.assetImages(ads.asset.id)
-                    //     })
-                    // }
                 })
                 .catch(e => {
                     console.log(e)
@@ -245,6 +278,17 @@ button.asset-content-name:hover {
                 .catch(e => {
                     console.log(e)
                 })
+            },
+            buyAdAssetLink() {
+                window.location.href = siteurl + 'advertisements/package-ad#/'
+            },
+            calculateDiscount(price, discount) {
+                if(discount === null || discount === '' || discount === undefined || discount === 0) {
+                    return price
+                }else{
+                    this.isDiscount = price - discount
+                    return price - discount
+                }
             }
         }
     })

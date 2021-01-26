@@ -5,23 +5,20 @@
                 <ul class="list-inline mb-1 g-font-size-13">
                     <?php $footerLinkClass = 'u-link-v5 g-color-white'; ?>
                     <li class="list-inline-item mx-3">
-                        <?= $this->Html->link('ข้อตกลงและเงื่อนไข', ['controller' => 'home'], ['class' => $footerLinkClass]) ?>
+                        <?= $this->Html->link('ข้อตกลงและเงื่อนไข', ['controller' => 'terms_and_conditions'], ['class' => $footerLinkClass]) ?>
                     </li>
                     <li class="list-inline-item mx-3">
-                        <?= $this->Html->link('นโยบายความเป็นส่วนตัว', ['controller' => 'sales'], ['class' => $footerLinkClass]) ?>
+                        <?= $this->Html->link('นโยบายความเป็นส่วนตัว', ['controller' => 'privacy_policy'], ['class' => $footerLinkClass]) ?>
                     </li>
                     <li class="list-inline-item mx-3">
-                        <?= $this->Html->link('เกี่ยวกับเรา', ['controller' => 'rent'], ['class' => $footerLinkClass]) ?>
+                        <?= $this->Html->link('เกี่ยวกับเรา', ['controller' => 'about'], ['class' => $footerLinkClass]) ?>
                     </li>
-
                     <li class="list-inline-item mx-3">
                         <?= $this->Html->link('ติดต่อเรา', ['controller' => 'contact'], ['class' => $footerLinkClass]) ?>
                     </li>
                 </ul>
                 <span class="d-block g-color-text g-font-size-13 mb-4">&#169; MapCii. All Rights Reserved. 2019</span>
             </div>
-
-
         </div>
     </footer>
 </section>

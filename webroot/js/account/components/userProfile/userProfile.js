@@ -136,7 +136,7 @@ export const userProfile = {
                 })
                 .then((response) => {
                     if(response.data.status === 200) {
-                        this.$parent.getUserProfiles()
+                        this.$store.dispatch('getUserProfiles')
                         this.loading.firstname = false
                         this.loading.lastname = false
                         this.loading.phone = false

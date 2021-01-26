@@ -1,4 +1,3 @@
-
 <section class="dzsparallaxer auto-init height-is-based-on-content use-loading" data-options='{direction: "reverse", settings_mode_oneelement_max_offset: "150"}' style="border-bottom: #145ebe solid 7px;">
     <!-- Parallax Image -->
     <div class="divimage dzsparallaxer--target w-100 u-bg-overlay g-bg-white-opacity-0_5--after" style="height: 110%; background-image: url(<?= SITE_URL ?>img/cover/home_cover.jpg);"></div>
@@ -16,51 +15,61 @@
                 </div>
             </div>
         </div>
-
-
+        
         <?= $this->element('banner/top') ?>
     </div>
 
 </section>
-<section>
-    <div class="container g-pt-20 g-pb-10">
-        <div class="row">
-            <div class="col-md-12" id="">
-                <h3>อสังหาฯ ขายด่วนร้อนเงิน มาใหม่</h3>
+<div id="ishome">
+    <section>
+        <div class="container g-pt-20 g-pb-10">
+            <div class="row">
+                <div class="col-md-12" id="">
+                    <h3>อสังหาฯ ขายด่วนร้อนเงิน มาใหม่</h3>
+                </div>
             </div>
+            <get-assets
+                :type = "'ขายด่วน'"
+            ></get-assets>
+            <!-- <div class="row" id="box_last_asset">
+                
+            </div> -->
         </div>
-        <div class="row" id="box_last_asset">
-            
-        </div>
-    </div>
-</section>
+    </section>
 
-<section>
-    <div class="container g-pt-20 g-pb-10">
-        <div class="row">
-            <div class="col-md-12" id="">
-                <h3>อสังหาฯ มือสองมาใหม่ล่าสุด</h3>
+    <section>
+        <div class="container g-pt-20 g-pb-10">
+            <div class="row">
+                <div class="col-md-12" id="">
+                    <h3>อสังหาฯ มือสองมาใหม่ล่าสุด</h3>
+                </div>
             </div>
-        </div>
-        <div class="row" id="box_last_second_asset">
+            <get-assets
+                :type = "'มือสอง'"
+            ></get-assets>
+            <!-- <div class="row" id="box_last_second_asset">
 
+            </div> -->
         </div>
-    </div>
-</section>
+    </section>
 
-<section>
-    <div class="container g-pt-20 g-pb-10">
-        <div class="row">
-            <div class="col-md-12" id="">
-                <h3>โครงการใหม่ล่าสุด</h3>
+    <section>
+        <div class="container g-pt-20 g-pb-10">
+            <div class="row">
+                <div class="col-md-12" id="">
+                    <h3>อสังหาฯ โครงการใหม่ล่าสุด</h3>
+                </div>
             </div>
-        </div>
-        <div class="row" id="box_last_newproject_asset">
+            <get-assets
+                :type = "'โครงการใหม่'"
+            ></get-assets>
+            <!-- <div class="row" id="box_last_newproject_asset">
 
+            </div> -->
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
+<br/><br/>
 <section>
     <div class="container g-pt-20 g-pb-10">
         <div class="row">
@@ -92,11 +101,27 @@
     .font-new-family {
         font-family: 'Fredoka One';
     }
+    p.is-show-discount {
+        background-color: #dd0000;
+        padding: 0px 7px;
+        border-radius: 3px;
+        font-size: 12px;
+        color: #fff;
+    }
+    p.is-show-new {
+        background-color: #dd0000;
+        padding: 3px 7px;
+        border-radius: 3px;
+        font-size: 10px;
+        color: #fff;
+    }
 </style>
 
-<?= $this->Html->script('map.js') ?>
-<?= $this->Html->script('home.js') ?>
-<?= $this->Html->script('supporter.js') ?>
+<?= ''//$this->Html->script('map.js') ?>
+<?= ''//$this->Html->script('home.js') ?>
+<?= ''//$this->Html->script('supporter.js') ?>
+<?= $this->Html->script('home/main.js', ['type' => 'module']) ?>
+<?= $this->Html->css('home/style.css') ?>
 <?= ''//$this->Html->script('asset-option.js') ?>
 
 <?= ''//$this->Html->script('home/search') ?>

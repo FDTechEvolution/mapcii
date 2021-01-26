@@ -2,11 +2,11 @@ function setMapHeight() {
     var headerHeight = parseInt($('header[data-id="div_header"]').height());
     var footerHeight = parseInt($('#div_footer').height());
     var bannerHeight = parseInt($('#div_banner_top').height());
-    console.log('headerHeight:' + headerHeight);
-    console.log('footerHeight:' + footerHeight);
+    // console.log('headerHeight:' + headerHeight);
+    // console.log('footerHeight:' + footerHeight);
     var screenSize = getWindowSize();
     var mapHeight = screenSize.h - headerHeight - footerHeight - bannerHeight;
-    console.log('mapHeight:' + mapHeight);
+    // console.log('mapHeight:' + mapHeight);
     $('#map').height(mapHeight);
     $('#div_assetlist').height(mapHeight);
 
@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $.get(apiurl + 'api-assets/avaliable-asset?limit=4&orderby=datedesc').done(function (res) {
         res = JSON.parse(res);
-        //console.log(res);
+        // console.log(res);
         $.each(res['list'], function (index, value) {
             var str = '<div class="col-md-3">';
             str += '<article>';

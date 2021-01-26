@@ -8,15 +8,15 @@ export const PackageAd = {
         }
     },
     template: `<div class="row mb-4">
-                    <div class="col-md-6 text-center">
+                    <div class="col-md-6 text-center package-intro">
                         ตัวอย่างโฆษณา AD (Comming Soon...)
                     </div>
-                    <div class="col-md-6 border-left">
+                    <div class="col-md-6 border-left package-intro">
                         <h4>AD ประกาศลงโฆษณา</h4>
                         <p class="mb-0">กรุณาเลือก "แพ็คเกจ" ลงโฆษณา ก่อนชำระเงิน</p>
                         <p style="font-size: 0.8rem;">แพ็คเกจลงโฆษณานี้ สามารถใช้ร่วมกันได้ทั้งหน้า อสังหาขายด่วน อสังหามือสอง และโครงการใหม่ โดยระบบจะนับจำนวนประกาศรวมกันให้ลงได้ตามสิทธิ์ที่สมัครไว้</p>
                     </div>
-                    <div class="col-md-12 tableresponsive">
+                    <div v-if="!$store.getters.loading_ad_package" class="col-md-12 tableresponsive">
                         <table class="table g-mb-20 w-100" style="border-bottom: 1px solid #ddd;">
                             <thead>
                                 <tr class="g-bg-primary g-color-white" style="font-size: 0.8rem;">
@@ -54,7 +54,7 @@ export const PackageAd = {
                                         </div>
                                     </td>
                                     <td class="td-in-rowspan" rowspan="2" style="font-size: 0.9rem;">
-                                        <ul class="pl-4 mb-0 hide-on-responsive">
+                                        <ul class="pl-4 mb-0 hide-on-responsive text-left">
                                             <li>แสดงด้านขวามือของแผนที่</li>
                                             <li>แสดงก่อนประกาศฟรี มีสัญลักษณ์ 'AD' ที่ประกาศ</li>
                                             <li>แสดงผลตาม จังหวัด/อำเภอ/ตำบล ที่ค้นหา</li>
@@ -64,7 +64,7 @@ export const PackageAd = {
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="mb-0">
+                        <p class="mb-0 package-intro">
                             <span class="show-on-responsive">
                                 <h4>การแสดงประกาศ</h4>
                                 <ul class="pl-4 mb-3">
@@ -77,6 +77,13 @@ export const PackageAd = {
                             <strong style="font-size: 1.3rem;">หมายเหตุ </strong>
                             <span style="font-size: 0.8rem;">ลูกค้าสามารถเพิ่มจำนวนประกาศได้ โดยการชำระค่าแพ็คเกจประกาศ(AD)เพิ่มเติม และสามารถต่ออายุประกาศได้โดยการ ต่ออายุประกาศ(ระบบจะคำนวนอายุแต่ละแพ็คเกจ)</span>
                         </p>
+                    </div>
+                    <div v-else class="col-md-12 text-center">
+                        <div class="loadingio-spinner-pulse-s0fdf1v0u4">
+                            <div class="ldio-ukcojlsaueg">
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>`
 }

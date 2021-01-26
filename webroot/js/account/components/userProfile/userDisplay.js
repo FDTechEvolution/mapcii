@@ -114,7 +114,7 @@ export const userDisplay = {
                             </span>
                             <span v-else>
                                 <img :src="userImageDisplay" class="g-width-100 bg-white rounded">
-                                <button class="btn btn-sm btn-secondary rounded-circle border border-white btn-edit-profile-img" @click="selectImage"><i class="fas fa-edit" style="font-size: 10px; padding-left: 2px; padding-bottom: 5px;"></i></button>
+                                <button class="btn btn-sm btn-secondary rounded-circle border border-white btn-edit-profile-img" @click="selectImage"><i class="fas fa-pencil-alt" style="font-size: 12px;"></i></button>
                             </span>
                             <input type="file" id="fileUpload" ref="file" @change="previewImage" hidden>
                         </div>

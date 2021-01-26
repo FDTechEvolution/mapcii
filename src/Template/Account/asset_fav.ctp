@@ -56,7 +56,7 @@
     $(document).ready(function(){
         $.get( apiurl+"api-assets/fav/"+user_id, function( data ) {
             var json = JSON.parse(data);
-            console.log(json);
+            // console.log(json);
             $.each(json,function(key,asset){
                 //asset = asset['asset'];
                 $('#tb-fav > tbody').append('<tr><td></td><td><image src="'+asset.url+'" width="100"/></td><td>'+asset.name+'</td><td>'+Number(asset.price).toLocaleString('en')+'</td></tr>');

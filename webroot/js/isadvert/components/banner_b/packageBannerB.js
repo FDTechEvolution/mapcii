@@ -8,13 +8,13 @@ export const PackageBannerB = {
         }
     },
     template: `<div class="row mb-4">
-                    <div class="col-md-5 text-center mb-2">
+                    <div class="col-md-5 text-center mb-2 package-intro">
                         <img src="/git/mapcii/img/400x250.jpg" class="w-100"/>
                     </div>
-                    <div class="col-md-7 border-left">
+                    <div class="col-md-7 border-left package-intro">
                         <h4>ลงโฆษณา Banner B</h4>
                     </div>
-                    <div class="col-md-12 tableresponsive">
+                    <div v-if="!$store.getters.loading_ad_package" class="col-md-12 tableresponsive">
                         <table class="table g-mb-20 w-100" style="border-bottom: 1px solid #ddd;">
                             <thead>
                                 <tr class="g-bg-primary g-color-white" style="font-size: 0.8rem;">
@@ -47,7 +47,7 @@ export const PackageBannerB = {
                                         </div>
                                     </td>
                                     <td class="td-in-rowspan" rowspan="2" style="font-size: 0.9rem;">
-                                        <ul class="pl-4 mb-0 hide-on-responsive">
+                                        <ul class="pl-4 mb-0 hide-on-responsive text-left">
                                             <li>เป็นการสุ่มแสดง Banner ตอนเริ่มต้น จากนั้นจะแสดง Banner ต่อไปแบบเรียงลำดับ</li>
                                             <li>สามารถลง Banner และแก้ไขได้ด้วยตนเอง ตลอด 24 ชั่วโมง</li>
                                         </ul>
@@ -55,7 +55,7 @@ export const PackageBannerB = {
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="mb-0">
+                        <p class="mb-0 package-intro">
                             <span class="show-on-responsive">
                                 <h4>การแสดงประกาศ</h4>
                                 <ul class="pl-4 mb-3">
@@ -66,6 +66,13 @@ export const PackageBannerB = {
                             <strong style="font-size: 1.3rem;">หมายเหตุ </strong>
                             <span style="font-size: 0.8rem;">ลูกค้าสามารถเพิ่มจำนวน Banner ได้ โดยการชำระค่าแพ็คเกจ Banner เพิ่มเติม และสามารถต่ออายุ Banner ได้โดยการ ต่ออายุ Banner (ระบบจะคำนวนอายุแต่ละแพ็คเกจ)</span>
                         </p>
+                    </div>
+                    <div v-else class="col-md-12 text-center">
+                        <div class="loadingio-spinner-pulse-s0fdf1v0u4">
+                            <div class="ldio-ukcojlsaueg">
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>`
 }

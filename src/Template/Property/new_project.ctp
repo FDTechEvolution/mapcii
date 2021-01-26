@@ -6,7 +6,8 @@
             <h1 class="h2 mb-0 prompt-600 g-color-primary">โครงการใหม่</h1>
             <div class="row">
                 <div class="col-md-12">
-                    <?= $this->element('search_form_v2_2') ?>
+                    <?php //$this->element('search_form_v2_2') ?>
+                    <?= $this->element('search_form_a_1') ?>
                 </div>
             </div>
         </div>
@@ -253,12 +254,15 @@
     .asset-style::-webkit-scrollbar-thumb:hover {
         background: #555;
     }
+    nav.js-mega-menu.navbar.navbar-expand-lg.g-pa-0.hs-menu-initialized.hs-menu-horizontal .container {
+        max-width: 1140px;
+    }
 </style>
 
 <?= $this->Html->script('map.js') ?>
 <?= $this->Html->script('asset-with-map.js') ?>
 <?= $this->Html->script('asset.js') ?>
-<?= $this->Html->script('property/new-project.js')?>
+<?= $this->Html->script('property/main.js')?>
 <script>
     $(document).ready(function () {
 

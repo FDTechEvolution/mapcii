@@ -1,19 +1,54 @@
 import {ModalPackageBalanceLine} from './modalPackageBalanceLine.js'
+import {packageRenewModal} from '../modal/packageRenewModal.js'
+import {progressBar} from '../../../components/progressBar.js'
+import {packageCloseModal} from '../modal/packageCloseModal.js'
 
 export const PackageBalance = {
     components: {
-        'balance-lines' : ModalPackageBalanceLine
+        'balance-lines' : ModalPackageBalanceLine,
+        'package-renew' : packageRenewModal,
+        'progress-bar' : progressBar,
+        'package-close' : packageCloseModal
     },
     data() {
         return {
+            status: {
+                isY: 'Y',
+                isN: 'N',
+                Complete: 'CO',
+                Expire: 'EX'
+            },
             showModal: false,
             code: '',
             name: '',
-            size: ''
+            size: '',
+            showAll: false,
+            packageRenew: {
+                id: '',
+                code: '',
+                name: '',
+                size: ''
+            },
+            packageClose: {
+                id: '',
+                code: '',
+                name: '',
+                size: ''
+            }
         }
     },
     mounted() {
-        this.$store.dispatch('getUserPackageBalance')
+        this.$store.dispatch('getUserPackageBalance', true)
+    },
+    computed: {
+        balanceSofting() {
+            let balance = this.$store.getters.package_balance
+            let balance_expire = balance.filter(item => item.isexpire === this.status.isY)
+            let balance_allUsed = balance.filter(item => this.isBalance(item.credit, item.used) <= 0)
+            let balance_active = balance.filter(item => item.isexpire === this.status.isN && this.isBalance(item.credit, item.used) > 0)
+
+            return balance_active.concat(balance_expire, balance_allUsed)
+        }
     },
     methods: {
         isBalance(qty, used) {
@@ -59,35 +94,73 @@ export const PackageBalance = {
             let packageDetail = {id: id, name: packagename, duration: duration, price: price, index: index}
             this.$store.dispatch('getDataToPayment', packageDetail)
             this.$router.push('/payment')
+        },
+        dateIsZero(duration) {
+            return (duration > 0) ? duration : 0
+        },
+        renewAdsBalance(id,code,name,size) {
+            this.packageRenew.id = id
+            this.packageRenew.code = code
+            this.packageRenew.name = name
+            this.packageRenew.size = size
+            this.$store.dispatch('showPackageRenewModal', true)
+        },
+        closeAdsBalance(id, code, name, size) {
+            this.packageClose.id = id
+            this.packageClose.code = code
+            this.packageClose.name = name
+            this.packageClose.size = size
+            this.$store.dispatch('showPackageCloseModal', true)
+        },
+        checkRenewButtonCondition(isExp, duration) {
+            return (isExp === this.status.isY || duration < 1) ? true : false
         }
     },
-    template: `<div class="tableresponsive">
-                    <table class="table g-mb-20 w-100" style="border-bottom: 1px solid #ddd;">
+    template: `<div class="tableresponsive style-on-package-account">
+                    <div class="row">
+                        <div class="col-md-6" style="text-align: left;">
+                            <span><input v-model="showAll" type="checkbox" id="showall" style="cursor: pointer;"> <label for="showall" style="cursor: pointer;"><small>แสดงเฉพาะแพ็คเกจที่สามารถใช้งานได้</small></label></span>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-right mb-0 icon-description"><small><button class="btn btn-sm btn-info" style="padding: 0.05rem .25rem;"><i class="fas fa-redo-alt"></i></button> = ต่ออายุแพ็คเกจ , <button class="btn btn-sm btn-danger" style="padding: 0.05rem .25rem;" title="ปิดแพ็คเกจ"><i class="fas fa-times-circle"></i></button> = ปิดแพ็คเกจ , <i class="fas fa-check-circle text-secondary" style="font-size: 16px;"></i> = เครดิตเต็ม</small></p>
+                        </div>
+                    </div>
+                    <progress-bar v-if="$store.getters.balance_progress_bar"></progress-bar>
+                    <table class="table g-mb-20 w-100 bg-white" style="border-bottom: 1px solid #ddd;">
                         <thead>
                             <tr class="g-bg-primary g-color-white">
                                 <th>หมายเลขคำสั่งซื้อ</th>
                                 <th class="text-center">ประเภทโฆษณา</th>
-                                <th class="text-center">วันที่ซื้อ/ต่ออายุ</th>
+                                <th class="text-center">วันที่ซื้อ</th>
                                 <th class="text-center">สิทธิ์ลงโฆษณา</th>
                                 <th class="text-center">ใช้สิทธิ์ไปแล้ว</th>
                                 <th class="text-center">คงเหลือ</th>
+                                <th class="text-center td-activity"></th>
                             </tr>
                         </thead>
                         <tbody class="g-font-size-14">
                             <slot v-if="!$store.getters.balance_loaded">
                                 <slot v-if="$store.getters.package_balance !== ''">
-                                    <tr v-for="(balance, index) in $store.getters.package_balance">
-                                        <td data-title="หมายเลขคำสั่งซื้อ"><button class="btn btn-link p-0" @click="BalanceLine(balance.u_pack_id,balance.order_code,balance.name,balance.size)">{{ balance.order_code }}</button> <i v-if="balance.attention" class="fas fa-exclamation-circle text-warning"></i></td>
+                                    <tr v-for="(balance, index) in balanceSofting" :class="[(balance.isexpire === status.isY || isBalance(balance.credit, balance.used) <= 0 || balance.duration <= 0) ? 'bg-light' : '', (balance.isexpire === status.isY && showAll || isBalance(balance.credit, balance.used) <= 0 && showAll || balance.duration <= 0 && showAll) ? 'isNone' : '']">
+                                        <td data-title="หมายเลขคำสั่งซื้อ">
+                                            <button class="btn btn-link p-0" @click="BalanceLine(balance.u_pack_id,balance.order_code,balance.name,balance.size)">{{ balance.order_code }}</button> <i v-if="balance.attention" class="fas fa-exclamation-circle text-warning"></i> 
+                                        </td>
                                         <td data-title="ประเภทโฆษณา" class="text-center">{{ balance.name }} <span v-if="balance.size !== null">- {{ balance.size }}</span> </td>
-                                        <td data-title="วันที่ซื้อ/ต่ออายุ" class="text-center">{{ thDateFormat(balance.buy_date) }} <span v-if="balance.duration !== null">({{ balance.duration }} วัน)</span></td>
+                                        <td data-title="วันที่ซื้อ" class="text-center">{{ thDateFormat(balance.buy_date) }} <span v-if="balance.duration !== null">(<strong :class="[(balance.duration < 10) ? 'text-danger' : 'text-info']">{{ dateIsZero(balance.duration) }}</strong> <small>วัน</small>)</span></td>
                                         <td data-title="สิทธิ์ลงโฆษณา" class="text-center"><strong>{{ balance.credit }}</strong></td>
-                                        <slot v-if="balance.isexpire === 'N'">
-                                            <td data-title="ใช้สิทธิ์ไปแล้ว" class="text-center"><strong class="text-danger">{{ balance.used }}</strong></td>
-                                            <td data-title="คงเหลือ" class="text-center"><strong class="text-success">{{ isBalance(balance.credit, balance.used) }}</strong></td>
-                                        </slot>
-                                        <slot v-else>
-                                            <td data-title="" class="text-center" colspan="2"><button class="btn btn-success">เลือกวิธีการชำระเงิน</button></td>
-                                        </slot>
+                                        <td data-title="ใช้สิทธิ์ไปแล้ว" class="text-center"><strong class="text-danger">{{ balance.used }}</strong></td>
+                                        <td data-title="คงเหลือ" class="text-center"><strong class="text-success">{{ isBalance(balance.credit, balance.used) }}</strong></td>
+                                        <td v-if="balance.attention" class="text-center td-activity"></td>
+                                        <td v-else class="text-center td-activity">
+                                            <slot v-if="checkRenewButtonCondition(balance.isexpire, balance.duration)">
+                                                <span v-if="isBalance(balance.credit, balance.used) <= 0"><i class="fas fa-check-circle text-secondary" style="font-size: 20px; margin-bottom: -4px;"></i></span>
+                                                <button class="btn btn-sm btn-info" style="padding: 0.05rem .25rem;" title="ต่ออายุแพ็คเกจ" @click="renewAdsBalance(balance.u_pack_id,balance.order_code,balance.name,balance.size)"><i class="fas fa-redo-alt"></i></button>
+                                                <button class="btn btn-sm btn-danger" style="padding: 0.05rem .25rem;" title="ปิดแพ็คเกจ" @click="closeAdsBalance(balance.u_pack_id,balance.order_code,balance.name,balance.size)"><i class="fas fa-times-circle"></i></button>
+                                            </slot>
+                                            <slot v-else>
+                                                <span v-if="isBalance(balance.credit, balance.used) <= 0"><i class="fas fa-check-circle text-secondary" style="font-size: 20px;"></i></span>
+                                            </slot>
+                                        </td>
                                     </tr>
                                 </slot>
                                 <slot v-else>
@@ -110,8 +183,8 @@ export const PackageBalance = {
                         </tbody>
                     </table>
                     <balance-lines v-if="showModal" @close="showModal = false">
-                        <h4 slot="header">[ {{ code }} ] : {{ name }} <span v-if="size !== ''">- {{ size }}</span></h4>
-                        <div class="tableresponsive">
+                        <h4 slot="header">[ {{ code }} ] : {{ name }} <span v-if="size !== null">- {{ size }}</span></h4>
+                        <div slot="body" class="tableresponsive">
                             <table class="table g-mb-20 w-100" style="border-bottom: 1px solid #ddd;">
                                 <thead>
                                     <tr class="g-bg-secondary g-color-dark">
@@ -126,8 +199,8 @@ export const PackageBalance = {
                                 <tbody v-if="!$store.getters.balanceline_loaded">
                                     <tr class="pt-2 pb-2" v-for="(balanceline, index) in $store.getters.balance_line">
                                         <td data-title="หมายเลขใบเสร็จ">
-                                            <span v-if="balanceline.user_payments[index].documentno !== null">
-                                                {{index+1}}. {{ balanceline.user_payments[index].documentno }}
+                                            <span v-if="balanceline.user_payments[0].documentno !== null">
+                                                {{index+1}}. {{ balanceline.user_payments[0].documentno }}
                                             </span>
                                             <span v-else>
                                                 ยังไม่ได้ชำระเงิน...
@@ -182,5 +255,18 @@ export const PackageBalance = {
                             </table>
                         </div>
                     </balance-lines>
+                    <package-renew v-if="$store.getters.showPackageRenewModal"
+                        :id = packageRenew.id
+                        :packageCode = packageRenew.code
+                        :name = packageRenew.name
+                        :size = packageRenew.size
+                    ></package-renew>
+
+                    <package-close v-if="$store.getters.showPackageCloseModal"
+                        :id = packageClose.id
+                        :packageCode = packageClose.code
+                        :name = packageClose.name
+                        :size = packageClose.size
+                    ></package-close>
                 </div>`
 }

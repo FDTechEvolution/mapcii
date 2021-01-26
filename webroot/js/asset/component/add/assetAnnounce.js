@@ -120,6 +120,9 @@ export const AssetAnnounce = {
             this.asset.discount = Math.ceil((this.asset.price*this.minDiscountPercent)/100)
             this.discountNotice = ''
             this.discountNoticeStatus = false
+        },
+        checkCreditCondition(duration, credit) {
+            return (duration > 0 && credit > 0) ? true : false
         }
     },
     template: `<div class="row">
@@ -169,7 +172,7 @@ export const AssetAnnounce = {
                                         <label for="type">เลือกเครดิตโฆษณา</label>
                                         <select v-model="asset.packageCreditSelected" class="form-control" id="type" name="type" @change="creditSelected">
                                             <option value="" class="text-dark">ไม่ได้เลือก...</option>
-                                            <option v-for="creditList in $store.getters.creditList" :value="creditList.id">{{ creditList.code }} - [คงเหลือ {{ creditList.duration }} วัน : {{ creditList.credit }} เครดิต]</option>
+                                            <option v-if="checkCreditCondition(creditList.duration, creditList.credit)" v-for="creditList in $store.getters.creditList" :value="creditList.id">{{ creditList.code }} - [คงเหลือ {{ creditList.duration }} วัน : {{ creditList.credit }} เครดิต]</option>
                                         </select>
                                     </div>
                                     <div v-else>
@@ -182,7 +185,7 @@ export const AssetAnnounce = {
                                 <label for="project">ประเภท <strong class="text-danger">*</strong></label>
                                 <select v-model="asset.project" class="form-control" id="project" name="project" :disabled="$store.getters.announceStatus === null">
                                     <option disabled value="">เลือก...</option>
-                                    <option value="มือสอง">อสังหามือสอง</option>
+                                    <option value="มือสอง">อสังหามือสอง <span v-if="$store.getters.announceStatus !== null && asset.packageCreditSelected !== ''">(ใช้เครดิต x1)</span></option>
                                     <slot v-if="$store.getters.announceStatus !== null && asset.packageCreditSelected !== ''">
                                         <option v-if="asset.announce !== 'ให้เช่า'" value="ขายด่วน">อสังหาขายด่วน <span class="text-info">(ใช้เครดิต x1)</span></option>
                                         <option value="โครงการใหม่">โครงการใหม่ (ใช้เครดิต x1)</option>

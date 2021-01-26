@@ -1,41 +1,29 @@
 import {store} from '../store/index.js'
 import {router} from './router/index.js'
-import {userProfile} from './components/userProfile.js'
-import {userDisplay} from './components/userDisplay.js'
-import {userChangePassword} from './components/userChangePassword.js'
 import {packageIndex} from './packageIndex.js'
+import {leftMenuAccount} from './leftMenuAccount.js'
 
 new Vue ({
     el: '#account',
     store,
     router,
     components: {
-        'user-profile' : userProfile,
-        'user-display' : userDisplay,
-        'user-change-password' : userChangePassword,
-        'package-index' : packageIndex
+        'package-index' : packageIndex,
+        'menu-account' : leftMenuAccount
     },
     data () {
         return {
-            userProfile: [],
-            loading: true
+
         }
     },
     mounted() {
-        this.getUserProfiles()
+        this.$store.dispatch('loadAssetList', true)
+        this.$store.dispatch('loadFreeAssetList', true)
+        this.$store.dispatch('loadBannerListToMyAccount', true)
+        this.$store.dispatch('getUserProfiles')
+        this.$store.dispatch('loadAssetFavorite', false)
     },
     methods: {
-        getUserProfiles () {
-            try{
-                axios.get(apiurl + 'api-users/user?id=' + user_id)
-                .then((response) => {
-                    // console.log(response)
-                    this.userProfile = response.data.data
-                })
-                .finally(() => this.loading = false)
-            }catch(e){
-                console.log(e)
-            }
-        }
+        
     }
 })

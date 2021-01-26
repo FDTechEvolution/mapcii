@@ -20,7 +20,14 @@ const state = {
     bannerBPackages: [],
     bannerBPackageName:[],
 
-    driffDate: null
+    driffDate: null,
+
+    showPackageRenewModal: false,
+    balance_progress_bar: false,
+    renew_saving: false,
+    showPackageCloseModal: false,
+    package_closing: false,
+    loading_ad_package: false
 }
 
 const getters = {
@@ -43,12 +50,20 @@ const getters = {
     package_banner_a_name: state => state.bannerAPackageName,
 
     package_banner_b: state => state.bannerBPackages,
-    package_banner_b_name: state => state.bannerBPackageName
+    package_banner_b_name: state => state.bannerBPackageName,
+
+    showPackageRenewModal: state => state.showPackageRenewModal,
+    balance_progress_bar: state => state.balance_progress_bar,
+    renew_saving: state => state.renew_saving,
+    showPackageCloseModal: state => state.showPackageCloseModal,
+    package_closing: state => state.package_closing,
+    loading_ad_package: state => state.loading_ad_package
 }
 
 const mutations = {
     GET_PACKAGE_BALANCE(state, data) {
         state.packageBalance = data
+        // console.log('loaded')
         // (data.status === 200) ? state.packageBalance = data : (data.status === 404) ? state.packageBalance = '' : ''
     },
     GET_PACKAGE_DURATION(state, data) {
@@ -90,50 +105,76 @@ const mutations = {
     },
     DRIFF_DATE(state, data) {
         state.driffDate = data
+    },
+    SET_SHOW_PACKAGE_RENEW_MODAL(state, status) {
+        state.showPackageRenewModal = status
+    },
+    SET_PROGRESS_BAR_LOADING(state, status) {
+        state.balance_progress_bar = status
+    },
+    USER_RENEW_SAVING(state, status) {
+        state.renew_saving = status
+    },
+    SHOW_PACKAGE_CLOSE_MODAL(state, status) {
+        state.showPackageCloseModal = status
+    },
+    PACKAGE_CLOSE_CLOSING(state, status) {
+        state.package_closing = status
+    },
+    LOADING_AD_PACKAGE(state, status) {
+        state.loading_ad_package = status
     }
 }
 
 const actions = {
-    getUserPackageBalance({commit, dispatch, state}) {
-        commit('BALANCE_LOADED', true)
+    getUserPackageBalance({commit, dispatch, state}, inLoad) {
+        if(inLoad) commit('BALANCE_LOADED', true)
         try{
             axios.get(apiurl + 'api-packages/package-balance?uid=' + localStorage.getItem('MAPCII_USER'))
             .then((response) => {
-                let isBalance = []
-                let isPackageName = null
-                let isPackageSize = null
-                response.data.balance.forEach(item => {
-                    let isDuration = null
-                    let isAttention = false
+                // console.log(response)
+                if(response.data.status === 200) {
+                    let isBalance = []
+                    let isPackageName = null
+                    let isPackageSize = null
+                    response.data.balance.forEach(item => {
+                        let isDuration = null
+                        let isAttention = false
 
-                    item.user_package_lines.forEach(item => {
-                        isPackageName = item.package_name
-                        isPackageSize = item.size
-                        if(item.ispaid === 'Y'){
-                            let toDiffDate = {paidDate: item.start_date, duration: item.duration}
-                            dispatch('diffDate', toDiffDate)
-                            isDuration = Math.ceil(state.driffDate)
-                        }else{
-                            isAttention = true
-                        }
-                    })
+                        item.user_package_lines.forEach(item => {
+                            isPackageName = item.package_name
+                            isPackageSize = item.size
+                            if(item.ispaid === 'Y'){
+                                let toDiffDate = {paidDate: item.start_date, duration: item.duration}
+                                dispatch('diffDate', toDiffDate)
+                                isDuration = Math.ceil(state.driffDate)
+                            }else{
+                                isAttention = true
+                            }
+                        })
 
-                    isBalance.push({
-                        u_pack_id : item.id,
-                        order_code : item.order_code, 
-                        name : isPackageName, 
-                        size: isPackageSize,
-                        buy_date : (item.user_package_lines[item.user_package_lines.length - 1].paid_date !== null) ? item.user_package_lines[item.user_package_lines.length - 1].paid_date : item.user_package_lines[item.user_package_lines.length - 1].buy_date,
-                        duration : isDuration,
-                        credit : item.credit,
-                        used : item.used,
-                        isexpire : item.isexpire,
-                        attention : isAttention
+                        isBalance.push({
+                            u_pack_id : item.id,
+                            order_code : item.order_code, 
+                            name : isPackageName, 
+                            size: isPackageSize,
+                            buy_date : (item.user_package_lines[item.user_package_lines.length - 1].paid_date !== null) ? item.user_package_lines[item.user_package_lines.length - 1].paid_date : item.user_package_lines[item.user_package_lines.length - 1].buy_date,
+                            duration : isDuration,
+                            credit : item.credit,
+                            used : item.used,
+                            isexpire : item.isexpire,
+                            attention : isAttention
+                        })
                     })
-                })
-                commit('GET_PACKAGE_BALANCE', isBalance)
+                    commit('GET_PACKAGE_BALANCE', isBalance)
+                }else{
+                    commit('GET_PACKAGE_BALANCE', '')
+                }
             })
-            .finally(() => commit('BALANCE_LOADED', false))
+            .finally(() => {
+                commit('BALANCE_LOADED', false)
+                dispatch('progressBarLoading', false)
+            })
         }catch(e){
             console.log(e)
         }
@@ -154,6 +195,7 @@ const actions = {
         try{
             axios.get(apiurl + 'api-packages/package-balance-lines?upid=' + id)
             .then((response) => {
+                // console.log(response)
                 commit('GET_BALANCE_LINE', response.data)
             })
             .finally(() => commit('BALANCELINE_LOADED', false))
@@ -182,6 +224,7 @@ const actions = {
         }
     },
     getAdPackages({commit,state}) {
+        commit('LOADING_AD_PACKAGE', true)
         try{
             axios.get(apiurl + 'api-packages/package-ad-list')
             .then((response) => {
@@ -242,26 +285,31 @@ const actions = {
                     state.adSize = nameSize[0]
                 }
             })
+            .finally(() => commit('LOADING_AD_PACKAGE', false))
         }catch(e){
             console.log(e)
         }
     },
     getBannerA({commit}) {
+        commit('LOADING_AD_PACKAGE', true)
         try{
             axios.get(apiurl + 'api-packages/package-banner-a-list')
             .then((response) => {
                 commit('GET_BANNER_A_PACKAGE', response.data.package_banner_a)
             })
+            .finally(() => commit('LOADING_AD_PACKAGE', false))
         }catch(e){
             console.log(e)
         }
     },
     getBannerB({commit}) {
+        commit('LOADING_AD_PACKAGE', true)
         try{
             axios.get(apiurl + 'api-packages/package-banner-b-list')
             .then((response) => {
                 commit('GET_BANNER_B_PACKAGE', response.data.package_banner_b)
             })
+            .finally(() => commit('LOADING_AD_PACKAGE', false))
         }catch(e){
             console.log(e)
         }
@@ -287,6 +335,57 @@ const actions = {
         }catch(e){
             console.log(e)
         }
+    },
+    showPackageRenewModal({commit}, status) {
+        commit('SET_SHOW_PACKAGE_RENEW_MODAL', status)
+    },
+    saveUserRenewPackage({commit, dispatch}, payload) {
+        dispatch('progressBarLoading', true)
+        commit('USER_RENEW_SAVING', true)
+        let formData = new FormData()
+        formData.append('user_package_id', payload.user_package_id)
+        formData.append('duration_id', payload.duration_id)
+        formData.append('size_id', payload.size_id)
+        formData.append('package_line_id', payload.package_line_id)
+        axios.post(apiurl + 'api-packages/save-user-renew-package', formData, {
+            headers: {
+                'Content-Type' : 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            if(response.data.status === 200) {
+                if(payload.isForm === 'md') {
+                    dispatch('getUserPackageBalance', false)
+                    commit('USER_RENEW_SAVING', false)
+                }else if(payload.isForm === 'pk') {
+                    window.location.href = siteurl + 'advertisements/balance'
+                    commit('USER_RENEW_SAVING', false)
+                }
+            }
+        })
+        .finally(() => commit('SET_SHOW_PACKAGE_RENEW_MODAL', false))
+    },
+    showPackageCloseModal({commit}, status) {
+        commit('SHOW_PACKAGE_CLOSE_MODAL', status)
+    },
+    ClosePackageBalance({commit, dispatch}, data) {
+        dispatch('progressBarLoading', true)
+        commit('PACKAGE_CLOSE_CLOSING', true)
+        try {
+            axios.get(apiurl + 'api-packages/close-package-balance?id=' + data)
+            .then((response) => {
+                if(response.data.status === 200) {
+                    dispatch('getUserPackageBalance', false)
+                    commit('PACKAGE_CLOSE_CLOSING', false)
+                }
+            })
+            .finally(() => commit('SHOW_PACKAGE_CLOSE_MODAL', false))
+        } catch(e) {
+            throw e
+        }
+    },
+    progressBarLoading({commit}, status) {
+        commit('SET_PROGRESS_BAR_LOADING', status)
     }
 }
 

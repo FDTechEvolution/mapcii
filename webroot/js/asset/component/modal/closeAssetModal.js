@@ -1,5 +1,5 @@
 export const closeAssetModal = {
-    props: ['assetName', 'assetId'],
+    props: ['assetCode', 'assetName', 'assetDuration', 'assetId'],
     methods: {
         confirmCloseAsset(id) {
             this.$store.dispatch('closeAssetFree', id)
@@ -10,14 +10,16 @@ export const closeAssetModal = {
                         <div class="modal-wrapper">
                             <div class="modal-container-closeasset">
 
-                                <div class="modal-body text-center pt-5 pb-5">
+                                <div class="modal-body text-center pt-4 pb-4">
                                     <slot name="body">
-                                        ยืนยันการปิดประกาศ <strong class="border-bottom">"{{assetName}}"</strong> ?
+                                        <h5 class="mb-3">ยืนยันการปิดประกาศ ?</h5>
+                                        <strong class="border-bottom">"[{{assetCode}}] : {{assetName}}"</strong><br/>
+                                        ระยะเวลาคงเหลือ : <strong v-if="assetDuration > 10" class="text-success">{{assetDuration}}</strong><strong v-else class="text-danger">{{assetDuration}}</strong> วัน
                                     </slot>
                                 </div>
 
                                 <div class="modal-footer d-flex pt-2 pb-2">
-                                    <slot v-if="!$store.getters.loadingCloseAsset" name="footer">
+                                    <slot v-if="!$store.getters.closeAssetFreeLoading" name="footer">
                                         <button class="btn btn-danger" @click="confirmCloseAsset(assetId)">ยืนยัน</button>
                                         <button class="btn btn-secondary" @click="$store.dispatch('closeAssetFreeModal', false)">ยกเลิก</button>
                                     </slot>

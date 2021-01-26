@@ -24,7 +24,9 @@ const state = {
     closeAssetFreeModal: false,
     assetLists: [],
     imageLists: [],
-    assetListLoading: false
+    assetListLoading: false,
+    closeAssetFreeLoading: false,
+    extendAssetLoading: false
 }
 
 const getters = {
@@ -47,7 +49,9 @@ const getters = {
     closeAssetFreeModal: state => state.closeAssetFreeModal,
     assetLists: state => state.assetLists,
     imageLists: state => state.imageLists,
-    assetListLoading: state => state.assetListLoading
+    assetListLoading: state => state.assetListLoading,
+    closeAssetFreeLoading: state => state.closeAssetFreeLoading,
+    extendAssetLoading: state => state.extendAssetLoading
 }
 
 const mutations = {
@@ -112,9 +116,11 @@ const mutations = {
     },
     IS_TEST_ANNOUNCE_LOADED (state, status) {
         state.isAnnounceStatusLoaded = status
+        // console.log(status)
     },
     SET_CREDIT_LIST (state, data) {
         state.creditList = data
+        // console.log(state.creditList)
     },
     SET_IS_TYPE (state, data) {
         state.isType = data
@@ -136,6 +142,12 @@ const mutations = {
     },
     SET_ASSET_LIST_LOADING(state, status) {
         state.assetListLoading = status
+    },
+    SET_CLOSE_ASSET_FREE_LOADING(state, status) {
+        state.closeAssetFreeLoading = status
+    },
+    EXTEND_ASSET_LOADING(state, status) {
+        state.extendAssetLoading = status
     }
 }
 
@@ -269,13 +281,14 @@ const actions = {
         }
     },
     async packageAdCheck ({commit, dispatch}, data) {
+        // console.log(data)
         commit('IS_TEST_ANNOUNCE_LOADED', true)
         let packageResponse = await axios.get(apiurl + 'api-packages/package-list')
-        commit('SET_IS_TYPE', (data === 'AD') ? packageResponse.data.packages[2].id : (data === 'A') ? packageResponse.data.packages[0].id : (data === 'B') ? packageResponse.data.packages[1].id : '')
+        commit('SET_IS_TYPE', (data === 'AD') ? packageResponse.data.packages[2].id : (data.is_banner === 'Banner A') ? packageResponse.data.packages[0].id : (data.is_banner === 'Banner B') ? packageResponse.data.packages[1].id : (data.is_banner === 'Banner ALL') ? 'Banner ALL' : '')
 
         await dispatch('getPackageAd')
-        await dispatch('loadCategories')
-        await dispatch('loadAddress')
+        if(data === 'AD') await dispatch('loadCategories')
+        if(data === 'AD') await dispatch('loadAddress')
     },
     diffDate({commit}, toDiffDate) {
         let result = new Date(toDiffDate.paidDate);
@@ -293,24 +306,29 @@ const actions = {
             axios.get(apiurl + 'api-packages/package-balance?uid=' + localStorage.getItem('MAPCII_USER'))
             .then((response) => {
                 if(response.data.status === 200){
-                    let isDuration = null
-                    let isHasCredit = null
-                    let isTestAnnounce = null
-                    let getCredit = null
-                    let getUsed = null
+                    let isDuration, isHasCredit, isTestAnnounce, getCredit = null, getUsed = null
                     let creditList = []
 
                     response.data.balance.forEach(item => {
                         item.user_package_lines.forEach(item2 => {
-                            if(item2.ispaid === 'Y'){
+                            if(item2.ispaid === 'Y' && item.isexpire === 'N'){
                                 let toDiffDate = {paidDate: item2.start_date, duration: item2.duration}
                                 dispatch('diffDate', toDiffDate)
 
-                                if(item2.package_line.package_id === state.isType) {
-                                    getCredit += item.credit
-                                    getUsed += item.used
+                                if(state.isType === 'Banner ALL') {
+                                    if(item2.package_name === 'Banner A' || item2.package_name === 'Banner B') {
+                                        getCredit += item.credit
+                                        getUsed += item.used
 
-                                    if(item.credit > item.used) creditList.push({id:item.id, code:item.order_code, duration:Math.ceil(state.driffDate), credit:(item.credit - item.used)})
+                                        if(item.credit > item.used) creditList.push({id:item.id, name:item2.package_name, code:item.order_code, duration:Math.ceil(state.driffDate), credit:(item.credit - item.used)})
+                                    }
+                                }else{
+                                    if(item2.package_line.package_id === state.isType) {
+                                        getCredit += item.credit
+                                        getUsed += item.used
+
+                                        if(item.credit > item.used) creditList.push({id:item.id, name:item2.package_name, code:item.order_code, duration:Math.ceil(state.driffDate), credit:(item.credit - item.used)})
+                                    }
                                 }
                                 
                                 isDuration = (Math.ceil(state.driffDate) >= 0) ? true : false
@@ -324,7 +342,7 @@ const actions = {
                     // console.log(creditList)
                     // console.log(getCredit)
                     // console.log(getUsed)
-                    if(getCredit > getUsed) isHasCredit = true
+                    isHasCredit = (getCredit > getUsed) ? true : false
                     commit('SET_CREDIT_LIST', creditList)
 
                     let packageStatus = {isDuration: isDuration, isHasCredit: isHasCredit, isTestAnnounce: isTestAnnounce}
@@ -342,6 +360,7 @@ const actions = {
         commit('SET_CLOSE_ASSET_MODAL', status)
     },
     closeAssetFree ({commit, dispatch}, id) {
+        commit('SET_CLOSE_ASSET_FREE_LOADING', true)
         try{
             let formData = new FormData()
             formData.append('id', id)
@@ -353,15 +372,35 @@ const actions = {
             .then((response) => {
                 if(response.data.status === 200){
                     dispatch('closeAssetFreeModal', false)
-                    dispatch('getPackageAd')
+                    dispatch('loadAssetList')
+                }
+            })
+            .finally(() => commit('SET_CLOSE_ASSET_FREE_LOADING', false))
+        }catch(e){
+            throw e
+        }
+    },
+    upAssetToTopFree ({commit, dispatch}, id) {
+        commit('EXTEND_ASSET_LOADING', true)
+        try{
+            let formData = new FormData()
+            formData.append('id', id)
+            axios.post(apiurl + 'api-assets/up-asset-to-top', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                if(response.data.status === 200){
+                    dispatch('loadAssetList', false)
                 }
             })
         }catch(e){
             throw e
         }
     },
-    loadAssetList ({commit}) {
-        commit('SET_ASSET_LIST_LOADING', true)
+    loadAssetList ({commit}, inload) {
+        if(inload) commit('SET_ASSET_LIST_LOADING', true)
         try{
             axios.get(apiurl + 'api-assets/getlistasset?user=' + localStorage.getItem('MAPCII_USER'))
             .then((response) => {
@@ -371,9 +410,33 @@ const actions = {
             .catch(e => {
                 console.log(e)
             })
-            .finally(() => commit('SET_ASSET_LIST_LOADING', false))
+            .finally(() => {
+                commit('SET_ASSET_LIST_LOADING', false)
+                commit('EXTEND_ASSET_LOADING', false)
+            })
         }catch(e){
             console.log(e)
+        }
+    },
+    extendAsset ({commit, dispatch}, data) {
+        if(data.duration < 7) {
+            commit('EXTEND_ASSET_LOADING', true)
+            try{
+                let formData = new FormData()
+                formData.append('id', data.id)
+                axios.post(apiurl + 'api-assets/extend-asset', formData, {
+                    headers: {
+                        'Content-Type' : 'multipart/form-data'
+                    }
+                })
+                .then((response) => {
+                    if(response.data.status === 200){
+                        dispatch('loadAssetList', false)
+                    }
+                })
+            }catch(e){
+                throw e
+            }
         }
     }
 }

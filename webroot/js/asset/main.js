@@ -36,7 +36,7 @@ new Vue ({
     },
     mounted () {
         // this.loadAssetList()
-        this.$store.dispatch('loadAssetList')
+        this.$store.dispatch('loadAssetList', true)
     },
     methods: {
         loadAssetList () {

@@ -18,6 +18,59 @@
     z-index: 2;
     cursor: pointer;
 }
+.btn-edit-banner-img {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    z-index: 99;
+}
+.banner-notice-border {
+    border: 4px solid #dd0000;
+}
+.m-height-custom-270 {
+  max-height: 270px;
+}
+.isNone {
+  display: none !important;
+}
+tr:last-child td.td-in-rowspan {
+  display: none;
+}
+.package-intro {
+  display: none;
+}
+.td-activity {
+  display: none;
+}
+.icon-description {
+  display: none;
+}
+.style-on-package-account {
+  height: 260px;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+/* scroll style width */
+.style-on-package-account::-webkit-scrollbar {
+  width: 6px;
+}
+/* scroll style Track */
+.style-on-package-account::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+/* scroll style Handle */
+.style-on-package-account::-webkit-scrollbar-thumb {
+  background: #bbb; 
+  border-radius: 5px;
+}
+/* scroll style Handle on hover */
+.style-on-package-account::-webkit-scrollbar-thumb:hover {
+  background: #888; 
+  border-radius: 5px;
+}
+
+
 
 /* LOADING STYLE */
 @keyframes ldio-mlvdh911kas {
@@ -335,6 +388,12 @@ transform-origin: 0 0; /* see note above */
 
   .show-on-responsive { display: initial; }
 
+  ul.nav.nav-tabs li { margin-bottom: 26px; }
+
+  ul.nav.nav-tabs { padding-bottom: 0 !important; }
+
+  .modal-container, .modal-container-closeasset { width: 95% !important; }
+
 }
 
 /*--------------------- MODAL ---------------------------------*/
@@ -419,3 +478,61 @@ transform-origin: 0 0; /* see note above */
   transform: scale(1.1);
 }
 /* --------------------------------------------------------------------------------------- */
+
+
+
+/* ------------------------------- ASSET HISTORY TABS ------------------------------------ */
+ul.nav.nav-tabs li a {
+  padding: 7px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+a.active.show {
+  background-color: #3398dc;
+  color: #fff;
+}
+ul.nav.nav-tabs {
+  padding-bottom: 6px;
+}
+.nav-tabs {
+  border-bottom: none;
+}
+/* ----------------------------------------------------------------------------------------- */
+
+
+
+/* -------------------------- LEFT MENU -------------------------------- */
+a.router-link-active.router-link-exact-active.router-link-active {
+  color: #fff;
+  font-weight: 700;
+  background-color: #145ebe;
+  padding: 4px 14px;
+  padding-left: 0;
+  border-radius: 5px;
+}
+a.router-link-active {
+  color: #333;
+}
+/* --------------------------------------------------------------------- */
+
+
+
+/* -------------------------- PROGRESS BAR LOADING -------------------------------- */
+#myProgress {
+  width: 100%;
+  background-color: #eee;
+  border-radius: 30px;
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999; */
+}
+
+#myBar {
+  width: 1%;
+  height: 3px;
+  background-color: #4CAF50;
+  border-radius: 30px;
+}
+/* -------------------------------------------------------------------------------- */

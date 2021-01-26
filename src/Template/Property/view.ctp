@@ -1,13 +1,44 @@
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<?php 
+    function setDateFormat($date) {
+        $exTdate = explode('T', $date);
+        $exDate = explode('-', $exTdate[0]);
+        return $exDate[2].'/'.$exDate[1].'/'.$exDate[0];
+    }
+?>
 
 <div class="container g-pt-50 g-pb-80">
 
-    <h1 class="h2 mb-0"><?= $asset['name'] ?></h1>
+    <h1 class="h2 mb-0"><span class="text-primary">[<?= $asset['announce'] ?>]</span> : <?= $asset['name'] ?></h1>
 
     <div class="row">
         <div class="col-md-8">
-            <span class="d-block g-font-weight-600 g-font-size-25 text-danger"><?= $this->Number->format($asset['price']) ?> <span class="g-font-size-15">/บาท</span></span>
+            <span class="d-block g-font-weight-600 g-font-size-25 text-danger">
+                <span class='g-font-size-15 text-dark'>ราคา : </span>
+                <?php 
+                    if($asset['issales'] == 'Y' && $asset['isrent'] == 'N') {
+                        echo ($asset['discount'] !== 0) 
+                            ? '<small><s>'.$this->Number->format($asset['price']).'</s></small> '.$this->Number->format($asset['price'] - $asset['discount']) 
+                            : $this->Number->format($asset['price']);
+                        echo "<span class='g-font-size-15 text-dark'> บาท</span>";
+                    }
+
+                    if($asset['issales'] == 'N' && $asset['isrent'] == 'Y') {
+                        echo $this->Number->format($asset['rental'])." <span class='g-font-size-15 text-dark'>บาท/เดือน</span>";
+                    }
+
+                    if($asset['issales'] == 'Y' && $asset['isrent'] == 'Y') {
+                        echo ($asset['discount'] !== 0) 
+                            ? '<small><s>'.$this->Number->format($asset['price']).'</s></small> '.$this->Number->format($asset['price'] - $asset['discount']) 
+                            : $this->Number->format($asset['price']);
+                        echo "<span class='g-font-size-15 text-dark'> บาท</span>";
+                        echo "<span class='text-dark'> | </span>";
+                        echo $this->Number->format($asset['rental'])." <span class='g-font-size-15 text-dark'>บาท/เดือน</span>";
+                    }
+                ?> 
+                
+            </span>
         </div>
     </div>
     <div class="row g-pt-50">
@@ -17,29 +48,29 @@
                 <ul class="col-md-12 list-unstyled g-font-weight-600 mb-0">
 
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">ประกาศสำหรับ:</span>
-                        <span class="float-right g-color-black"><?= $asset['type'] ?></span>
+                        <span class="g-color-text g-font-size-12">ประกาศสำหรับ :</span>
+                        <span class="float-right g-color-black">อสังหาฯ <?= $asset['type'] ?></span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">ที่ตั้ง:</span>
+                        <span class="g-color-text g-font-size-12">ที่ตั้ง :</span>
                         <?php $address = $asset['address']; ?>
                         <span class="float-right g-color-black"><?= $address['address1'] . ' ' . $address['subdistrict']['name'] . ' ' . $address['district']['name'] . ' ' . $address['province']['name'] ?></span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">ห้องนอน:</span>
-                        <span class="float-right g-color-black"><?= h($asset['bedroom']) ?></span>
+                        <span class="g-color-text g-font-size-12">ห้องนอน :</span>
+                        <span class="float-right g-color-black"><?= h($asset['bedroom']) ?> ห้อง</span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">ห้องน้ำ:</span>
-                        <span class="float-right g-color-black"><?= h($asset['bathroom']) ?></span>
+                        <span class="g-color-text g-font-size-12">ห้องน้ำ :</span>
+                        <span class="float-right g-color-black"><?= h($asset['bathroom']) ?> ห้อง</span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">พื้นที่ใช้สอย:</span>
-                        <span class="float-right g-color-black"><?= h($asset['usefulspace']) ?></span>
+                        <span class="g-color-text g-font-size-12">พื้นที่ใช้สอย :</span>
+                        <span class="float-right g-color-black"><?= h($asset['usefulspace']) ?> ตารางเมตร</span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
-                        <span class="g-color-text g-font-size-12">ขนาดที่ดิน:</span>
-                        <span class="float-right g-color-black"><?= h($asset['landsize']) ?></span>
+                        <span class="g-color-text g-font-size-12">ขนาดที่ดิน :</span>
+                        <span class="float-right g-color-black"><?= h($asset['landsize_1']) ?> ไร่ | <?= h($asset['landsize_2']) ?> งาน | <?= h($asset['landsize_3']) ?> ตารางวา</span>
                     </li>
                 </ul>
 
@@ -83,9 +114,9 @@
                 <!-- Listing - Share -->
                 <div class="d-flex align-items-center">
                     <ul class="list-inline g-color-text g-font-weight-600 g-font-size-13 mb-0">
-                        <li class="list-inline-item mr-0">ผู้ประกาศ: <span class="g-font-weight-400"><?= h($asset['user']['firstname'] . '  ' . $asset['user']['lastname']) ?></span></li>
-                        <li class="list-inline-item g-mx-40">โทร: <span class="g-font-weight-400"><?= h($asset['user']['phone']) ?></span></li>
-                        <li class="list-inline-item mr-0">อีเมล์: <span class="g-font-weight-400"><?= h($asset['user']['email']) ?></span></li>
+                        <li class="list-inline-item mr-0">ผู้ประกาศ : <span class="g-font-weight-400"><?= h($asset['user']['firstname'] . '  ' . $asset['user']['lastname']) ?></span></li>
+                        <li class="list-inline-item g-mx-40">โทร : <span class="g-font-weight-400"><?= h($asset['user']['phone']) ?></span></li>
+                        <li class="list-inline-item mr-0">อีเมล์ : <span class="g-font-weight-400"><?= h($asset['user']['email']) ?></span></li>
                     </ul>
                 </div>
 
@@ -95,8 +126,11 @@
                 <!-- Listing - Share -->
                 <div class="d-flex align-items-center float-lg-right">
                     <ul class="list-inline g-color-text g-font-weight-600 g-font-size-13 mb-0">
-                        <li class="list-inline-item mr-0">รหัสประกาศ: <span class="g-font-weight-400"><?= $asset['code'] ?></span></li>
-                        <li class="list-inline-item g-mx-40">ประกาศเมื่อ: <span class="g-font-weight-400"><?= $asset['startdate'] ?></span></li>
+                        <li class="list-inline-item mr-0" style="vertical-align: top;">รหัสประกาศ : <span class="g-font-weight-400"><?= $asset['code'] ?></span></li>
+                        <li class="list-inline-item g-mx-40">
+                            ประกาศเมื่อ : <span class="g-font-weight-400"><?= $asset['startdate'] ?></span><br/>
+                            ปรับปรุงเมื่อ : <span class="g-font-weight-400"><?= setDateFormat($asset['modified']) ?></span>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Listing - Share -->
@@ -162,7 +196,7 @@
                     </div>
 
                     <div class="col-md-9 g-mb-30">
-                        <?php $description = str_replace(PHP_EOL, "<br>", $asset['description']); ?>
+                        <?php $description = ($asset['description'] !== '') ? str_replace(PHP_EOL, "<br>", $asset['description']) : 'ไม่มีรายละเอียดเพิ่มเติม...'; ?>
                         <?= $description ?>
                     </div>
                 </div>
@@ -170,7 +204,7 @@
             <!-- End Listing - Description -->
 
             <!-- Listing - Property Details -->
-            <div class="g-brd-bottom g-brd-gray-light-v3 g-py-30 g-mt-30 g-mb-30">
+            <!-- <div class="g-brd-bottom g-brd-gray-light-v3 g-py-30 g-mt-30 g-mb-30">
                 <div class="row">
                     <div class="col-md-3 g-mb-30">
                         <h3 class="h6 g-font-weight-600 text-uppercase mb-0">สิ่งอำนวยควมสะดวก</h3>
@@ -192,7 +226,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="g-brd-bottom g-brd-gray-light-v3 g-py-10 g-mt-30 g-mb-10">
                 <div class="row">
                     <div class="col-md-3 g-mb-30">
@@ -250,20 +284,17 @@
                     </div>
                 </form>
             </div>
-
-
-
         </div>
 
         <div class="col-md-5 col-lg-3 g-mb-70">
             <div class="g-bg-secondary g-pa-5 g-mb-30">
                 <div class="g-bg-white g-pa-15">
                     <h2 class="h6 g-font-weight-600 mb-4">รายการสินทรัพย์แนะนำ</h2>
-
-
+                        soon....
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <?= $this->Html->script('map.js') ?>

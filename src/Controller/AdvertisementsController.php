@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Advertisements Controller
@@ -11,6 +12,14 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Advertisement[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AdvertisementsController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        
+        if(is_null($this->getRequest()->getSession()->read('Authen.User'))){
+            $this->redirect(['controller'=>'login']);
+        }
+    }
 
     public function package() {
         $packageId = $this->request->getQuery('id');

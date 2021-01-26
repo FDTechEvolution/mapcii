@@ -25,30 +25,47 @@
 
 
     .combo-label {margin-bottom:.5em;}
+
+    .fast-search-row-style {
+        padding: 0 5px;
+    }
+    .input-group-btn button {
+        padding: 7px !important;
+    }
 </style>
 
 <?php 
     $issales = (isset($_GET['issales'])) ? $_GET['issales'] : null;
     $isrent = (isset($_GET['isrent'])) ? $_GET['isrent'] : null;
+    $type = (isset($_GET['type'])) ? $_GET['type'] : null;
+    $ex_type = explode('-', $type);
+    $isType = $ex_type[1];
 ?>
 <?= $this->Html->css('jquery.multiselect.css') ?>
 
 <?= $this->Form->create('search', ['id' => 'frm_search', 'type' => 'GET']) ?>
 <div class="g-bg-black-opacity-0_5 g-pa-30">
 
-
     <div class="row">
-        <div <?php if($isrent == 'Y') { ?> class="col-md-4 col-6 g-mb-10" <?php }else if($issales == 'Y'){ ?> class="col-md-2 col-6 g-mb-10" <?php } ?> >
-            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_sales">ขาย</a>
+        <div <?php if($isType == 'ขายด่วน' && $isType != '') { ?> class="col-md-2 col-6 g-mb-10" <?php }else{ ?> class="col-md-1 col-6 g-mb-10 fast-search-row-style" <?php } ?> >
+            <a href="javascript:void(0);" class="btn btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white text-center px-0" id="bt_sales">ขาย</a>
             <input type="hidden" name="issales" id="issales" value="N" />
         </div>
-        <?php if($issales == 'Y') { ?>
-        <div class="col-md-2 col-6 g-mb-10">
-            <a href="javascript:void(0);" class="btn btn-lg btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white" id="bt_rent">ให้เช่า</a>
+        <?php if($isType != 'ขายด่วน' && $isType != '') { ?>
+        <div class="col-md-1 col-6 g-mb-10 fast-search-row-style">
+            <a href="javascript:void(0);" class="btn btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white text-center px-0" id="bt_rent">ให้เช่า</a>
             <input type="hidden" name="isrent" id="isrent" value="N" />
         </div>
         <?php } ?>
-        <div class="col-12 col-md-8 g-mb-10">
+        <div class="col-md-3 g-mb-10 fast-search-row-style">
+            <div class="input-group u-shadow-v21 g-bg-white rounded-0 ">
+                <div id="form-icon-location-pin" class="input-group-append">
+                    <span class="input-group-text rounded-0 border-0 g-font-size-16 g-color-gray-light-v1"><i class="icon-location-pin g-pos-rel g-top-1 g-px-1"></i></span>
+                </div>
+                <input name="search_text" class="form-control rounded-0 g-px-20 g-py-8" type="text" placeholder="ชื่อเมือง,โครงการ หรือสถานที่สำคัญ" style="border: 0px;" aria-label="City, Zip or Country" aria-describedby="form-icon-location-pin">
+            </div>
+        </div>
+        <div class="col-12 col-md-3 g-mb-10 fast-search-row-style">
             <div class="input-group-btn">
                 <select name="search_asset_type_id" multiple id="search_asset_type_id" class="form-control rounded-0 g-color-black">
 
@@ -56,8 +73,18 @@
                 <input type="hidden" name="asset_type" value="" id="asset_type"/>
             </div>
         </div>
+        <div class="col-md-2 g-mb-10 fast-search-row-style">
+            <a href="javascript:void(0)" id="bt_more_search" class="btn btn-block g-font-weight-600 g-py-8 rounded-0 g-bg-white g-font-size-14 text-center px-0">
+                <i class="fa fa-sliders"></i> ค้นหาแบบละเอียด
+            </a>
+        </div>
+        <div class="col-md-2 fast-search-row-style">
+            <button class="btn btn-block u-btn-primary g-color-white g-bg-primary-dark-v1--hover g-font-weight-600 rounded-0 g-px-18 g-py-8 text-center" type="submit" id="bt_search">
+                <i class="fa fa-search"></i> ค้นหา
+            </button>
+        </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-8 g-mb-10">
             <div class="input-group u-shadow-v21 g-bg-white rounded-0 ">
                 <div id="form-icon-location-pin" class="input-group-append">
@@ -71,8 +98,8 @@
                 <i class="fa fa-sliders"></i> ค้นหาแบบละเอียด
             </a>
         </div>
-    </div>
-    <div class="row"  id="box_more_search">
+    </div> -->
+    <div class="row"  id="box_more_search" style="display: none;">
         <div class="col-md-4 g-mb-10">
             <select name="province"  id="province" class="custom-select form-control-md rounded-0"></select>
         </div>
@@ -156,17 +183,20 @@
         </div>
     </div>
 
+    <input type="hidden" name="type" value="<?=$type?>">
 
-    <div class="row">
+
+    <!-- <div class="row">
         <div class="col-md-4 offset-md-4">
             <button class="btn btn-lg btn-block u-btn-primary g-color-white g-bg-primary-dark-v1--hover g-font-weight-600 rounded-0 g-px-18" type="submit" id="bt_search">
                 <i class="fa fa-search"></i> ค้นหา
             </button>
         </div>
-    </div>
+    </div> -->
 
 </div>
 <?= $this->Form->end() ?>
+
 
 <?= $this->Html->script('jquery.multiselect.js') ?>
 <!-- <?= $this->Html->script('address-option-search.js') ?> -->

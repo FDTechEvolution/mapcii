@@ -9,7 +9,7 @@
 <div id="assets-list" class="container g-pb-100">
     <div class="g-pa-5">
         <div class="row">
-            <div class="col-md-6 d-flex">
+            <div class="col-md-12 mb-0">
                 <?php
                     if($this->request->getSession()->read('Authen.User.islocked') == 'Y') {
                         echo "<script>
@@ -18,14 +18,17 @@
                         })
                         </script>";
                     }else{ ?>
-                        <h1 class="h2 mb-0 g-color-primary g-mr-20">รายการประกาศฟรีของฉัน</h1> <?=$this->Html->link('<i class="far fa-plus-square"></i> เพิ่มประกาศ',['action'=>'add'],['class'=>BT_ADD_CLASS, 'escape' => false])?>
+                        <h3 class="h3 mb-0 g-color-primary g-mr-20">รายการประกาศฟรีของฉัน</h3>
                 <?php
                     }
                 ?>
             </div>
-            <div class="col-md-6 text-right align-text-bottom pt-4">
+            <div class="col-md-4">
+                <?=$this->Html->link('<i class="far fa-plus-square"></i> เพิ่มประกาศ',['action'=>'add'],['class'=>"btn btn-outline-primary mb-0", 'style' => 'margin-bottom: -25px !important;', 'escape' => false])?>
+            </div>
+            <div class="col-md-8 text-right align-text-bottom pt-4 mb-2">
                 <small>
-                    <i class="fas fa-edit text-success"></i> = แก้ไขประกาศ , <i class="fas fa-redo-alt text-info"></i> = ต่ออายุประกาศ , <i class="fas fa-level-up-alt text-primary"></i> = เลื่อนประกาศขึ้นอันดับแรก , <i class="fas fa-times text-danger"></i> = ปิดประกาศ
+                    <i class="fas fa-edit text-success"></i> = แก้ไขประกาศ , <i class="fas fa-redo-alt text-info"></i> = ต่ออายุประกาศ <u>(อายุ < 7 วัน)</u> , <i class="fas fa-level-up-alt text-primary"></i> = เลื่อนประกาศขึ้นอันดับแรก <u>(วันละ 1 ครั้ง)</u> , <i class="fas fa-times text-danger"></i> = ปิดประกาศ
                 </small>
             </div>
         </div>

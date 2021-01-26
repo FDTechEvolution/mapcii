@@ -98,6 +98,14 @@ new Vue ({
         this.price_start = this.urlParams.get('price_start')
         this.price_end = this.urlParams.get('price_end')
 
+        let isType = this.urlParams.get('type')
+        if(isType !== '') {
+            let exType = isType.split('-')
+            this.asset_type = exType[1]
+        }else{
+            this.asset_type = ''
+        }
+
         this.getPositionAsset()
 
         // console.log(this.issales)
@@ -105,6 +113,9 @@ new Vue ({
         // console.log(this.province)
     },
     methods: {
+        reloadPositonAsset() {
+            this.getPositionAsset()
+        },
         loadMap () {
             this.map = new window.google.maps.Map(this.$refs['map'], {
                 center: { lat: this.lat, lng: this.lng },
@@ -124,30 +135,35 @@ new Vue ({
         },
         getPositionAsset () {
             axios.get(apiurl + 'api-assets/listassetaddress?isnewproject=' + this.isnewproject +
+                                '&issales=' + this.issales +
+                                '&isrent=' + this.isrent +
                                 '&type=' + this.type +
                                 '&search_text=' + this.search_text +
                                 '&province=' + this.province +
                                 '&search_district_id=' + this.search_district_id +
                                 '&search_sub_district_id=' + this.search_sub_district_id +
                                 '&price_start=' + this.price_start +
-                                '&price_end=' + this.price_end)
+                                '&price_end=' + this.price_end +
+                                '&asset_type=' + this.asset_type)
             .then((response) => {
                 // console.log(response)
                 if(response.data.status == 200) {
-                    response.data.list.forEach((asset_list) => {
-                        if(asset_list.status === 'CO') {
-                            this.assets.push(asset_list)
-                        }
-                    })
+                    this.assets = response.data.list
                     this.assetAds = response.data.ads
+                    // response.data.list.forEach((asset_list) => {
+                    //     if(asset_list.status === 'CO') {
+                    //         this.assets.push(asset_list)
+                    //     }
+                    // })
+                    // this.assetAds = response.data.ads
                 
-                    this.assetAds.forEach((adsPosition) => {
-                        if (adsPosition.position.position == 'province') {
-                            this.assetAdsProvince.push(adsPosition)
-                        } else if (adsPosition.position.position == 'district') {
-                            this.assetAdsDistrict.push(adsPosition)
-                        }
-                    })
+                    // this.assetAds.forEach((adsPosition) => {
+                    //     if (adsPosition.position.position == 'province') {
+                    //         this.assetAdsProvince.push(adsPosition)
+                    //     } else if (adsPosition.position.position == 'district') {
+                    //         this.assetAdsDistrict.push(adsPosition)
+                    //     }
+                    // })
                 }
                 // console.log(this.assetAdsProvince)
                 // console.log(this.assetAdsDistrict)
@@ -184,6 +200,7 @@ new Vue ({
             })
             .catch(e => {
                 console.log(e)
+                this.reloadPositonAsset()
             })
         },
         getImageAsset (id) {
@@ -249,6 +266,14 @@ new Vue ({
         this.price_start = this.urlParams.get('price_start')
         this.price_end = this.urlParams.get('price_end')
 
+        let isType = this.urlParams.get('type')
+        if(isType !== '') {
+            let exType = isType.split('-')
+            this.asset_type = exType[1]
+        }else{
+            this.asset_type = ''
+        }
+
         this.loadAssetsAvaliable()
         this.loadAssetFavorite()
 
@@ -262,13 +287,16 @@ new Vue ({
                                 '&search_district_id=' + this.search_district_id +
                                 '&search_sub_district_id=' + this.search_sub_district_id +
                                 '&price_start=' + this.price_start +
-                                '&price_end=' + this.price_end)
+                                '&price_end=' + this.price_end +
+                                '&asset_type=' + this.asset_type)
             .then((response) => {
                 // console.log(response)
                 this.assets = response.data.listasset
                 if(this.assets != null){
                     response.data.imgasset.forEach((img,index) => {
-                        this.backgroundImages.push('background-image: url('+img+')')
+                        let bgImgSplit = img.split('\\')
+                        let bgImgSplitCombine = bgImgSplit[0] + bgImgSplit[1]
+                        this.backgroundImages.push('background-image: url('+bgImgSplitCombine+')')
                     })
                 }
                 // console.log(this.assets)
