@@ -1,4 +1,3 @@
-
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?php 
     function setDateFormat($date) {
@@ -41,7 +40,7 @@
             </span>
         </div>
     </div>
-    <div class="row g-pt-50">
+    <div id="propery-view" class="row g-pt-50">
         <div class="col-md-6 g-mb-30">
             <div class="row">
                 <!-- Listing - List of Details -->
@@ -49,7 +48,7 @@
 
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
                         <span class="g-color-text g-font-size-12">ประกาศสำหรับ :</span>
-                        <span class="float-right g-color-black">อสังหาฯ <?= $asset['type'] ?></span>
+                        <span class="float-right g-color-black" id="asset_type">อสังหาฯ <?= $asset['type'] ?></span>
                     </li>
                     <li class="g-brd-bottom--dashed g-brd-gray-light-v3 pt-1 mb-3">
                         <span class="g-color-text g-font-size-12">ที่ตั้ง :</span>
@@ -299,6 +298,28 @@
 </div>
 <?= $this->Html->script('map.js') ?>
 <?= $this->Html->script('asset/view.js') ?>
+<script>
+    new Vue ({
+    el: '#propery-view',
+    mounted() {
+        this.assetViewCounter()
+    },
+    methods: {
+        assetViewCounter() {
+            let getAssetType = document.getElementById('asset_type')
+            let assetType = getAssetType.textContent.split(' ')
+
+            let formData = new FormData()
+            formData.append('type', assetType[1])
+            axios.post(apiurl + 'api-visitor-counters/web-counter', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
+    }
+})
+</script>
 <script>
     $(document).ready(function () {
         var latitude = '<?= $address['latitude'] ?>';

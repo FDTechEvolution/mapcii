@@ -153,7 +153,7 @@ export const AssetAnnounce = {
                             </div>
                             <div v-if="$store.getters.announceStatus.isHasCredit" class="col-md-10 offset-1 margin-top--40">
                                 <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                <small>คุณมีเครดิตในการโฆษณาเหลืออยู่ ระบบจะหักเครดิตก็ต่อเมื่อลงประกาศประเภท "อสังหาขายด่วน" และ "โครงการใหม่"</small>
+                                <small>คุณมีเครดิตในการโฆษณาเหลืออยู่ ระบบจะหักเครดิตก็ต่อเมื่อมีการเลือกเครดิตโฆษณา</small>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                             </div>

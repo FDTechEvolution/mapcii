@@ -155,16 +155,22 @@ const actions = {
         try{
             axios.get(apiurl + 'api-assets/listassetads?user=' + localStorage.getItem('MAPCII_USER'))
             .then((response) => {
+                // console.log(response)
                 let isDuration = []
                 response.data.list_ad_packages.forEach(item => {
-                    item.user_package_lines.forEach(item2 => {
-                        if(item2.isexpire === 'N') {
-                            let toDiffDate = {paidDate: item2.start_date, duration: item2.duration}
-                            dispatch('diffDate', toDiffDate)
-                            isDuration.push({duration: Math.ceil(state.driffDate)})
-                        }
-                    })
+                    // item.user_package_lines.forEach((item2, index) => {
+                    //     if(item2.isexpire === 'N' && item2[index] === item2[item2.length -1]) {
+                    //         console.log(item2[item2.length -1])
+                    //         let toDiffDate = {paidDate: item2.start_date, duration: item2.duration}
+                    //         dispatch('diffDate', toDiffDate)
+                    //         isDuration.push({duration: Math.ceil(state.driffDate)})
+                    //     }
+                    // })
+                    let toDiffDate = {paidDate: item.user_package_lines[item.user_package_lines.length -1].start_date, duration: item.user_package_lines[item.user_package_lines.length -1].duration}
+                    dispatch('diffDate', toDiffDate)
+                    isDuration.push({duration: Math.ceil(state.driffDate)})
                 })
+                // console.log(isDuration)
 
                 commit('SET_ADS_ASSET_LIST', response.data.list_ads)
                 commit('SET_ADS_ASSET_IMAGE', response.data.list_ad_imgs)

@@ -59,7 +59,7 @@ export const userProfile = {
                 case 'email':
                     this.clickEdit.email = true
                     break
-                case 'line':
+                case 'lineid':
                     this.clickEdit.lineid = true
                     break
                 case 'facebook':

@@ -104,7 +104,7 @@ export const packageAdAnnounce = {
                     <div class="col-md-12 pl-0 align-text-bottom">
                         <button class="btn btn-sm btn-outline-primary mb-2 float-left" @click="addNewAsset"><i class="far fa-plus-square"></i> เพิ่มประกาศ</button>
                         <small class="float-right">
-                            <i class="fas fa-edit text-success"></i> = แก้ไขประกาศ , <i class="fas fa-redo-alt text-info"></i> = ต่ออายุประกาศ , <i class="fas fa-level-up-alt text-primary"></i> = เลื่อนประกาศขึ้นอันดับแรก(วันละ 1 ครั้ง) , <i class="fas fa-times text-danger"></i> = ปิดประกาศ (ได้เครดิตคืน)
+                            <i class="fas fa-edit text-success"></i> = แก้ไขประกาศ , <i class="fas fa-level-up-alt text-primary"></i> = เลื่อนประกาศขึ้นอันดับแรก(วันละ 1 ครั้ง) , <i class="fas fa-times text-danger"></i> = ปิดประกาศ (ได้เครดิตคืน)
                         </small>
                     </div>
                     <div class="table-responsive tableresponsive">
@@ -152,7 +152,6 @@ export const packageAdAnnounce = {
                                             <td data-title="สถานะ" v-else-if="asset.status == 'DR'" class="text-center"><span class="u-label u-label-warning g-color-white">ฉบับร่าง</span></td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-success" :disabled="$store.getters.progressBar" @click="editMyAsset(asset.id)" title="แก้ไข"><i class="fas fa-edit"></i></button> 
-                                                <button v-if="asset.status === 'EX'" class="btn btn-sm btn-info" title="ต่ออายุ" :disabled="$store.getters.progressBar"><i class="fas fa-redo-alt"></i></button> 
                                                 <slot v-if="checkAssetUpToTop(asset.up_to_top)">
                                                     <button class="btn btn-sm btn-primary" title="เลื่อนประกาศ" :disabled="$store.getters.progressBar" @click="upAssetToTop(asset.id)"><i class="fas fa-level-up-alt"></i></button> 
                                                 </slot>

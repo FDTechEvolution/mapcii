@@ -148,7 +148,6 @@ export const packageAdBanner = {
                                         <td data-title="สถานะ" v-else-if="banner.status == 'DR'" class="text-center"><span class="u-label u-label-warning g-color-white">ฉบับร่าง</span></td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-success" :disabled="$store.getters.progressBar" @click="editMyBanner(banner.id, banner.topic, banner.description, banner.src, banner.type)" title="แก้ไข"><i class="fas fa-edit"></i></button> 
-                                            <button v-if="banner.status == 'EX'" class="btn btn-sm btn-info" title="ต่ออายุ" :disabled="$store.getters.progressBar"><i class="fas fa-redo-alt"></i></button> 
                                             <button class="btn btn-sm btn-danger" title="ปิดประกาศ" :disabled="$store.getters.progressBar" @click="showDeleteBannerImageModal(banner.id, banner.package, banner.topic, banner.src)"><i class="fas fa-times"></i></button>
                                         </td>
                                     </tr>

@@ -11,9 +11,17 @@ new Vue ({
         }
     },
     mounted() {
-
+        this.visitorCounter()
     },
     methods: {
-        
+        visitorCounter() {
+            let formData = new FormData()
+            formData.append('type', 'web')
+            axios.post(apiurl + 'api-visitor-counters/web-counter', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        }
     }
 })
