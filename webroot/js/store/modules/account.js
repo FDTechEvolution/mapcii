@@ -84,13 +84,15 @@ const mutations = {
     SET_FREE_ASSET_LISTS(state, data) {
         state.assetFreeLists = data
 
-        let cxCount = 0
-        data.forEach(item => {
-            if(item.status === 'CX' || item.status === 'EX'){
-                cxCount ++
-            }
-        })
-        state.cxFree = cxCount
+        if(data) {
+            let cxCount = 0
+            data.forEach(item => {
+                if(item.status === 'CX' || item.status === 'EX'){
+                    cxCount ++
+                }
+            })
+            state.cxFree = cxCount
+        }
     },
     SET_FREE_IMAGE_LISTS(state, data) {
         state.imageFreeLists = data

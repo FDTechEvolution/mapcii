@@ -2,11 +2,14 @@
     <div class="g-pos-rel g-z-index-1">
         <div class="container pt-5">
             <?php 
-                $isType = $_GET['type'];
-                $exType = explode('-', $isType);
-                $setType = $exType[0].$exType[1];
+                if(isset($_GET['type'])) {
+                    $isType = $_GET['type'];
+                    $exType = explode('-', $isType);
+                    $setType = $exType[0].$exType[1];
+                }
+                $isTypeName = isset($_GET['is']) ? $_GET['is'] : '';
             ?>
-            <h1 class="h2 mb-0 prompt-600 g-color-primary">ประกาศ<?php echo $setType; ?></h1>
+            <h1 class="h2 mb-0 prompt-600 g-color-primary">ประกาศ<?php echo isset($_GET['type']) ? $setType : $isTypeName; ?></h1>
             <div class="row">
                 <div class="col-md-12 g-px-0">
                     <?= $this->element('search_form_a_1') ?>
@@ -37,12 +40,12 @@
                         :lng="parseFloat(ads.asset.address.longitude)"
                     >
                         <div class="row row-to-fix" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != ads.asset.id}">
-                            <div class="col-md-4 px-1">
-                                <a class="asset-a-marker" :href="'<?= SITE_URL ?>property/view?id=' + ads.asset.id">
+                            <div class="col-md-4 px-1 px-in-row-to-fix">
+                                <a class="asset-a-marker" :href="'property/view?id=' + ads.asset.id">
                                     <img style="width: 100%;" class="g-mt-5 g-pr-5" :src="assetimageAds[index]" :title="ads.asset.name">
                                 </a>
                             </div>
-                            <div class="col-md-8 px-1">
+                            <div class="col-md-8 px-1 px-in-row-to-fix">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <map-info-windown-content
@@ -99,10 +102,10 @@
                         :lng="parseFloat(asset.address.longitude)"
                     >
                         <div class="row row-to-fix" v-bind:class="{ activeFullInfowindow : classObj.infowindowActive != asset.id}">
-                            <div class="col-md-4 px-1">
+                            <div class="col-md-4 px-1 px-in-row-to-fix">
                                 <img style="width: 100%;" class="g-mt-5 g-pr-5" :src="assetimages[index]">
                             </div>
-                            <div class="col-md-8 px-1">
+                            <div class="col-md-8 px-1 px-in-row-to-fix">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <map-info-windown-content
@@ -145,11 +148,11 @@
                 <div class="col-lg-12 g-mb-0">
                     <?= $this->element('asset/ads') ?>
                 </div>
-                <div v-if="!onlyAd" id="avaliable-assets" class="col-lg-12 g-mb-70">
+                <div id="avaliable-assets" v-if="!onlyAd" class="col-lg-12 g-mb-70">
                     <div class="asset-style">
                         <div v-for="(asset, index) in assets">
                             <article class="row no-gutters g-mb-15">
-                                <div class="col-lg-4 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
+                                <div class="col-lg-4 g-bg-img-hero g-min-height-100 bg-asset-on-mobile" :style="backgroundImages[index]"></div>
                                 <div class="col-lg-8">
                                     <asset-content
                                         :id = 'asset.id'
@@ -305,6 +308,15 @@
         padding: 0 7px;
         border-radius: 3px;
         color: #fff;
+    }
+    @media only screen and (max-width: 600px) {
+        .row-to-fix {
+            width: 200px;
+        }
+        .px-in-row-to-fix {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
     }
 </style>
 

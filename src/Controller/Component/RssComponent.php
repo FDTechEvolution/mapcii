@@ -21,7 +21,10 @@ class RssComponent extends Component {
     public $Contents = null;
 
     public function get($url) {
-        $xml = simplexml_load_file($url,'SimpleXMLElement',LIBXML_NOCDATA);
+        $xmlobj = $this->get_xml_from_url($url);
+        $xml = new \SimpleXMLElement($xmlobj);
+        // $xml = (array)$xml;
+        // $this->log($xml, 'debug');
    
         $rows = [];
         foreach ($xml->channel->item as $row) {
@@ -36,6 +39,19 @@ class RssComponent extends Component {
             array_push($rows, $n);
         }
         return $rows;
+    }
+
+    private function get_xml_from_url($url){
+        $ch = curl_init();
+    
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+    
+        $xmlstr = curl_exec($ch);
+        curl_close($ch);
+    
+        return $xmlstr;
     }
 
    

@@ -1,9 +1,10 @@
 <?php
-
+// define('SITE_URL', 'https://mapcii.com/');
+// define('SITE_API', 'https://mapcii.com/office/');
 
 define('SITE_URL', 'http://localhost/git/mapcii/');
 //define('SITE_URL', 'http://127.0.0.1:8888/Git/mapcii/');
-//define('SITE_API', 'https://office.mapcii.com/');
+// define('SITE_API', 'https://office.mapcii.com/');
 define('SITE_API', 'http://localhost/git/mapcii-backend/');
 //define('SITE_API', 'http://127.0.0.1:8888/Dropbox/mapcii/');
 //define('SITE_API', 'http://localhost:8888/Dropbox/mapcii/');

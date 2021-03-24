@@ -9,7 +9,7 @@ export const PackageAd = {
     },
     template: `<div class="row mb-4">
                     <div class="col-md-6 text-center package-intro">
-                        ตัวอย่างโฆษณา AD (Comming Soon...)
+                        <img src="/img/simple_announce_A.jpg" class="img-fluid w-100" alt="ตัวอย่างประกาศโฆษณา" title="ตัวอย่างประกาศโฆษณา">
                     </div>
                     <div class="col-md-6 border-left package-intro">
                         <h4>AD ประกาศลงโฆษณา</h4>

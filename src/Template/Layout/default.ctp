@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>mapcii.com <?= isset($headTitle) ? $headTitle : '' ?></title>
+        <title>แมพซี่ ดีที่สุด ด้านการค้นหาอสังหาฯ ด้วยแผนที่ <?= isset($headTitle) ? $headTitle : '' ?></title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <meta http-equiv='cache-control' content='no-cache'> 
+        <meta http-equiv='expires' content='0'> 
+        <meta http-equiv='pragma' content='no-cache'>
 
         <link rel="apple-touch-icon" sizes="57x57" href="<?=SITE_URL?>fav.ico/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="<?=SITE_URL?>fav.ico/apple-icon-60x60.png">
@@ -55,7 +59,8 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
 
         <!-- Vue.js & Axios -->
-        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+        <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vuex@2.0.0"></script>
         <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>

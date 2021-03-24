@@ -22,14 +22,14 @@ export const userProfileIndex = {
                                 </div>
                             </div>
                         </div>
-                        <div v-else class="card-body row">
-                            <div class="col-6">
+                        <div v-else class="card-body row card-no-padding-on-mobile">
+                            <div class="col-lg-6 col-sm-12">
                                 <h5 class="mb-4">บัญทึกข้อมูลการติดต่อ เพื่อความสะดวกในการซื้อขาย</h5>
                                 <user-profile
                                     :user-profile = '$store.getters.userProfile'>
                                 </user-profile>
                             </div>
-                            <div class="col-6">
+                            <div class="col-lg-6 col-sm-12">
                                 <user-display
                                     :user-display = '$store.getters.userDisplay'
                                     :loading = '$store.getters.loadingUserProfile'>

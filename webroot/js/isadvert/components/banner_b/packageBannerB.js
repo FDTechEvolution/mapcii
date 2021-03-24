@@ -9,7 +9,7 @@ export const PackageBannerB = {
     },
     template: `<div class="row mb-4">
                     <div class="col-md-5 text-center mb-2 package-intro">
-                        <img src="/git/mapcii/img/400x250.jpg" class="w-100"/>
+                        <img src="/img/banner-side-on-null.jpg" class="img-fluid w-100" alt="ตัวอย่างโฆษณาแบนเนอร์ B" title="ตัวอย่างโฆษณาแบนเนอร์ B">
                     </div>
                     <div class="col-md-7 border-left package-intro">
                         <h4>ลงโฆษณา Banner B</h4>

@@ -16,7 +16,8 @@ export const SelectAds = {
             isDuration: '',
             packageRenewSelected: false,
             isDurationSelected: false,
-            user_package_id: ''
+            user_package_id: '',
+            isSize: ''
         }
     },
     mounted() {
@@ -35,6 +36,13 @@ export const SelectAds = {
                 }
             })
             return this.formatNumber(this.isPrice)
+        },
+        setSizeIdFromRenew() {
+            if(this.packageRenewSelected){
+                this.adsSizeId = ''
+                const isSizeId = this.$store.getters.package_size.filter(item => item.name == this.isSize)
+                this.adsSizeId = isSizeId[0].id
+            }
         }
     },
     methods: {
@@ -66,6 +74,10 @@ export const SelectAds = {
         },
         durationSelected() {
             this.isDurationSelected = true
+        },
+        setAnnounceOperate() {
+            return this.adsOperate === 'buy' ? true : false
+
         }
     },
     template: `<div v-if="!$store.getters.package_payment" class="row">
@@ -94,13 +106,19 @@ export const SelectAds = {
                     </div>
                     <div class="col-md-2 mb-3">
                         4. ขนาด
-                        <select v-if="isDurationSelected" v-model="adsSizeId" class="form-control">
-                            <option value="" disabled>เลือก...</option>
-                            <slot v-if="adsOperate !== ''">
-                                <option v-for="size in $store.getters.package_size" :value="size.id">{{ size.name }}</option>
-                            </slot>
-                        </select>
-                        <select v-else class="form-control" disabled><option value="" selected>เลือก...</option></select>
+                        <slot v-if="setAnnounceOperate()">
+                            <select v-if="isDurationSelected" v-model="adsSizeId" class="form-control">
+                                <option value="" disabled>เลือก...</option>
+                                <slot v-if="adsOperate !== ''">
+                                    <option v-for="size in $store.getters.package_size" :value="size.id">{{ size.name }}</option>
+                                </slot>
+                            </select>
+                            <select v-else class="form-control" disabled><option value="" selected>เลือก...</option></select>
+                        </slot>
+                        <slot v-else>
+                            <input type="text" v-model="isSize" class="form-control" readonly>
+                            {{setSizeIdFromRenew}}
+                        </slot>
                     </div>
                     <div class="col-md-2 mb-3">
                         5.จำนวนเงิน

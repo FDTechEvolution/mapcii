@@ -156,12 +156,12 @@ export const userProfile = {
                     <div class="card-body bg-transparent-8 rounded mb-4">
                         {{ checkNullData }} {{ setProfile }}
                         <div class="form-group row mb-2">
-                            <label for="firstname" class="col-sm-2 col-form-label font-weight-bold text-right px-1">ชื่อ</label>
-                            <div class="col-sm-8">
+                            <label for="firstname" class="col-sm-2 col-form-label font-weight-bold text-right px-1 label-profile-on-mobile">ชื่อ</label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.firstname" type="text" class="form-control-plaintext rounded px-2" id="firstname" v-model="profile.firstname" readonly>
                                 <input v-else type="text" class="form-control rounded px-2" id="firstname" v-model="profile.firstname" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.firstname">
                                     <button v-if="!clickEdit.firstname" class="btn btn-sm btn-outline-info" @click="editProfile('firstname')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('firstname')">ยืนยัน</button>
@@ -177,12 +177,12 @@ export const userProfile = {
                             </div>
                         </div>
                         <div class="form-group row mb-0">
-                            <label for="lastname" class="col-sm-2 col-form-label font-weight-bold text-right px-1">นามสกุล</label>
-                            <div class="col-sm-8">
+                            <label for="lastname" class="col-sm-2 col-form-label font-weight-bold text-right px-1 label-profile-on-mobile">นามสกุล</label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.lastname" type="text" class="form-control-plaintext rounded px-2" id="lastname" v-model="profile.lastname" readonly>
                                 <input v-else type="text" class="form-control rounded px-2" id="lastname" v-model="profile.lastname" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.lastname">
                                     <button v-if="!clickEdit.lastname" class="btn btn-sm btn-outline-info" @click="editProfile('lastname')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('lastname')">ยืนยัน</button>
@@ -200,12 +200,12 @@ export const userProfile = {
                     </div>
                     <div class="card-body bg-transparent-8 rounded mb-2">
                         <div class="form-group row mb-0">
-                            <label for="phone" class="col-sm-2 col-form-label font-weight-bold text-center pt-1"><h4><i class="fa fa-mobile-alt text-dark"></i></h4></label>
-                            <div class="col-sm-8">
+                            <label for="phone" class="col-sm-2 col-form-label font-weight-bold text-center pt-1 label-profile-on-mobile"><h4><i class="fa fa-mobile-alt text-dark"></i></h4></label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.phone" type="number" class="form-control-plaintext rounded px-2" id="phone" v-model="profile.phone" readonly>
                                 <input v-else type="number" class="form-control rounded px-2" id="phone" v-model="profile.phone" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.phone">
                                     <button v-if="!clickEdit.phone" class="btn btn-sm btn-outline-info" @click="editProfile('phone')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('phone')">ยืนยัน</button>
@@ -221,12 +221,12 @@ export const userProfile = {
                             </div>
                         </div>
                         <div class="form-group row mb-0">
-                            <label for="email" class="col-sm-2 col-form-label font-weight-bold text-center pt-1"><h4><i class="fa fa-envelope-open-text text-info"></i></h4></label>
-                            <div class="col-sm-8">
+                            <label for="email" class="col-sm-2 col-form-label font-weight-bold text-center pt-1 label-profile-on-mobile"><h4><i class="fa fa-envelope-open-text text-info"></i></h4></label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.email" type="email" class="form-control-plaintext rounded px-2" id="email" v-model="profile.email" readonly>
                                 <input v-else type="email" class="form-control rounded px-2" id="email" v-model="profile.email" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.email">
                                     <button v-if="!clickEdit.email" class="btn btn-sm btn-outline-info" @click="editProfile('email')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('email')">ยืนยัน</button>
@@ -242,12 +242,12 @@ export const userProfile = {
                             </div>
                         </div>
                         <div class="form-group row mb-0">
-                            <label for="lineid" class="col-sm-2 col-form-label font-weight-bold text-center pt-1"><h4><i class="fab fa-line text-success"></i></h4></label>
-                            <div class="col-sm-8">
+                            <label for="lineid" class="col-sm-2 col-form-label font-weight-bold text-center pt-1 label-profile-on-mobile"><h4><i class="fab fa-line text-success"></i></h4></label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.lineid" type="text" class="form-control-plaintext rounded px-2" id="lineid" v-model="profile.lineid" readonly>
                                 <input v-else type="text" class="form-control rounded px-2" id="lineid" v-model="profile.lineid" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.lineid">
                                     <button v-if="!clickEdit.lineid" class="btn btn-sm btn-outline-info" @click="editProfile('lineid')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('lineid')">ยืนยัน</button>
@@ -263,12 +263,12 @@ export const userProfile = {
                             </div>
                         </div>
                         <div class="form-group row mb-0">
-                            <label for="facebook" class="col-sm-2 col-form-label font-weight-bold text-center pt-1"><h4><i class="fa fa-facebook-square text-primary"></i></h4></label>
-                            <div class="col-sm-8">
+                            <label for="facebook" class="col-sm-2 col-form-label font-weight-bold text-center pt-1 label-profile-on-mobile"><h4><i class="fa fa-facebook-square text-primary"></i></h4></label>
+                            <div class="col-sm-8 col-text-input-profile-on-mobile">
                                 <input v-if="!clickEdit.facebook" type="text" class="form-control-plaintext rounded px-2" id="facebook" v-model="profile.facebook" readonly>
                                 <input v-else type="text" class="form-control rounded px-2" id="facebook" v-model="profile.facebook" placeholder="กรุณาระบุ">
                             </div>
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-2 text-center btn-profile-on-mobile">
                                 <slot v-if="!loading.facebook">
                                     <button v-if="!clickEdit.facebook" class="btn btn-sm btn-outline-info" @click="editProfile('facebook')">แก้ไข</button>
                                     <button v-else class="btn btn-sm btn-info" @click="saveProfile('facebook')">ยืนยัน</button>

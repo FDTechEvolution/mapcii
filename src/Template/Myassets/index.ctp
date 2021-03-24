@@ -33,8 +33,8 @@
             </div>
         </div>
         <asset-list-table
-            :assets = "this.$store.getters.assetLists"
-            :images = "this.$store.getters.imageLists"
+            :assets = "$store.getters.assetLists"
+            :images = "$store.getters.imageLists"
         ></asset-list-table>
     </div>
 

@@ -48,8 +48,9 @@ class PropertyController extends AppController {
     public function view() {
 
         $id = $this->request->getQuery('id');
-        //$this->log($id, 'debug');
+        // $this->log($id, 'debug');
         $asset = $this->RequestUrl->getRequest(SITE_API . 'api-assets/asset?id=' . $id);
+        $this->log($asset, 'debug');
 
         $asset = $asset['detail'];
         $this->set(compact('asset'));

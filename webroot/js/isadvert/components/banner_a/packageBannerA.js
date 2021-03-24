@@ -9,7 +9,7 @@ export const PackageBannerA = {
     },
     template: `<div class="row mb-4">
                     <div class="col-md-8 text-center package-intro">
-                        ตัวอย่างโฆษณา Banner A (Comming Soon...)
+                        <img src="/img/banner-top-on-null.jpg" class="img-fluid w-100" alt="ตัวอย่างโฆษณาแบนเนอร์ A" title="ตัวอย่างโฆษณาแบนเนอร์ A">
                     </div>
                     <div class="col-md-4 border-left package-intro">
                         <h4>ลงโฆษณา Banner A</h4>

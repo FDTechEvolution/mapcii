@@ -192,7 +192,7 @@ const actions = {
             .then((response) => {
                 if(response.data.status === 200) {
                     if(response.data.link == 'FREE') window.location.href = siteurl + 'myassets'
-                    if(response.data.link == 'AD') window.location.href = siteurl + 'account/package'
+                    if(response.data.link == 'AD') window.location.href = siteurl + 'account#/package'
                 }
             })
         }catch(e) {

@@ -5,7 +5,7 @@ $(document).ready(function () {
             $('#page-load').show();
             $.post(apiurl + 'api-authen/login', formdata).done(function (res) {
                 res = JSON.parse(res);
-                console.log(res);
+                // console.log(res);
 
 
                 if (res.status === 200) {

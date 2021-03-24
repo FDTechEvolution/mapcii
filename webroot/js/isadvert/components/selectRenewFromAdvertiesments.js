@@ -49,8 +49,9 @@ export const selectRenewFromAdvertiesments = {
         dateIsZero(duration) {
             return (duration > 0) ? duration : 0
         },
-        renewSelectedPackage(id) {
+        renewSelectedPackage(id, size) {
             this.$parent.user_package_id = id
+            this.$parent.isSize = size
             this.$parent.packageRenewSelected = true
             // console.log({id:id, code:code})
         },
@@ -77,7 +78,7 @@ export const selectRenewFromAdvertiesments = {
                                 <slot v-if="$store.getters.package_balance !== ''">
                                     <tr v-for="(balance, index) in $store.getters.package_balance">
                                         <slot v-if="checkConditionPackage(balance.name, balance.duration)">{{countPK}}
-                                            <td class="text-center"><input type="radio" name="selectPackageRenew" value="true" @click="renewSelectedPackage(balance.u_pack_id)"></td>
+                                            <td class="text-center"><input type="radio" name="selectPackageRenew" value="true" @click="renewSelectedPackage(balance.u_pack_id, balance.size)"></td>
                                             <td data-title="หมายเลขคำสั่งซื้อ">{{ balance.order_code }}</td>
                                             <td data-title="ประเภทโฆษณา" class="text-center">{{ balance.name }} <span v-if="balance.size !== null">- {{ balance.size }}</span> </td>
                                             <td data-title="วันที่ซื้อ" class="text-center">{{ thDateFormat(balance.buy_date) }} <span v-if="balance.duration !== null">(<strong :class="[(balance.duration < 10) ? 'text-danger' : 'text-info']">{{ dateIsZero(balance.duration) }}</strong> <small>วัน</small>)</span></td>

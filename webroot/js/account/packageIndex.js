@@ -16,7 +16,7 @@ export const packageIndex = {
     template: `<div class="container" style="max-width: 100%;">
                     <package-credit></package-credit>
                     <hr class="mt-3 mb-4"/>
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs nav-tabs-on-mobile">
                         <li class="active show"><a class="active show" data-toggle="tab" href="#ads">รายการประกาศโฆษณา</a></li>
                         <li><a data-toggle="tab" href="#banner">รายการแบนเนอร์โฆษณา</a></li>
                     </ul>

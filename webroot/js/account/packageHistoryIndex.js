@@ -14,7 +14,7 @@ export const packageHistoryIndex = {
         }
     },
     template: `<div class="container" style="max-width: 100%;">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs nav-tabs-history-on-mobile">
                         <li class="active show"><a class="active show" data-toggle="tab" href="#ads">ประวัติประกาศโฆษณา</a></li>
                         <li><a data-toggle="tab" href="#banner">ประวัติแบนเนอร์โฆษณา</a></li>
                         <li><a data-toggle="tab" href="#free">ประวัติประกาศฟรี</a></li>

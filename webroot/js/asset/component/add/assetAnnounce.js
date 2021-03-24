@@ -104,10 +104,6 @@ export const AssetAnnounce = {
             let isCreditList = null
             if(this.$store.getters.creditList.length > 1) {
                 isCreditList = this.asset.packageCreditSelected
-            }else if(this.$store.getters.creditList.length === 1) {
-                isCreditList = this.$store.getters.creditList[0].id
-                this.asset.packageCreditSelected = this.$store.getters.creditList[0].id
-                this.asset.packageCreditDesc = this.$store.getters.creditList[0].code + ' - [' + this.$store.getters.creditList[0].duration + ' วัน : ' + this.$store.getters.creditList[0].credit + ' เครดิต]'
             }
             return isCreditList
         },
@@ -129,32 +125,13 @@ export const AssetAnnounce = {
                     {{dataCheck}} {{checkTypeProjectDiscount}}
                     <div class="col-md-12">
                         <div class="row pr-4 mb-4">
-                            <div class="col-md-12 text-danger">
-                                <div class="row">
-                                    <div v-if="$store.getters.announceStatus.isTestAnnounce" class="col-md-10 offset-1 margin-top--40">
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <small><i class="fa fa-exclamation-triangle"></i> กรุณาชำระเงินตามแพ็คเกจที่คุณได้เลือกไว้...เพื่อใช้งานประกาศประเภทอื่นๆ</small>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        </div>
-                                    </div>
-                                    <div v-else-if="!$store.getters.announceStatus.isDuration" class="col-md-10 offset-1 margin-top--40">
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                        <small><i class="fa fa-exclamation-triangle"></i> แพ็คเกจของคุณหมดอายุแล้ว...กรุณาต่ออายุแพ็คเกจ</small>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        </div>
-                                    </div>
-                                    <div v-else-if="!$store.getters.announceStatus.isHasCredit" class="col-md-10 offset-1 margin-top--40">
-                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            <small><i class="fa fa-exclamation-triangle"></i> แพ็คเกจของคุณเครดิตเต็มแล้ว...กรุณาปิดประกาศอื่นๆหรือซื้อแพ็คเกจใหม่เพื่อเพิ่มเครดิต</small>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div v-if="$store.getters.announceStatus.isHasCredit" class="col-md-10 offset-1 margin-top--40">
+                            <div v-if="$store.getters.announceStatus.isHasCredit" class="col-md-10 offset-1 margin-top--40 text-center">
                                 <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                <small>คุณมีเครดิตในการโฆษณาเหลืออยู่ ระบบจะหักเครดิตก็ต่อเมื่อมีการเลือกเครดิตโฆษณา</small>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <small>
+                                    คุณมีเครดิตในการโฆษณาเหลืออยู่ ระบบจะหักเครดิตก็ต่อเมื่อมีการเลือกเครดิตโฆษณา <br/>
+                                    (อสังหาขายด่วย และ โครงการใหม่ จะต้องใช้เครดิตโฆษณาเท่านั้น)
+                                </small>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -168,17 +145,11 @@ export const AssetAnnounce = {
                             </div>
                             <div class="col-md-5 mb3">
                                 <slot v-if="$store.getters.announceStatus.isHasCredit">
-                                    <div v-if="$store.getters.creditList.length > 1">
-                                        <label for="type">เลือกเครดิตโฆษณา</label>
-                                        <select v-model="asset.packageCreditSelected" class="form-control" id="type" name="type" @change="creditSelected">
-                                            <option value="" class="text-dark">ไม่ได้เลือก...</option>
-                                            <option v-if="checkCreditCondition(creditList.duration, creditList.credit)" v-for="creditList in $store.getters.creditList" :value="creditList.id">{{ creditList.code }} - [คงเหลือ {{ creditList.duration }} วัน : {{ creditList.credit }} เครดิต]</option>
-                                        </select>
-                                    </div>
-                                    <div v-else>
-                                        <label for="type">เครดิตโฆษณา</label><br/>
-                                        <input type="text" class="form-control text-info" :value="asset.packageCreditDesc" readonly>
-                                    </div>
+                                    <label for="type">เลือกเครดิตโฆษณา</label>
+                                    <select v-model="asset.packageCreditSelected" class="form-control" id="type" name="type" @change="creditSelected()">
+                                        <option value="" selected>ไม่ใช้เครดิต...</option>
+                                        <option v-for="creditList in $store.getters.creditList" v-if="checkCreditCondition(creditList.duration, creditList.credit)" :value="creditList.id">{{ creditList.code }} - [คงเหลือ {{ creditList.duration }} วัน : {{ creditList.credit }} เครดิต]</option>
+                                    </select>
                                 </slot>
                             </div>
                             <div class="col-md-4 mb-3">

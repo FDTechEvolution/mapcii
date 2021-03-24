@@ -94,7 +94,6 @@ export const adsHistory = {
                                 <th>รายละเอียด</th>
                                 <th class="text-center">วันที่ลงประกาศ</th>
                                 <th class="text-center">วันที่ปิดประกาศ</th>
-                                <th class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,10 +121,7 @@ export const adsHistory = {
                                             <small><strong>รายการ : </strong>อสังหาฯ{{asset.type}}</strong> | <strong>ราคา :</strong> {{assetPrice({announce:asset.announce, price:asset.price, discount:asset.discount, rental:asset.rental})}} | <strong>แพ็คเกจ : </strong><button class="btn btn-link btn-sm p-0" style="margin-top: -4px;" @click="showModalPackage($store.getters.package[index].id, asset.name, $store.getters.package[index].order_code)"><small>{{ $store.getters.package[index].order_code }}</small></button></small>
                                         </td>
                                         <td data-title="วันที่ลงประกาศ" class="text-center">{{thaiDateFormat(asset.startdate)}}</td>
-                                        <td data-title="วันที่ปิด" class="text-center">{{thaiDateFormat(asset.enddate)}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-danger" title="ลงซ้ำอีกครั้ง" :disabled="$store.getters.progressBar" @click="announceReNew(asset.id, asset.code, $store.getters.duration[index].duration, $store.getters.package[index].order_code, $store.getters.package[index].credit, $store.getters.package[index].used, asset.name)"><i class="fas fa-retweet"></i> ลงซ้ำอีกครั้ง</button>
-                                        </td>
+                                        <td data-title="วันที่ปิด" class="text-center"><span v-if="asset.enddate != null">{{thaiDateFormat(asset.enddate)}}</span><span v-else>-</span></td>
                                     </tr>
                                 </slot>
                                 <tr v-if="$store.getters.cxADS === 0">

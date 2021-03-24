@@ -44,10 +44,10 @@ export const PackageBalance = {
         balanceSofting() {
             let balance = this.$store.getters.package_balance
             let balance_expire = balance.filter(item => item.isexpire === this.status.isY)
-            let balance_allUsed = balance.filter(item => this.isBalance(item.credit, item.used) <= 0)
+            let balance_allUsed = balance.filter(item => this.isBalance(item.credit, item.used) <= 0 && item.isexpire !== this.status.isY)
             let balance_active = balance.filter(item => item.isexpire === this.status.isN && this.isBalance(item.credit, item.used) > 0)
 
-            return balance_active.concat(balance_expire, balance_allUsed)
+            return balance_active.concat(balance_allUsed, balance_expire)
         }
     },
     methods: {
@@ -118,7 +118,7 @@ export const PackageBalance = {
     },
     template: `<div class="tableresponsive style-on-package-account">
                     <div class="row">
-                        <div class="col-md-6" style="text-align: left;">
+                        <div class="col-md-6 showall-on-mobile">
                             <span><input v-model="showAll" type="checkbox" id="showall" style="cursor: pointer;"> <label for="showall" style="cursor: pointer;"><small>แสดงเฉพาะแพ็คเกจที่สามารถใช้งานได้</small></label></span>
                         </div>
                         <div class="col-md-6">
@@ -224,11 +224,8 @@ export const PackageBalance = {
                                             <slot v-else>
                                                 <div class="row">
                                                     <slot v-if="balanceline.user_payments[0].status === 'DR'">
-                                                        <div class="col-md-8 p-0">
+                                                        <div class="col-md-12 p-0">
                                                             <button class="btn btn-info btn-sm" @click="goToPayment(balanceline.id, balanceline.package_name, balanceline.duration_name, balanceline.price, index)">ชำระเงิน</button>
-                                                        </div>
-                                                        <div class="col-md-4 p-0">
-                                                            <button class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
                                                         </div>
                                                     </slot>
                                                     <slot v-else-if="balanceline.user_payments[0].status === 'CK'">

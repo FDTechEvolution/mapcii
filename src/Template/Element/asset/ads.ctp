@@ -1,13 +1,17 @@
 <?php 
-    $exType = explode('-', $_GET['type']);
-    $combineType = $exType[0].$exType[1];
+    if(isset($_GET['type'])) {
+        $exType = explode('-', $_GET['type']);
+        $combineType = $exType[0].$exType[1];
+    }else{
+        $combineType = '';
+    }
 ?>
 
 <div class="col-lg-12 g-mb-0 g-px-0 mt-2" id="asset-ads" class="asset-ads-style">
     <button class="btn btn-block text-white rounded-0 mb-1" style="line-height: 16px; background-color: #ff8027; letter-spacing: 1px;" @click="buyAdAssetLink"><strong>AD ประกาศลงโฆษณา<br/><?php echo $combineType; ?></strong></button>
     <div v-for="(ads, index) in assetAds">
         <article class="row no-gutters g-mb-15 ads-asset-banner">
-            <div class="col-lg-4 g-bg-img-hero g-min-height-100" :style="backgroundImages[index]"></div>
+            <div class="col-lg-4 g-bg-img-hero g-min-height-100 bg-asset-on-mobile" :style="backgroundImages[index]"></div>
             <div class="col-lg-8">
                 <asset-content
                     :id = 'ads.asset.id'

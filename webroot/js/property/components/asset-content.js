@@ -37,7 +37,6 @@ export const assetContent = {
         addToFavorite (fav_id) {
             axios.get(siteurl + 'services/property?action=favorite&id='+fav_id)
             .then((response) => {
-                // console.log(response)
                 if(response.data.code === 200){
                     // console.log('clicked')
                     // this.$parent.loadAssetFavorite().then(() => {
@@ -45,6 +44,7 @@ export const assetContent = {
                     // })
                     // this.$parent.loadAssetsAdsList()
                     // this.setFavLoaded()
+                    // console.log(response.data)
                     this.$parent.loadAssetFavorite()
                 }else{
                     alert('เกิดข้อผิดพลาด กรุณาเข้าสู่ระบบก่อน...')

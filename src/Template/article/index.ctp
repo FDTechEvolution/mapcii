@@ -21,7 +21,7 @@
                                 $url = explode('|', $sanookNew['url']);
                                 $url = $url[1];
                                 ?>
-                                <img src="<?= $sanookNew['image'] ?>" class="img-fluid w-100"/>
+                                <img src="<?= $sanookNew['image'] ?>" class="img-fluid w-100">
                                 <strong><a href="<?= $url ?>" target="_blank"><?= h($sanookNew['title']) ?></a></strong>
                                 <p><?= $des ?></p>
                             </article>
@@ -56,7 +56,7 @@
                             <div class="col-md-4 g-mb-20">
 
                                 <article><a href="<?= $bkkNew['url'] ?>" target="_blank">
-                                        <img src="<?= $bkkNew['image'] ?>" class="img-fluid w-100"/>
+                                        <img src="<?= $bkkNew['image'] ?>" class="img-fluid w-100">
                                         <strong><?= ($bkkNew['title']) ?></strong>
                                     </a>
                                 </article>
@@ -66,12 +66,29 @@
                                 break;
                             }
                             ?>
-<?php endforeach; ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <?= $this->element('banner/side_b') ?>
+                <div class="row g-mt-20">
+                    <?php foreach ($bkkNews as $key => $bkkNew): ?>
+                        <div class="col-md-12 g-mb-20">
+
+                            <article><a href="<?=$bkkNew['url']?>" target="_blank">
+                                <img src="<?= $bkkNew['image'] ?>" class="img-fluid w-100"/>
+                                <strong><?= ($bkkNew['title']) ?></strong>
+                                </a>
+                            </article>
+                        </div>
+                        <?php
+                        if ($key == 8) {
+                            break;
+                        }
+                        ?>
+                    <?php endforeach; ?>
+                </div>
                 <!-- <div class="g-mb-20">
                     <img src="https://sv1.picz.in.th/images/2019/06/25/1Pkhtn.jpg" class="img-fluid w-100">
                 </div>

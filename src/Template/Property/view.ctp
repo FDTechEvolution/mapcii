@@ -140,7 +140,7 @@
     <div class="row g-pt-10">
         <div class="col-md-12 g-pb-30">
             <div class="g-pos-rel">
-                <?php $row = round(sizeof($asset['asset_images']) / 6, 0, PHP_ROUND_HALF_UP); ?>
+                <?php $row = round(is_array($asset['asset_images']) / 6, 0, PHP_ROUND_HALF_UP); ?>
                 <div class="js-carousel g-pt-6 g-mx-2"
                      data-infinite="true"
                      data-slides-show="6"

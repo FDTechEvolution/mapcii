@@ -31,7 +31,7 @@ export const mapInfoWindowContent = {
         }
     },
     template: `<div>
-                    <a class="asset-a-marker" :href="'<?= SITE_URL ?>property/view?id=' + id" :title="name">
+                    <a class="asset-a-marker" :href="'property/view?id=' + id" :title="name">
                         <span class="asset-content-marker g-font-size-12"><strong class="text-danger">[{{setAssetType(issales, isrent)}}]</strong> <strong>{{name}}</strong></span>
                     </a>
                     <small>

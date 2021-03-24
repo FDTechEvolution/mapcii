@@ -38,8 +38,12 @@
     $issales = (isset($_GET['issales'])) ? $_GET['issales'] : null;
     $isrent = (isset($_GET['isrent'])) ? $_GET['isrent'] : null;
     $type = (isset($_GET['type'])) ? $_GET['type'] : null;
-    $ex_type = explode('-', $type);
-    $isType = $ex_type[1];
+    if($type !== null) {
+        $ex_type = explode('-', $type);
+        $isType = $ex_type[1];
+    }else{
+        $isType = 1;
+    }
 ?>
 <?= $this->Html->css('jquery.multiselect.css') ?>
 
@@ -199,7 +203,7 @@
 
 
 <?= $this->Html->script('jquery.multiselect.js') ?>
-<!-- <?= $this->Html->script('address-option-search.js') ?> -->
+<?= $this->Html->script('address-option-search.js?version=1.0') ?>
 <script>
     let type_id = [];
     function setDefaultFields(){

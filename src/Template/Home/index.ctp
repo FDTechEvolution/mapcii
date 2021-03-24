@@ -74,24 +74,24 @@
     <div class="container g-pt-20 g-pb-10">
         <div class="row">
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/home.png', ['url' => ['controller' => 'property', 'action' => 'index', 'issales'=>'Y', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5><?= $this->Html->link('รวมโครงการบ้าน', ['controller' => 'property', 'action' => 'index', 'issales'=>'Y', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
-                <p><?= $this->Html->link('เรารวบรวมโครงการที่อยู่อาศัย หรือเพื่อลงทุน จากทั่วประเทศ ให้คุณได้เลือกสรร', ['controller' => 'property', 'action' => 'index', 'issales'=>'Y', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f'], ['class' => 'a-href-color']) ?></p>
+                <?= $this->Html->image('icon/home.png', ['url' => ['controller' => 'property', 'action' => 'index', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f', 'is' => 'โครงการบ้าน'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมโครงการบ้าน', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f', 'is' => 'โครงการบ้าน'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('เรารวบรวมโครงการที่อยู่อาศัย หรือเพื่อลงทุน จากทั่วประเทศ ให้คุณได้เลือกสรร', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id'=>'6640bc19-8d50-43a4-82b2-45f33741e58f', 'asset_type' => '6640bc19-8d50-43a4-82b2-45f33741e58f', 'is' => 'โครงการบ้าน'], ['class' => 'a-href-color']) ?></p>
             </div>
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/condominium.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5><?= $this->Html->link('รวมโครงการคอนโด', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
-                <p><?= $this->Html->link('คอนโดทำเลทอง หลากหลายรูปแบบ ให้คุณเลือกตามความต้องการและตรงใจของคุณ', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d'], ['class' => 'a-href-color']) ?></p>
+                <?= $this->Html->image('icon/condominium.png', ['url' => ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d', 'is' => 'โครงการคอนโด'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมโครงการคอนโด', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d', 'is' => 'โครงการคอนโด'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('คอนโดทำเลทอง หลากหลายรูปแบบ ให้คุณเลือกตามความต้องการและตรงใจของคุณ', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '09f96782-d729-435b-a5f5-c7f224b0ff1d', 'is' => 'โครงการคอนโด'], ['class' => 'a-href-color']) ?></p>
             </div>
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/land.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5><?= $this->Html->link('รวมประกาศขายที่ดิน', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
-                <p><?= $this->Html->link('ที่ดินหลากหลายพื้นที่ หลากหลายขนาด ตามความต้องการของคุณ มีมาให้เลือก', ['controller' => 'property', 'action' => 'index','isrent'=>'Y', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575'], ['class' => 'a-href-color']) ?></p>
+                <?= $this->Html->image('icon/land.png', ['url' => ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575', 'is' => 'รวมที่ดิน'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมประกาศขายที่ดิน', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575', 'is' => 'รวมที่ดิน'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('ที่ดินหลากหลายพื้นที่ หลากหลายขนาด ตามความต้องการของคุณ มีมาให้เลือก', ['controller' => 'property', 'action' => 'index', 'search_asset_type_id' => '16dc78c4-7c21-4d5e-8edc-0e8c78572575', 'is' => 'รวมที่ดิน'], ['class' => 'a-href-color']) ?></p>
             </div>
             <div class="col-md-3 text-center">
-                <?= $this->Html->image('icon/cityscape.png', ['url' => ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
-                <h5><?= $this->Html->link('รวมประกาศขาย', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
-                <p><?= $this->Html->link('เรารวบรวม ประกาศซื้อขาย บ้าน คอนโด ที่ดิน', ['controller' => 'property', 'action' => 'index','isrent'=>'Y'], ['class' => 'a-href-color']) ?></p>
+                <?= $this->Html->image('icon/cityscape.png', ['url' => ['controller' => 'property', 'action' => 'index',], 'class' => 'img-fluid', 'style' => 'width:30%;']) ?>
+                <h5><?= $this->Html->link('รวมประกาศขาย', ['controller' => 'property', 'action' => 'index'], ['class' => 'a-href-color g-font-weight-600']) ?></h5>
+                <p><?= $this->Html->link('เรารวบรวม ประกาศซื้อขาย บ้าน คอนโด ที่ดิน', ['controller' => 'property', 'action' => 'index'], ['class' => 'a-href-color']) ?></p>
             </div>
         </div>
     </div>

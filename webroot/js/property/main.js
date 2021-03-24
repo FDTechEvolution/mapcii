@@ -1,6 +1,8 @@
 import {assetContent} from './components/asset-content.js'
 import {mapInfoWindowContent} from './components/map-info-window-content.js'
 
+Vue.config.productionTip = false
+
 Vue.component('map-marker', {
     props: {
         lat: { type: Number, required: true },
@@ -104,7 +106,7 @@ new Vue ({
         this.price_end = this.urlParams.get('price_end')
         
         let isType = this.urlParams.get('type')
-        if(isType !== '') {
+        if(isType !== null) {
             let exType = isType.split('-')
             this.asset_type = exType[1]
         }else{
@@ -121,7 +123,7 @@ new Vue ({
         reloadPositonAsset() {
             this.getPositionAsset()
         },
-        loadMap () {
+        async loadMap () {
             this.map = new window.google.maps.Map(this.$refs['map'], {
                 center: { lat: this.lat, lng: this.lng },
                 zoom: this.zoom,
@@ -138,7 +140,7 @@ new Vue ({
             }
             checkForMap()
         },
-        getPositionAsset () {
+        async getPositionAsset () {
             axios.get(apiurl + 'api-assets/listassetaddress?issales=' + this.issales +
                                 '&isrent=' + this.isrent +
                                 '&type=' + this.type +
@@ -154,6 +156,7 @@ new Vue ({
                 if(response.data.status == 200) {
                     this.assets = response.data.list
                     this.assetAds = response.data.ads
+                    // console.log(this.assets)
                     // console.log(this.assetAds)
 
                     // this.assetAds.forEach((adsPosition) => {
@@ -294,7 +297,7 @@ new Vue ({
         this.price_end = this.urlParams.get('price_end')
         
         let isType = this.urlParams.get('type')
-        if(isType !== '') {
+        if(isType !== null) {
             let exType = isType.split('-')
             this.asset_type = exType[1]
         }else{

@@ -45,7 +45,7 @@ export const userDisplay = {
                 })
                 .then((response) => {
                     if(response.data.status === 200) {
-                        this.$parent.getUserProfiles()
+                        this.$store.dispatch('getUserProfiles')
                         this.dloading.displayname = false
                     }else{
                         console.log(response)
@@ -82,7 +82,7 @@ export const userDisplay = {
                     }
                 })
                 .then((response) => {
-                    this.$parent.getUserProfiles()
+                    this.$store.dispatch('getUserProfiles')
                     this.dloading.displayimage = false
                     this.imageData = ''
                 })
@@ -94,7 +94,7 @@ export const userDisplay = {
     template: `<div class="card-body rounded mb-4" style="background: #C3EBFF;">
                     {{ userDisplayName }}
                     <div class="row">
-                        <div class="col-3 text-center">
+                        <div class="col-lg-3 col-sm-12 text-center">
                             <span v-if="imageData.length > 0">
                                 <img :src="imageData" class="g-width-100 bg-white rounded">
                                 <span class="btn-edit-profile-img">
@@ -118,10 +118,10 @@ export const userDisplay = {
                             </span>
                             <input type="file" id="fileUpload" ref="file" @change="previewImage" hidden>
                         </div>
-                        <div class="col-9 pl-3">
+                        <div class="col-lg-9 col-sm-12 mt-2 pl-3 col-display-on-mobile">
                             <p class="mb-0">หมายเลขสมาชิก</p>
                             <h1 style="line-height: 1;letter-spacing: 1.5px;">{{ userDisplay.usercode }}</h1>
-                            <p class="d-flex"><strong class="mt-2">DisplayName :</strong> 
+                            <p class="d-flex"><strong class="mt-2 strong-display-on-mobile">DisplayName :</strong> 
                                 <input v-if="!clickEdit.displayname" type="text" class="form-control-plaintext w-50 rounded px-2" style="margin-top: 1px;" id="displayname" v-model="profile.displayname" readonly> 
                                 <input v-else type="text" class="form-control w-50 rounded px-2" style="margin-top: 1px;" id="displayname" v-model="profile.displayname" placeholder="กรุณาระบุ">
                                 <span v-if="!dloading.displayname">

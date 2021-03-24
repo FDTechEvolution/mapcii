@@ -20,13 +20,16 @@ class LoginController extends AppController {
         if($this->request->is(['post'])){
             $this->loadComponent('RequestUrl');
             $postData = $this->request->getData();
+            // $this->log($postData, 'debug');
             
             $res = $this->RequestUrl->postRequest(SITE_API.'api-accesses/verify',$postData);
             $res = json_decode($res,true);
-            //$this->log($res,'debug');
+            // $this->log($res,'debug');
             if($res['status'] == 200){
                 $this->MyAuthen->setAuthen($res['access']['user']);
                 return $this->redirect(['controller'=>'home']);
+            }else{
+                $this->log($res, 'debug');
             }
         }
         

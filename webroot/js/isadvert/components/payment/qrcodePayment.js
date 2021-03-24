@@ -31,13 +31,12 @@ export const QrcodePayment = {
                                 <div class="col-md-7 text-center" style="line-height: 26px;">
                                     <h5>ชำระเงินด้วย QR โค้ด</h5>
                                     ทำการสแกน QR โค้ด เพื่อชำระค่าบริการ<br/>
-                                    <img class="w-25 mt-3 mb-3" src="http://localhost/git/mapcii/webroot/img/Kbank.png"><br/>
+                                    <img class="w-25 mt-3 mb-3" src="https://mapcii.com/img/Kbank.png"><br/>
                                     <strong>ชื่อบัญชี :</strong> XXXXXXXXXXXXXXXX<br/>
                                     บัญชีออมทรัพย์ ธนาคารกสิกรไทย<br/>
-                                    <strong>หมายเลขสมาชิก :</strong> xxxxxxxxx
                                 </div>
                                 <div class="col-md-5 text-center">
-                                    <img class="w-100 rounded" src="http://localhost/git/mapcii/webroot/img/qrCode_simple.jpg">
+                                    <img class="w-100 rounded" src="https://mapcii.com/img/qrCode_simple.jpg">
                                 </div>
                             </div>
                         </div>

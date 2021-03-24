@@ -221,3 +221,67 @@ a{
         opacity: 0;
     }
 }
+
+
+/* On Mobile */
+@media only screen and (max-width: 600px) {
+    .container {
+        max-width: 90% !important;
+    }
+    .navbar-expand-lg .navbar-collapse {
+        padding-left: 10%;
+    }
+    .bg-asset-on-mobile {
+        height: 200px;
+    }
+    .modal-container-closeasset {
+        width: 95% !important;
+    }
+    nav.js-mega-menu.navbar.navbar-expand-lg.g-pa-0.hs-menu-initialized.hs-menu-horizontal.hs-mobile-state {
+        background-color: #fff;
+    }
+    button.navbar-toggler.navbar-toggler-right {
+        margin-top: -10px !important;
+    }
+    ul.nav-tabs-on-mobile li {
+        width: 50%;
+    }
+    ul.nav-tabs-history-on-mobile li {
+        width: 100%;
+    }
+    ul.nav-tabs-on-mobile li a, ul.nav-tabs-history-on-mobile li a {
+        display: block;
+        text-align: center;
+    }
+    .card-no-padding-on-mobile {
+        padding: 0 !important;
+    }
+
+    /* Profile Mobile */
+    .label-profile-on-mobile {
+        width: 25% !important;
+    }
+    .col-text-input-profile-on-mobile {
+        width: 55% !important;
+        padding: 0 !important;
+    }
+    .btn-profile-on-mobile {
+        width: 20% !important;
+        padding: 0 !important;
+    }
+    .strong-display-on-mobile {
+        width: 40%;
+    }
+    .col-display-on-mobile {
+        text-align: center;
+    }
+    .btn-edit-profile-img {
+        right: inherit !important;
+    }
+    .showall-on-mobile {
+        text-align: right;
+    }
+}
+@media (max-width: 991px) {
+    
+}

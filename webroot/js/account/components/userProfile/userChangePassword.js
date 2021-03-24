@@ -50,13 +50,16 @@ export const userChangePassword = {
                     }
                 })
                 .then((response) => {
-                    console.log(response)
-                    if(response.status === 200) {
-                        alert('Complete...')
-                        this.oldPassword = ''
-                        this.newPassword = ''
-                        this.confirmPassword = ''
+                    if(response.data.status === 200) {
+                        alert('เปลี่ยนรหัสผ่านเรียบร้อยแล้ว...')
+                    }else{
+                        alert('เกิดข้อผิดพลาดเกี่ยวกับรหัสผ่านเดิม กรุณาตรวจสอบอีกครั้ง...')
                     }
+                })
+                .finally(() => {
+                    this.oldPassword = ''
+                    this.newPassword = ''
+                    this.confirmPassword = ''
                 })
             }catch(e) {
                 console.log(e)

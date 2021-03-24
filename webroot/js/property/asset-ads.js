@@ -41,7 +41,7 @@ new Vue ({
         this.price_end = this.urlParams.get('price_end')
 
         let isType = this.urlParams.get('type')
-        if(isType !== '') {
+        if(isType !== null) {
             let exType = isType.split('-')
             this.asset_type = exType[1]
         }else{
@@ -70,6 +70,7 @@ new Vue ({
                                 '&limit=' + this.limit +
                                 '&asset_type=' + this.asset_type)
             .then((response) => {
+                // console.log(response)
                 if(response.data.status === 200) {
                     this.assetAds = response.data.asset_ads
                     // response.data.asset_ads_img.forEach(img => {
@@ -80,9 +81,9 @@ new Vue ({
                     response.data.asset_ads.forEach(item => {
                         item.asset.asset_images.forEach(img => {
                             if(img.isdefault === 'Y') {
-                                let bgImgSplit = img.image.url.split('\\')
-                                let bgImgSplitCombine = bgImgSplit[0] + bgImgSplit[1]
-                                this.backgroundImages.push('background-image: url('+bgImgSplitCombine+')')
+                                // let bgImgSplit = img.image.url.split('\\')
+                                // let bgImgSplitCombine = bgImgSplit[0] + bgImgSplit[1]
+                                this.backgroundImages.push('background-image: url('+img.image.url+')')
                             }
                         })
                     })
